@@ -86,6 +86,7 @@ public class TransformModule : MonoBehaviour
         rb.velocity = new Vector3(speedX, speedY, 0);
     }
 
+    #region Physics Related Methods
     public void Accelerate(float Xinput, float YInput)
     {
         accelSumX += Xinput;
@@ -94,10 +95,17 @@ public class TransformModule : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log(LayerMask.LayerToName(collision.gameObject.layer));
         // check layer collision with ground
         if(!jumpAllowed && collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            jumpAllowed = true;
+            Vector3 contactNormal = collision.GetContact(0).normal;
+            Debug.Log(contactNormal);
+            // float threshold = -0.1f;
+            if (contactNormal.y >= 0)
+            {
+                jumpAllowed = true;
+            }
         }
     }
 
@@ -109,3 +117,4 @@ public class TransformModule : MonoBehaviour
         }
     }
 }
+#endregion
