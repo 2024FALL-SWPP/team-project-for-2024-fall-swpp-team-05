@@ -44,7 +44,7 @@ public class TerrainDataLoader : MonoBehaviour
     public void SaveTerrainData()
     {
         string json = JsonUtility.ToJson(terrainData, true); // prettyPrint 옵션을 true로 설정하여 가독성을 높임
-        string path = Application.dataPath + "/Resources/terrainData/" + fileName + ".json";
+        string path = Application.dataPath + "/Resources/TerrainData/" + fileName + ".json";
         File.WriteAllText(path, json);
         Debug.Log("Level data saved to " + path);
     }
