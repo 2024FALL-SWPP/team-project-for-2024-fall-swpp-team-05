@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 public class GridManager : MonoBehaviour
 {
-    public Vector2Int gridSize;
+    public SerializableVector2Int gridSize;
     public GameObject gridPlane;
+    public TerrainDataLoader terrainDataLoader;
     public Camera mainCamera;
 
     // 팔레트 UI 관련
@@ -17,7 +18,7 @@ public class GridManager : MonoBehaviour
     private string selectedPrefabName = null;
 
     // 배치된 오브젝트들
-    private Dictionary<Vector2Int, GameObject> placedObjects = new Dictionary<Vector2Int, GameObject>();
+    private Dictionary<SerializableVector2Int, GameObject> placedObjects = new Dictionary<SerializableVector2Int, GameObject>();
 
     void Start()
     {
@@ -28,11 +29,35 @@ public class GridManager : MonoBehaviour
         LoadPalette();
     }
 
-    void CreateGrid()
+    public void CreateGrid()
     {
+        terrainDataLoader = GameObject.FindObjectOfType<TerrainDataLoader>();
+        gridSize = terrainDataLoader.terrainData.gridSize;
+        Debug.Log("Grid size: " + gridSize.x + ", " + gridSize.y);
         // 그리드 크기를 기반으로 Plane 생성 또는 Gizmos로 그리드 그리기
         // Plane의 크기를 gridSize에 맞게 조절
-        gridPlane.transform.localScale = new Vector3(gridSize.x / 10f, 1, gridSize.y / 10f);
+        gridPlane.transform.localScale = new Vector3(gridSize.x, 1, gridSize.y);
+
+        // draw gizmos for each grid cell
+        for (int x = 0; x < gridSize.x; x++)
+        {
+            for (int y = 0; y < gridSize.y; y++)
+            {
+                Vector3 cellCenter = new Vector3(x + 0.5f, 0, y + 0.5f);
+                // TODO
+                // transform.position = cellCenter;
+                // OnDrawGizmos();
+            }
+        }
+
+    }
+
+    void OnDrawGizmos()
+    {
+        // Draw a colored sphere at the transform's position
+        Gizmos.color = Color.black;
+        Debug.Log("Drawing gizmos at " + transform.position);
+        Gizmos.DrawSphere(transform.position, 0.1f);
     }
 
     void LoadPalette()
@@ -65,11 +90,13 @@ public class GridManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             // 드래그 시작 지점 저장
+
         }
 
         if (Input.GetMouseButton(0))
         {
             // 드래그 중 범위 표시
+
         }
 
         if (Input.GetMouseButtonUp(0))

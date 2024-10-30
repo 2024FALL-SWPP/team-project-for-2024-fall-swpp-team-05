@@ -36,16 +36,6 @@ public class TerrainDataLoader : MonoBehaviour
         }
     }
 
-    // public void SaveTerrainData()
-    // {
-    //     string path = Application.dataPath + "/Resources/TerrainData/" + fileName + ".dat";
-    //     FileStream file = File.Create(path);
-    //     BinaryFormatter bf = new BinaryFormatter();
-    //     bf.Serialize(file, terrainData);
-    //     file.Close();
-    //     Debug.Log("Terrain data saved to " + path);
-    // }
-
     public void SaveTerrainData()
     {
         string json = JsonUtility.ToJson(terrainData, true); // prettyPrint 옵션을 true로 설정하여 가독성을 높임
@@ -53,33 +43,6 @@ public class TerrainDataLoader : MonoBehaviour
         File.WriteAllText(path, json);
         Debug.Log("Level data saved to " + path);
     }
-
-    // public void LoadTerrainData()
-    // {
-    //     string path = Application.dataPath + "/Resources/TerrainData/" + fileName + ".dat";
-    //     if (File.Exists(path))
-    //     {
-    //         FileStream file = File.Open(path, FileMode.Open);
-    //         BinaryFormatter bf = new BinaryFormatter();
-    //         terrainData = (TerrainData)bf.Deserialize(file);
-    //         file.Close();
-    //         Debug.Log("Terrain data loaded from " + path);
-    //         InstantiateTerrain();
-    //     }
-    //     else
-    //     {
-    //         Debug.Log("No terrain data found at " + path);
-    //         stage = stageInputField.text;
-    //         terrainIndex = indexInputField.text;
-    //         // 새로운 TerrainData 생성
-    //         terrainData = new TerrainData();
-    //         terrainData.stage = stage;
-    //         terrainData.terrainIndex = terrainIndex;
-    //         terrainData.gridSize = new Vector2Int(200, 80);
-    //         fileName = $"Stage_{stage}_{terrainIndex}";
-    //         Debug.Log($"New terrain data created for {fileName}");
-    //     }
-    // }
 
     public void LoadTerrainData()
     {
