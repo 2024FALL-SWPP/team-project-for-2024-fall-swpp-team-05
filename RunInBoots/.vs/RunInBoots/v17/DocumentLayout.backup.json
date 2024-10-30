@@ -3,11 +3,15 @@
   "WorkspaceRootPath": "C:\\Users\\yuye2\\SWPP2024\\team-project-for-2024-fall-swpp-team-05\\RunInBoots\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\yuye2\\SWPP2024\\team-project-for-2024-fall-swpp-team-05\\RunInBoots\\Library\\PackageCache\\com.unity.render-pipelines.universal@12.1.15\\Shaders\\Lit.shader||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library\\PackageCache\\com.unity.render-pipelines.universal@12.1.15\\Shaders\\Lit.shader||{3B902123-F8A7-4915-9F01-361F908088D0}"
+      "AbsoluteMoniker": "D:0:0:{A32106B7-A0CF-BF5F-C656-37CA5E1B0385}|Assembly-CSharp.csproj|c:\\users\\yuye2\\swpp2024\\team-project-for-2024-fall-swpp-team-05\\runinboots\\assets\\scripts\\battlemodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A32106B7-A0CF-BF5F-C656-37CA5E1B0385}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\battlemodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A32106B7-A0CF-BF5F-C656-37CA5E1B0385}|Assembly-CSharp.csproj|c:\\users\\yuye2\\swpp2024\\team-project-for-2024-fall-swpp-team-05\\runinboots\\assets\\scripts\\testcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A32106B7-A0CF-BF5F-C656-37CA5E1B0385}|Assembly-CSharp.csproj|C:\\Users\\yuye2\\SWPP2024\\team-project-for-2024-fall-swpp-team-05\\RunInBoots\\assets\\scripts\\transformmodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A32106B7-A0CF-BF5F-C656-37CA5E1B0385}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\transformmodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A32106B7-A0CF-BF5F-C656-37CA5E1B0385}|Assembly-CSharp.csproj|C:\\Users\\yuye2\\SWPP2024\\team-project-for-2024-fall-swpp-team-05\\RunInBoots\\assets\\scripts\\testcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A32106B7-A0CF-BF5F-C656-37CA5E1B0385}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\testcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -23,19 +27,31 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Lit.shader",
-              "DocumentMoniker": "C:\\Users\\yuye2\\SWPP2024\\team-project-for-2024-fall-swpp-team-05\\RunInBoots\\Library\\PackageCache\\com.unity.render-pipelines.universal@12.1.15\\Shaders\\Lit.shader",
-              "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.render-pipelines.universal@12.1.15\\Shaders\\Lit.shader",
-              "ToolTip": "C:\\Users\\yuye2\\SWPP2024\\team-project-for-2024-fall-swpp-team-05\\RunInBoots\\Library\\PackageCache\\com.unity.render-pipelines.universal@12.1.15\\Shaders\\Lit.shader",
-              "RelativeToolTip": "Library\\PackageCache\\com.unity.render-pipelines.universal@12.1.15\\Shaders\\Lit.shader",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002777|",
-              "WhenOpened": "2024-10-24T07:44:16.253Z",
+              "Title": "BattleModule.cs",
+              "DocumentMoniker": "C:\\Users\\yuye2\\SWPP2024\\team-project-for-2024-fall-swpp-team-05\\RunInBoots\\Assets\\Scripts\\BattleModule.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\BattleModule.cs",
+              "ToolTip": "C:\\Users\\yuye2\\SWPP2024\\team-project-for-2024-fall-swpp-team-05\\RunInBoots\\Assets\\Scripts\\BattleModule.cs",
+              "RelativeToolTip": "Assets\\Scripts\\BattleModule.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABAAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-28T10:52:04.378Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "TransformModule.cs",
+              "DocumentMoniker": "C:\\Users\\yuye2\\SWPP2024\\team-project-for-2024-fall-swpp-team-05\\RunInBoots\\Assets\\Scripts\\TransformModule.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\TransformModule.cs",
+              "ToolTip": "C:\\Users\\yuye2\\SWPP2024\\team-project-for-2024-fall-swpp-team-05\\RunInBoots\\Assets\\Scripts\\TransformModule.cs",
+              "RelativeToolTip": "Assets\\Scripts\\TransformModule.cs",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAIwGQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-28T09:49:41.504Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "TestController.cs",
               "DocumentMoniker": "C:\\Users\\yuye2\\SWPP2024\\team-project-for-2024-fall-swpp-team-05\\RunInBoots\\Assets\\Scripts\\TestController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\TestController.cs",
@@ -43,8 +59,7 @@
               "RelativeToolTip": "Assets\\Scripts\\TestController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-24T07:16:55.695Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-24T07:16:55.695Z"
             }
           ]
         }

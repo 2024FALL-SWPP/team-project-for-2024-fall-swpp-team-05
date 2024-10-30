@@ -10,6 +10,9 @@ public class TransformModule : MonoBehaviour
     public float maxSpeedY = 10.0f;
     public bool jumpAllowed = false;
 
+    public float speedXCoef = 0.5f;
+    public float speedYCoef = 0.5f;
+
     private Rigidbody rb;
     private float gravity = 9.81f;
     [SerializeField] private float speedX = 0.0f;
@@ -89,18 +92,16 @@ public class TransformModule : MonoBehaviour
     #region Physics Related Methods
     public void Accelerate(float Xinput, float YInput)
     {
-        accelSumX += Xinput;
-        accelSumY += YInput;
+        accelSumX += speedXCoef * Xinput;
+        accelSumY += speedYCoef * YInput;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(LayerMask.LayerToName(collision.gameObject.layer));
         // check layer collision with ground
         if(!jumpAllowed && collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             Vector3 contactNormal = collision.GetContact(0).normal;
-            Debug.Log(contactNormal);
             // float threshold = -0.1f;
             if (contactNormal.y >= 0)
             {

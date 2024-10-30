@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\TestController.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
+    <Compile Include="Assets\Scripts\BattleModule.cs" />
     <Compile Include="Assets\Scripts\TransformModule.cs" />
   </ItemGroup>
   <ItemGroup>
