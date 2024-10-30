@@ -1,0 +1,8 @@
+{
+    "stage": "1​",
+    "terrainIndex": "2​",
+    "gridSize": {
+        "x": 200,
+        "y": 80
+    }
+}
