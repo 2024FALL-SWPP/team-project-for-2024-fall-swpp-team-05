@@ -7,11 +7,16 @@ using TMPro;
 
 public class TerrainDataLoader : MonoBehaviour
 {
-    public string stage;
-    public TextMeshProUGUI stageInputField, indexInputField;
-    public string terrainIndex;
-    public string fileName;
+    public GameObject stageInputField;
+    public GameObject indexInputField;
+    public GameObject loadCanvas;
     public TerrainData terrainData;
+
+    private string stage;
+    private string terrainIndex;
+    private string fileName;
+    
+    
 
     // Singleton instance
     public static TerrainDataLoader Instance;
@@ -89,8 +94,8 @@ public class TerrainDataLoader : MonoBehaviour
         else
         {
             Debug.Log("No level data found at " + path);
-            stage = stageInputField.text;
-            terrainIndex = indexInputField.text;
+            stage = stageInputField.GetComponentInChildren<TMP_InputField>().text;
+            terrainIndex = indexInputField.GetComponentInChildren<TMP_InputField>().text;
             // 새로운 terrainData 생성
             terrainData = new TerrainData();
             terrainData.stage = stage;
@@ -99,7 +104,8 @@ public class TerrainDataLoader : MonoBehaviour
             fileName = $"Stage_{stage}_{terrainIndex}";
             Debug.Log($"New terrain data created for {fileName}");
         }
-        
+
+        loadCanvas.SetActive(false);
     }
 
 

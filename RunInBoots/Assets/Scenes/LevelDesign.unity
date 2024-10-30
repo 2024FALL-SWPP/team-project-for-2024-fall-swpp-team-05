@@ -1772,7 +1772,9 @@ MonoBehaviour:
   terrainData:
     stage: 
     terrainIndex: 
-    gridSize: {x: 0, y: 0}
+    gridSize:
+      x: 0
+      y: 0
 --- !u!1 &1803291804
 GameObject:
   m_ObjectHideFlags: 0
