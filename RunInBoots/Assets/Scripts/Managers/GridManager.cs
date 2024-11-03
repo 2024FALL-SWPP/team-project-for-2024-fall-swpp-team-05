@@ -53,6 +53,7 @@ public class GridManager : MonoBehaviour
                 // gridPlane의 중심을 기준으로 x, y만큼 이동한 위치 계산
                 Vector3 cellCenter = gridPlane.transform.position + new Vector3(x - gridSize.x / 2 + 0.5f, y - gridSize.y / 2 + 0.5f, 0);
                 GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                sphere.name = "Cell_" + x + "_" + y;
                 sphere.transform.position = cellCenter;
                 sphere.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 sphere.GetComponent<Renderer>().material.color = Color.black;
@@ -108,8 +109,31 @@ public class GridManager : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            // TODO: draw drag area
-            
+            // 드래그 중인 범위 내에 있는 cell 표시
+            // 드래그 중인 범위 표시
+            Vector3 currentWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -cameraPosZ));
+            Vector3 minWorldPos = new Vector3(Mathf.Min(dragStartWorldPos.x, currentWorldPos.x), Mathf.Min(dragStartWorldPos.y, currentWorldPos.y), 0);
+            Vector3 maxWorldPos = new Vector3(Mathf.Max(dragStartWorldPos.x, currentWorldPos.x), Mathf.Max(dragStartWorldPos.y, currentWorldPos.y), 0);
+
+            SerializableVector2Int minGridPos = WorldToGrid(minWorldPos);
+            SerializableVector2Int maxGridPos = WorldToGrid(maxWorldPos);
+
+            for (int x = 0; x < gridSize.x; x++)
+            {
+                for (int y = 0; y < gridSize.y; y++)
+                {
+                    if (x >= minGridPos.x && x <= maxGridPos.x && y >= minGridPos.y && y <= maxGridPos.y)
+                    {
+                        GameObject sphere = GameObject.Find("Cell_" + x + "_" + y);
+                        sphere.GetComponent<Renderer>().material.color = Color.red;
+                    }
+                    else {
+                        GameObject sphere = GameObject.Find("Cell_" + x + "_" + y);
+                        sphere.GetComponent<Renderer>().material.color = Color.black;
+                    }
+                }
+                
+            }
         }
 
         if (Input.GetMouseButtonUp(0))
