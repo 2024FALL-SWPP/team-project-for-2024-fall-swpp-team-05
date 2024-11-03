@@ -110,7 +110,6 @@ public class GridManager : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             // 드래그 중인 범위 내에 있는 cell 표시
-            // 드래그 중인 범위 표시
             Vector3 currentWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -cameraPosZ));
             Vector3 minWorldPos = new Vector3(Mathf.Min(dragStartWorldPos.x, currentWorldPos.x), Mathf.Min(dragStartWorldPos.y, currentWorldPos.y), 0);
             Vector3 maxWorldPos = new Vector3(Mathf.Max(dragStartWorldPos.x, currentWorldPos.x), Mathf.Max(dragStartWorldPos.y, currentWorldPos.y), 0);
@@ -132,7 +131,6 @@ public class GridManager : MonoBehaviour
                         sphere.GetComponent<Renderer>().material.color = Color.black;
                     }
                 }
-                
             }
         }
 
@@ -196,6 +194,11 @@ public class GridManager : MonoBehaviour
 
                 if (selectedPrefabName != null)
                 {
+                    // grid bounds 내에 있는지 확인
+                    if (x < 0 || x >= gridSize.x || y < 0 || y >= gridSize.y)
+                    {
+                        continue;
+                    }
                     GameObject prefab = Resources.Load<GameObject>("LevelObject/" + selectedPrefabName);
                     GameObject obj = Instantiate(prefab, GridToWorld(gridPos), Quaternion.identity);
                     placedObjects.Add(gridPos, obj);
