@@ -7,19 +7,26 @@ using TMPro;
 
 public class TerrainDataLoader : MonoBehaviour
 {
+    public GridManager gridManager;
+    
     public GameObject stageInputField;
     public GameObject indexInputField;
-    public GameObject loadCanvas;
+    public GameObject loadPanel;
     public TerrainData terrainData;
 
     private string stage;
     private string terrainIndex;
     private string fileName;
+    private string path;
     
-    
-
     // Singleton instance
     public static TerrainDataLoader Instance;
+
+    private void Start()
+    {
+        loadPanel.SetActive(true);
+    }
+
 
     void Awake()
     {
@@ -39,14 +46,16 @@ public class TerrainDataLoader : MonoBehaviour
     public void SaveTerrainData()
     {
         string json = JsonUtility.ToJson(terrainData, true); // prettyPrint 옵션을 true로 설정하여 가독성을 높임
-        string path = Application.dataPath + "/Resources/TerrainData/" + fileName + ".json";
         File.WriteAllText(path, json);
         Debug.Log("Level data saved to " + path);
     }
 
     public void LoadTerrainData()
     {
-        string path = Application.dataPath + "/Resources/TerrainData/" + fileName + ".json";
+        stage = stageInputField.GetComponentInChildren<TMP_InputField>().text;
+        terrainIndex = indexInputField.GetComponentInChildren<TMP_InputField>().text;
+        fileName = $"Stage_{stage}_{terrainIndex}";
+        path = Application.dataPath + "/Resources/TerrainData/" + fileName + ".json";
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
@@ -57,18 +66,18 @@ public class TerrainDataLoader : MonoBehaviour
         else
         {
             Debug.Log("No level data found at " + path);
-            stage = stageInputField.GetComponentInChildren<TMP_InputField>().text;
-            terrainIndex = indexInputField.GetComponentInChildren<TMP_InputField>().text;
             // 새로운 terrainData 생성
             terrainData = new TerrainData();
             terrainData.stage = stage;
             terrainData.terrainIndex = terrainIndex;
             terrainData.gridSize = new SerializableVector2Int(200, 80);
-            fileName = $"Stage_{stage}_{terrainIndex}";
+            
             Debug.Log($"New terrain data created for {fileName}");
         }
 
-        loadCanvas.SetActive(false);
+        loadPanel.SetActive(false);
+        gridManager.LoadPalette();
+        gridManager.CreateGrid();
     }
 
 

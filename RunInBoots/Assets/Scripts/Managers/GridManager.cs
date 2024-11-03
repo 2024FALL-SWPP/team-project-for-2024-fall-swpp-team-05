@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using TMPro;
 
 public class GridManager : MonoBehaviour
 {
@@ -13,6 +14,13 @@ public class GridManager : MonoBehaviour
     public ToggleGroup paletteToggleGroup;
     public Toggle paletteTogglePrefab;
     public RectTransform paletteContent;
+    public GameObject palleteScroll;
+    public GameObject gridControllPanel;
+    public GameObject gridSizeXInputField;
+    public GameObject gridSizeYInputField;
+
+    private int gridSizeX;
+    private int gridSizeY;
 
     // 현재 선택된 오브젝트
     private string selectedPrefabName = null;
@@ -22,16 +30,17 @@ public class GridManager : MonoBehaviour
 
     void Start()
     {
+        terrainDataLoader = GameObject.FindObjectOfType<TerrainDataLoader>();
         // 그리드 생성
         CreateGrid();
 
-        // 팔레트 생성
-        LoadPalette();
+        palleteScroll.SetActive(false);
+        gridControllPanel.SetActive(false);
     }
 
     public void CreateGrid()
     {
-        terrainDataLoader = GameObject.FindObjectOfType<TerrainDataLoader>();
+        
         gridSize = terrainDataLoader.terrainData.gridSize;
         Debug.Log("Grid size: " + gridSize.x + ", " + gridSize.y);
         // 그리드 크기를 기반으로 Plane 생성 또는 Gizmos로 그리드 그리기
@@ -56,12 +65,16 @@ public class GridManager : MonoBehaviour
     {
         // Draw a colored sphere at the transform's position
         Gizmos.color = Color.black;
-        Debug.Log("Drawing gizmos at " + transform.position);
+        //Debug.Log("Drawing gizmos at " + transform.position);
         Gizmos.DrawSphere(transform.position, 0.1f);
     }
 
-    void LoadPalette()
+    public void LoadPalette()
     {
+        Debug.Log("Load Palette");
+        palleteScroll.SetActive(true);
+        gridControllPanel.SetActive(true);
+
         // Resources/LevelObject 폴더에서 프리팹 목록 로드
         GameObject[] prefabs = Resources.LoadAll<GameObject>("LevelObject");
         foreach (GameObject prefab in prefabs)
@@ -77,6 +90,16 @@ public class GridManager : MonoBehaviour
                 }
             });
         }
+    }
+
+    public void OnSetGridButtonClicked()
+    {
+        gridSizeX = int.Parse(gridSizeXInputField.GetComponentInChildren<TMP_InputField>().text);
+        gridSizeY = int.Parse(gridSizeYInputField.GetComponentInChildren<TMP_InputField>().text);
+        
+        terrainDataLoader.terrainData.gridSize = new SerializableVector2Int(gridSizeX, gridSizeY);
+
+        Debug.Log($"Grid size set to: {terrainDataLoader.terrainData.gridSize.x} x {terrainDataLoader.terrainData.gridSize.y}");
     }
 
     void Update()
