@@ -13,8 +13,17 @@ public class TerrainDataLoader : MonoBehaviour
     public string fileName;
     public TerrainData terrainData;
 
+    public UIManager uiManager;
+    public GridManager gridManager;
+
     // Singleton instance
     public static TerrainDataLoader Instance;
+
+    public void Start()
+    {
+        uiManager = GameObject.FindObjectOfType<UIManager>();
+        gridManager = GameObject.FindObjectOfType<GridManager>();
+    }
 
     void Awake()
     {
@@ -41,7 +50,14 @@ public class TerrainDataLoader : MonoBehaviour
 
     public void LoadTerrainData()
     {
+        stage = stageInputField.text;
+        terrainIndex = indexInputField.text;
+        terrainData.stage = stage;
+        terrainData.terrainIndex = terrainIndex;
+        fileName = $"Stage_{stage}_{terrainIndex}";
+        Debug.Log("Loading terrain data for " + fileName);
         string path = Application.dataPath + "/Resources/TerrainData/" + fileName + ".json";
+
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
@@ -52,17 +68,15 @@ public class TerrainDataLoader : MonoBehaviour
         else
         {
             Debug.Log("No level data found at " + path);
-            stage = stageInputField.text;
-            terrainIndex = indexInputField.text;
             // 새로운 terrainData 생성
             terrainData = new TerrainData();
-            terrainData.stage = stage;
-            terrainData.terrainIndex = terrainIndex;
-            terrainData.gridSize = new SerializableVector2Int(200, 80);
-            fileName = $"Stage_{stage}_{terrainIndex}";
+            terrainData.gridSize = new SerializableVector2Int(10, 10);
             Debug.Log($"New terrain data created for {fileName}");
+            gridManager.CreateGrid();
         }
-        
+
+        uiManager.InstantiateTerrain();
+        gridManager.StartGridMode();
     }
 
 
@@ -95,5 +109,6 @@ public class TerrainDataLoader : MonoBehaviour
 
         // 카메라에 Confiner 설정
         // CinemachineConfiner 등의 컴포넌트 추가 및 설정
+        
     }
 }

@@ -71,6 +71,7 @@
     <Compile Include="Assets/Scripts/Objects/StartPoint.cs" />
     <Compile Include="Assets/Scripts/Data/TerrainData.cs" />
     <Compile Include="Assets/Scripts/TransformModule.cs" />
+    <Compile Include="Assets/Scripts/Managers/UIManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
