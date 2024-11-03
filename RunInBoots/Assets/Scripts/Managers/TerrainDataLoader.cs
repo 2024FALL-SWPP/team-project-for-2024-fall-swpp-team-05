@@ -42,6 +42,7 @@ public class TerrainDataLoader : MonoBehaviour
 
     public void SaveTerrainData()
     {
+        gridManager.SaveGridData();
         string json = JsonUtility.ToJson(terrainData, true); // prettyPrint 옵션을 true로 설정하여 가독성을 높임
         string path = Application.dataPath + "/Resources/TerrainData/" + fileName + ".json";
         File.WriteAllText(path, json);
@@ -86,10 +87,10 @@ public class TerrainDataLoader : MonoBehaviour
         GameObject blocksParent = new GameObject("Blocks");
         blocksParent.transform.parent = levelParent.transform;
 
-        foreach (var entry in terrainData.objectPositions)
+        foreach (var entry in terrainData.objectPositions.objPos)
         {
-            string prefabName = entry.Key;
-            List<Vector3> positions = entry.Value;
+            string prefabName = entry.name;
+            List<Vector3> positions = entry.positions;
             GameObject prefab = Resources.Load<GameObject>("LevelObject/" + prefabName);
             foreach (Vector3 pos in positions)
             {

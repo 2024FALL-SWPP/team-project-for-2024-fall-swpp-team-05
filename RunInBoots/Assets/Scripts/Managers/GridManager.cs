@@ -16,7 +16,7 @@ public class GridManager : MonoBehaviour
     
     public Vector3 dragStartWorldPos, dragEndWorldPos;
 
-    // 현재 선택된 오브젝트
+    // 현재 선택된 오브젝트 (TODO: 팔레트에서 선택한 오브젝트로 변경)
     string selectedPrefabName = "Block";
     bool isGridMode = false;
 
@@ -167,6 +167,33 @@ public class GridManager : MonoBehaviour
         float x = gridPos.x - gridSize.x / 2 + 0.5f;
         float y = gridPos.y - gridSize.y / 2 + 0.5f;
         return new Vector3(x, y, 0);
+    }
+
+    public void SaveGridData()
+    {
+        // save grid data to terrainDataLoader
+        Debug.Log("Save grid data");
+        terrainDataLoader.terrainData.objectPositions = new ObjPosList();
+
+        Dictionary<string, List<Vector3>> objectPositionsDict = new Dictionary<string, List<Vector3>>();
+        foreach (var entry in placedObjects)
+        {
+            SerializableVector2Int gridPos = entry.Key;
+            string prefabName = entry.Value.name.Replace("(Clone)", "");
+            if (!objectPositionsDict.ContainsKey(prefabName))
+            {
+                objectPositionsDict.Add(prefabName, new List<Vector3>());
+            }
+            objectPositionsDict[prefabName].Add(GridToWorld(gridPos));
+        }
+
+        foreach (var entry in objectPositionsDict)
+        {
+            ObjectPosition objectPosition = new ObjectPosition();
+            objectPosition.name = entry.Key;
+            objectPosition.positions = entry.Value;
+            terrainDataLoader.terrainData.objectPositions.objPos.Add(objectPosition);
+        }
     }
 
     void PlaceObjectsInRange()
