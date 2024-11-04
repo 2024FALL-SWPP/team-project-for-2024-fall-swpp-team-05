@@ -83,8 +83,8 @@ public class TerrainDataLoader : MonoBehaviour
         GameObject levelParent = new GameObject("Level");
         GameObject blocksParent = new GameObject("Blocks");
 
-        gridManager.LoadGridData();
         gridManager.CreateGrid();
+        gridManager.LoadGridData();
 
         // CameraConfiner 설정
         GameObject cameraConfiner = new GameObject("CameraConfiner");
