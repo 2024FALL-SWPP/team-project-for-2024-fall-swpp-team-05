@@ -64,16 +64,13 @@ public class TerrainDataLoader : MonoBehaviour
             string json = File.ReadAllText(path);
             terrainData = JsonUtility.FromJson<TerrainData>(json);
             Debug.Log("Level data loaded from " + path);
-            InstantiateTerrain();
+            LoadTerrain();
         }
         else
         {
             Debug.Log("No level data found at " + path);
-            // 새로운 terrainData 생성
-            terrainData = new TerrainData();
-            terrainData.gridSize = new SerializableVector2Int(10, 10);
-            Debug.Log($"New terrain data created for {fileName}");
-            gridManager.CreateGrid();
+            CreateTerrain();
+            
         }
 
         uiManager.InstantiateTerrain();
@@ -81,23 +78,13 @@ public class TerrainDataLoader : MonoBehaviour
     }
 
 
-    void InstantiateTerrain()
+    void LoadTerrain()
     {
         GameObject levelParent = new GameObject("Level");
         GameObject blocksParent = new GameObject("Blocks");
-        blocksParent.transform.parent = levelParent.transform;
 
-        foreach (var entry in terrainData.objectPositions.objPos)
-        {
-            string prefabName = entry.name;
-            List<Vector3> positions = entry.positions;
-            GameObject prefab = Resources.Load<GameObject>("LevelObject/" + prefabName);
-            foreach (Vector3 pos in positions)
-            {
-                GameObject obj = Instantiate(prefab, pos, Quaternion.identity, blocksParent.transform);
-                // 필요한 경우 추가 설정
-            }
-        }
+        gridManager.LoadGridData();
+        gridManager.CreateGrid();
 
         // CameraConfiner 설정
         GameObject cameraConfiner = new GameObject("CameraConfiner");
@@ -111,5 +98,12 @@ public class TerrainDataLoader : MonoBehaviour
         // 카메라에 Confiner 설정
         // CinemachineConfiner 등의 컴포넌트 추가 및 설정
         
+    }
+
+    void CreateTerrain() {
+        terrainData = new TerrainData();
+        terrainData.gridSize = new SerializableVector2Int(10, 10);
+        Debug.Log($"New terrain data created for {fileName}");
+        gridManager.CreateGrid();
     }
 }

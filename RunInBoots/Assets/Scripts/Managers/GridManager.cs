@@ -196,6 +196,25 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    public void LoadGridData()
+    {
+        // load grid data from terrainDataLoader
+        Debug.Log("Load grid data");
+        placedObjects.Clear();
+        foreach (var entry in terrainDataLoader.terrainData.objectPositions.objPos)
+        {
+            string prefabName = entry.name;
+            List<Vector3> positions = entry.positions;
+            GameObject prefab = Resources.Load<GameObject>("LevelObject/" + prefabName);
+            foreach (Vector3 pos in positions)
+            {
+                SerializableVector2Int gridPos = WorldToGrid(pos);
+                GameObject obj = Instantiate(prefab, pos, Quaternion.identity);
+                placedObjects.Add(gridPos, obj);
+            }
+        }
+    }
+
     void PlaceObjectsInRange()
     {
         // 드래그된 범위 내의 그리드 좌표 계산
