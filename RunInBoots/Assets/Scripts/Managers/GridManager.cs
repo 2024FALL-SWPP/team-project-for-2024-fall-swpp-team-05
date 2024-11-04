@@ -53,7 +53,7 @@ public class GridManager : MonoBehaviour
             Destroy(gridPlane);
         }
         gridPlane = GameObject.CreatePrimitive(PrimitiveType.Plane);
-        planePosOffset.x = gridSize.x / 2 - 9; // TODO: Full HD
+        planePosOffset.x = gridSize.x / 2 - 10; // TODO: Full HD
         planePosOffset.y = gridSize.y / 2 - 5; // TODO: Full HD
 
         gridPlane.transform.position = new Vector3(planePosOffset.x, planePosOffset.y, 0);
