@@ -2319,15 +2319,18 @@ MonoBehaviour:
     y: 0
   gridPlane: {fileID: 1471687200}
   terrainDataLoader: {fileID: 1717985760}
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 2062261556}
   paletteToggleGroup: {fileID: 21088585}
-  paletteTogglePrefab: {fileID: 5480043241644163041, guid: f93b76b12cb1ea245941fe1dfb567963,
+  paletteTogglePrefab: {fileID: 5480043241644163041, guid: fe6ca4f166f66a34a985ead21aef4a10,
     type: 3}
   paletteContent: {fileID: 21088582}
   palleteScroll: {fileID: 1471426995}
   gridControllPanel: {fileID: 1162789579}
   gridSizeXInputField: {fileID: 1276838889}
   gridSizeYInputField: {fileID: 192509534}
+  dragStartWorldPos: {x: 0, y: 0, z: 0}
+  dragEndWorldPos: {x: 0, y: 0, z: 0}
+  cameraPosZ: -10
 --- !u!1 &1258037421
 GameObject:
   m_ObjectHideFlags: 0
@@ -3874,6 +3877,8 @@ MonoBehaviour:
     gridSize:
       x: 0
       y: 0
+    objectPositions:
+      objPos: []
 --- !u!1 &1803291804
 GameObject:
   m_ObjectHideFlags: 0
@@ -4027,7 +4032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1851563951
 RectTransform:
   m_ObjectHideFlags: 0

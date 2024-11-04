@@ -45,6 +45,7 @@ public class TerrainDataLoader : MonoBehaviour
 
     public void SaveTerrainData()
     {
+        gridManager.SaveGridData();
         string json = JsonUtility.ToJson(terrainData, true); // prettyPrint 옵션을 true로 설정하여 가독성을 높임
         File.WriteAllText(path, json);
         Debug.Log("Level data saved to " + path);
@@ -78,6 +79,7 @@ public class TerrainDataLoader : MonoBehaviour
         loadPanel.SetActive(false);
         gridManager.LoadPalette();
         gridManager.CreateGrid();
+        gridManager.StartGridMode();
     }
 
 
@@ -87,10 +89,10 @@ public class TerrainDataLoader : MonoBehaviour
         GameObject blocksParent = new GameObject("Blocks");
         blocksParent.transform.parent = levelParent.transform;
 
-        foreach (var entry in terrainData.objectPositions)
+        foreach (var entry in terrainData.objectPositions.objPos)
         {
-            string prefabName = entry.Key;
-            List<Vector3> positions = entry.Value;
+            string prefabName = entry.name;
+            List<Vector3> positions = entry.positions;
             GameObject prefab = Resources.Load<GameObject>("LevelObject/" + prefabName);
             foreach (Vector3 pos in positions)
             {
@@ -110,5 +112,6 @@ public class TerrainDataLoader : MonoBehaviour
 
         // 카메라에 Confiner 설정
         // CinemachineConfiner 등의 컴포넌트 추가 및 설정
+
     }
 }
