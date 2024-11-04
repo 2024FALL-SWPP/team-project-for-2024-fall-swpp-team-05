@@ -20,6 +20,10 @@ public class GridManager : MonoBehaviour
     string selectedPrefabName = "Block";
     bool isGridMode = false;
 
+    public float delayTime = 1f;
+
+    private float startTime;
+
     // 배치된 오브젝트들
     private Dictionary<SerializableVector2Int, GameObject> placedObjects = new Dictionary<SerializableVector2Int, GameObject>();
     public float cameraPosZ = -10.0f;
@@ -86,11 +90,13 @@ public class GridManager : MonoBehaviour
         // 그리드 모드 시작
         // 팔레트 활성화
         isGridMode = true;
+        startTime = Time.time;
     }
 
     void Update()
     {
-        if (isGridMode && gridSize.x > 0 && gridSize.y > 0)
+        float elapsedTime = Time.time - startTime;
+        if (elapsedTime >= delayTime && isGridMode && gridSize.x > 0 && gridSize.y > 0)
         {
             HandleMouseInput();
         }
