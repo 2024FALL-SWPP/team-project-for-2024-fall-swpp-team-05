@@ -79,11 +79,43 @@ public class GridManager : MonoBehaviour
                 }
                 GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 sphere.name = cellName;
+                sphere.tag = "Cell";
                 sphere.transform.position = cellCenter;
                 sphere.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 sphere.GetComponent<Renderer>().material.color = Color.black;
             }
         }
+
+        // remove all objects/cells outside of current gridSize
+        List<SerializableVector2Int> keysToRemove = new List<SerializableVector2Int>();
+        foreach (var entry in placedObjects)
+        {
+            SerializableVector2Int gridPos = entry.Key;
+            if (gridPos.x < 0 || gridPos.x >= gridSize.x || gridPos.y < 0 || gridPos.y >= gridSize.y)
+            {
+                Destroy(entry.Value);
+                keysToRemove.Add(gridPos);
+            }
+        }
+
+        foreach (var key in keysToRemove)
+        {
+            placedObjects.Remove(key);
+        }
+        
+        // remove all spheres outside of current gridSize
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("Cell");
+        foreach (GameObject obj in objects)
+        {
+            string[] cellName = obj.name.Split('_');
+            int x = int.Parse(cellName[1]);
+            int y = int.Parse(cellName[2]);
+            if (x < 0 || x >= gridSize.x || y < 0 || y >= gridSize.y)
+            {
+                Destroy(obj);
+            }
+        }
+        
     }
         
 
