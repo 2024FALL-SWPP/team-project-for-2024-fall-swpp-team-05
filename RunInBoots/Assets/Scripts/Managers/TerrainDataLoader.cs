@@ -7,23 +7,26 @@ using TMPro;
 
 public class TerrainDataLoader : MonoBehaviour
 {
-    public string stage;
-    public TextMeshProUGUI stageInputField, indexInputField;
-    public string terrainIndex;
-    public string fileName;
+    public GridManager gridManager;
+    
+    public GameObject stageInputField;
+    public GameObject indexInputField;
+    public GameObject loadPanel;
     public TerrainData terrainData;
 
-    public UIManager uiManager;
-    public GridManager gridManager;
-
+    private string stage;
+    private string terrainIndex;
+    private string fileName;
+    private string path;
+    
     // Singleton instance
     public static TerrainDataLoader Instance;
 
-    public void Start()
+    private void Start()
     {
-        uiManager = GameObject.FindObjectOfType<UIManager>();
-        gridManager = GameObject.FindObjectOfType<GridManager>();
+        loadPanel.SetActive(true);
     }
+
 
     void Awake()
     {
@@ -44,21 +47,16 @@ public class TerrainDataLoader : MonoBehaviour
     {
         gridManager.SaveGridData();
         string json = JsonUtility.ToJson(terrainData, true); // prettyPrint 옵션을 true로 설정하여 가독성을 높임
-        string path = Application.dataPath + "/Resources/TerrainData/" + fileName + ".json";
         File.WriteAllText(path, json);
         Debug.Log("Level data saved to " + path);
     }
 
     public void LoadTerrainData()
     {
-        stage = stageInputField.text;
-        terrainIndex = indexInputField.text;
-        terrainData.stage = stage;
-        terrainData.terrainIndex = terrainIndex;
+        stage = stageInputField.GetComponentInChildren<TMP_InputField>().text;
+        terrainIndex = indexInputField.GetComponentInChildren<TMP_InputField>().text;
         fileName = $"Stage_{stage}_{terrainIndex}";
-        Debug.Log("Loading terrain data for " + fileName);
-        string path = Application.dataPath + "/Resources/TerrainData/" + fileName + ".json";
-
+        path = Application.dataPath + "/Resources/TerrainData/" + fileName + ".json";
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
@@ -70,10 +68,11 @@ public class TerrainDataLoader : MonoBehaviour
         {
             Debug.Log("No level data found at " + path);
             CreateTerrain();
-            
         }
 
-        uiManager.InstantiateTerrain();
+        loadPanel.SetActive(false);
+        gridManager.LoadPalette();
+        gridManager.CreateGrid();
         gridManager.StartGridMode();
     }
 
@@ -97,7 +96,7 @@ public class TerrainDataLoader : MonoBehaviour
 
         // 카메라에 Confiner 설정
         // CinemachineConfiner 등의 컴포넌트 추가 및 설정
-        
+
     }
 
     void CreateTerrain() {
