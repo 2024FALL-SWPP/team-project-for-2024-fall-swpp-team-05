@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class GridManager : MonoBehaviour
 {
@@ -143,6 +144,10 @@ public class GridManager : MonoBehaviour
         // 마우스 좌클릭 드래그로 배치 범위 선택 및 오브젝트 배치
         if (Input.GetMouseButtonDown(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
             // 드래그 시작 지점 저장
             Debug.Log("Mouse Down");
             dragStartWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -cameraPosZ));
@@ -151,6 +156,10 @@ public class GridManager : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
             // 드래그 중인 범위 내에 있는 cell 표시
             Vector3 currentWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -cameraPosZ));
             Vector3 minWorldPos = new Vector3(Mathf.Min(dragStartWorldPos.x, currentWorldPos.x), Mathf.Min(dragStartWorldPos.y, currentWorldPos.y), 0);
@@ -179,6 +188,10 @@ public class GridManager : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
             Debug.Log("Mouse Up");
             // 드래그 종료 지점 저장
             dragEndWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -cameraPosZ));
@@ -189,10 +202,19 @@ public class GridManager : MonoBehaviour
         // 마우스 우클릭 드래그로 카메라 이동
         if (Input.GetMouseButton(1))
         {
-            float moveSpeed = 0.1f;
+            float moveSpeed = 0.5f;
             float h = -Input.GetAxis("Mouse X") * moveSpeed;
             float v = -Input.GetAxis("Mouse Y") * moveSpeed;
             mainCamera.transform.Translate(new Vector3(h, v, 0));
+
+            Vector3 cameraPos = mainCamera.transform.position;
+            float halfGridWidth = gridSize.x / 3f;
+            float halfGridHeight = gridSize.y / 3f;
+
+            cameraPos.x = Mathf.Clamp(cameraPos.x, -halfGridWidth, halfGridWidth);
+            cameraPos.y = Mathf.Clamp(cameraPos.y, -halfGridHeight, halfGridHeight);
+
+            mainCamera.transform.position = cameraPos;
         }
     }
 
