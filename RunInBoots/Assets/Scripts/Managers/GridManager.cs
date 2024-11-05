@@ -196,15 +196,7 @@ public class GridManager : MonoBehaviour
 
         
     }
-
-    SerializableVector2Int WorldToGrid(Vector3 worldPos)
-    {
-        // 월드 좌표를 그리드 좌표로 변환
-        int x = Mathf.RoundToInt(worldPos.x + gridSize.x / 2 - 0.5f);
-        int y = Mathf.RoundToInt(worldPos.y + gridSize.y / 2 - 0.5f);
-        return new SerializableVector2Int(x, y);
-    }
-
+    
     void HandleMouseInput()
     {
         // 마우스 좌클릭 드래그로 배치 범위 선택 및 오브젝트 배치
