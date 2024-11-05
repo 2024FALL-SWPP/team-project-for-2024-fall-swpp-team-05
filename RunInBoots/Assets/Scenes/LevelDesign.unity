@@ -2330,6 +2330,11 @@ MonoBehaviour:
   gridSizeYInputField: {fileID: 192509534}
   dragStartWorldPos: {x: 0, y: 0, z: 0}
   dragEndWorldPos: {x: 0, y: 0, z: 0}
+  planePosOffset: {x: 0, y: 0}
+  delayTime: 1
+  numGrids: 0
+  nonSelectedMaterial: {fileID: 0}
+  selectedMaterial: {fileID: 0}
   cameraPosZ: -10
 --- !u!1 &1258037421
 GameObject:
@@ -3879,6 +3884,8 @@ MonoBehaviour:
       y: 0
     objectPositions:
       objPos: []
+    pipeConnections:
+      pipeList: []
 --- !u!1 &1803291804
 GameObject:
   m_ObjectHideFlags: 0
