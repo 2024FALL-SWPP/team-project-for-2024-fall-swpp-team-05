@@ -4,7 +4,6 @@ using System.Collections;
 using System;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using System.Collections;
 using TMPro;
 using UnityEngine.EventSystems;
 
@@ -45,6 +44,7 @@ public class GridManager : MonoBehaviour
 
     // 배치된 오브젝트들
     private Dictionary<SerializableVector2Int, GameObject> placedObjects = new Dictionary<SerializableVector2Int, GameObject>();
+    private List<List<GameObject>> placedSpheres = new List<List<GameObject>>();
     public float cameraPosZ = -10.0f;
 
     void Start()
@@ -85,9 +85,13 @@ public class GridManager : MonoBehaviour
 
         gridPlane.GetComponent<Renderer>().material.color = Color.white;
 
+        // initialize placedSpheres
+        placedSpheres = new List<List<GameObject>>();
+
         // 각 cell의 중심 좌표에 sphere 생성
         for (int x = 0; x < gridSize.x; x++)
         {
+            placedSpheres.Add(new List<GameObject>());
             for (int y = 0; y < gridSize.y; y++)
             {
                 // gridPlane의 중심을 기준으로 x, y만큼 이동한 위치 계산
@@ -95,8 +99,10 @@ public class GridManager : MonoBehaviour
                 string cellName = "Cell_" + x + "_" + y;
                 // in case scaling up grid size
                 // if cell already exists, skip creating new cell
-                if (GameObject.Find(cellName) != null)
+                GameObject cell = GameObject.Find(cellName);
+                if (cell != null)
                 {
+                    placedSpheres[x].Add(cell);
                     continue;
                 }
                 GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -105,8 +111,12 @@ public class GridManager : MonoBehaviour
                 sphere.transform.position = cellCenter;
                 sphere.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 sphere.GetComponent<MeshRenderer>().material = nonSelectedMaterial;
+                placedSpheres[x].Add(sphere);
             }
         }
+
+        // print placedSpheres size
+        Debug.Log("placedSpheres size: " + placedSpheres.Count + " x " + placedSpheres[0].Count);
 
         // remove all objects/cells outside of current gridSize
         List<SerializableVector2Int> keysToRemove = new List<SerializableVector2Int>();
@@ -239,13 +249,13 @@ public class GridManager : MonoBehaviour
                 {
                     if (x >= minGridPos.x && x <= maxGridPos.x && y >= minGridPos.y && y <= maxGridPos.y)
                     {
-                        GameObject sphere = GameObject.Find("Cell_" + x + "_" + y);
-                        sphere.GetComponent<Renderer>().material.color = Color.red;
+                        GameObject sphere = placedSpheres[x][y];
+                        sphere.GetComponent<MeshRenderer>().material = selectedMaterial;
                     }
                     else
                     {
-                        GameObject sphere = GameObject.Find("Cell_" + x + "_" + y);
-                        sphere.GetComponent<Renderer>().material.color = Color.black;
+                        GameObject sphere = placedSpheres[x][y];
+                        sphere.GetComponent<MeshRenderer>().material = nonSelectedMaterial;
                     }
                 }
             }
