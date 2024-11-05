@@ -101,7 +101,7 @@ public class TerrainDataLoader : MonoBehaviour
 
     void CreateTerrain() {
         terrainData = new TerrainData();
-        terrainData.gridSize = new SerializableVector2Int(10, 10);
+        terrainData.gridSize = new SerializableVector2Int(20, 10);
         Debug.Log($"New terrain data created for {fileName}");
         gridManager.CreateGrid();
     }

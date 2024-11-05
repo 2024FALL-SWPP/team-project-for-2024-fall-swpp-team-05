@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
@@ -44,9 +46,6 @@ public class GridManager : MonoBehaviour
     void Start()
     {
         terrainDataLoader = GameObject.FindObjectOfType<TerrainDataLoader>();
-        // 그리드 생성
-        //CreateGrid();
-
         palleteScroll.SetActive(false);
         gridControllPanel.SetActive(false);
     }
@@ -159,6 +158,10 @@ public class GridManager : MonoBehaviour
                 {
                     selectedPrefabName = prefab.name;
                 }
+                if (!isOn)
+                {
+                    selectedPrefabName = null;
+                }
             });
         }
     }
@@ -169,6 +172,9 @@ public class GridManager : MonoBehaviour
         gridSizeY = int.Parse(gridSizeYInputField.GetComponentInChildren<TMP_InputField>().text);
         
         terrainDataLoader.terrainData.gridSize = new SerializableVector2Int(gridSizeX, gridSizeY);
+        gridSize.x = gridSizeX;
+        gridSize.y = gridSizeY;
+        CreateGrid();
 
         Debug.Log($"Grid size set to: {terrainDataLoader.terrainData.gridSize.x} x {terrainDataLoader.terrainData.gridSize.y}");
     }
@@ -185,16 +191,9 @@ public class GridManager : MonoBehaviour
 
         if (elapsedTime >= delayTime && isGridMode && gridSize.x > 0 && gridSize.y > 0)
         {
-            // keep tracking numGrids for scaling grid size
-            if (numGrids != gridSize.x * gridSize.y)
-            {
-                CreateGrid();
-            }
             numGrids = gridSize.x * gridSize.y;
             HandleMouseInput();
         }
-
-        
     }
     
     void HandleMouseInput()
@@ -266,11 +265,11 @@ public class GridManager : MonoBehaviour
             mainCamera.transform.Translate(new Vector3(h, v, 0));
 
             Vector3 cameraPos = mainCamera.transform.position;
-            float halfGridWidth = gridSize.x / 3f;
-            float halfGridHeight = gridSize.y / 3f;
+            float halfGridWidth = gridSize.x / 2f;      //-8.0f
+            float halfGridHeight = gridSize.y / 2f;
 
-            cameraPos.x = Mathf.Clamp(cameraPos.x, -halfGridWidth, halfGridWidth);
-            cameraPos.y = Mathf.Clamp(cameraPos.y, -halfGridHeight, halfGridHeight);
+            cameraPos.x = Mathf.Clamp(cameraPos.x, planePosOffset.x - halfGridWidth, planePosOffset.x + halfGridWidth);
+            cameraPos.y = Mathf.Clamp(cameraPos.y, planePosOffset.y - halfGridHeight, planePosOffset.y + halfGridHeight);
 
             mainCamera.transform.position = cameraPos;
         }
@@ -318,8 +317,31 @@ public class GridManager : MonoBehaviour
             objectPosition.positions = entry.Value;
             terrainDataLoader.terrainData.objectPositions.objPos.Add(objectPosition);
         }
+        SavePipeData();
     }
     
+    public void SavePipeData()
+    {
+        // save pipe data to terrainDataLoader
+        Debug.Log("Save pipe data");
+        terrainDataLoader.terrainData.pipeConnections.pipeList.Clear();
+
+        foreach (var entry in placedObjects)
+        {
+            if (entry.Value.GetComponent<Pipe>() != null)
+            {
+                Pipe pipe = entry.Value.GetComponent<Pipe>();
+                int pipeID = pipe.pipeID;
+                int targetPipeID = pipe.targetPipeID;
+                PipeData pipeData = new PipeData();
+                pipeData.targetTerrainIndex = pipe.targetTerrainIndex;
+                pipeData.targetPipeID = targetPipeID;
+                pipeData.pipeID = pipeID;
+                terrainDataLoader.terrainData.pipeConnections.pipeList.Add(pipeData);
+            }
+        }
+    }
+
     public void LoadGridData()
     {
         // load grid data from terrainDataLoader
@@ -360,7 +382,7 @@ public class GridManager : MonoBehaviour
                 SerializableVector2Int gridPos = new SerializableVector2Int(x, y);
 
                 // erase object if selectedPrefabName is empty
-                if (selectedPrefabName != "" || selectedPrefabName != null)
+                if (selectedPrefabName != "" && selectedPrefabName != null)
                 {
                     if (placedObjects.ContainsKey(gridPos))
                     {

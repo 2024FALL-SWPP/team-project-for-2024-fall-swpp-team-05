@@ -39,6 +39,22 @@ public class ObjPosList
     public List<ObjectPosition> objPos = new List<ObjectPosition>();
 }
 
+[Serializable]
+public class PipeData
+{
+    public string targetTerrainIndex;
+    public int pipeID;
+    public int targetPipeID;
+}
+
+
+[Serializable]
+public class PipeList
+{
+    public List<PipeData> pipeList = new List<PipeData>();
+}
+
+
 [System.Serializable]
 public class TerrainData
 {
@@ -46,5 +62,5 @@ public class TerrainData
     public string terrainIndex;
     public SerializableVector2Int gridSize;
     public ObjPosList objectPositions = new ObjPosList();
-    public List<Tuple<int, int>> pipeConnections = new List<Tuple<int, int>>();
+    public PipeList pipeConnections = new PipeList();
 }
