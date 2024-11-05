@@ -29,6 +29,14 @@ public class GridManager : MonoBehaviour
     private string selectedPrefabName = null;
     bool isGridMode = false;
 
+    public Vector2 planePosOffset = new Vector2(0, 0);
+
+    public float delayTime = 1f;
+
+    public int numGrids = 0;
+
+    private float startTime;
+
     // 배치된 오브젝트들
     private Dictionary<SerializableVector2Int, GameObject> placedObjects = new Dictionary<SerializableVector2Int, GameObject>();
     public float cameraPosZ = -10.0f;
@@ -47,12 +55,22 @@ public class GridManager : MonoBehaviour
     {
 
         terrainDataLoader = GameObject.FindObjectOfType<TerrainDataLoader>();
-        gridSize = terrainDataLoader.terrainData.gridSize;
-        Debug.Log("Grid size: " + gridSize.x + ", " + gridSize.y);
+        if (gridSize.x == 0 || gridSize.y == 0) {
+            gridSize = terrainDataLoader.terrainData.gridSize;
+            Debug.Log("Grid size: " + gridSize.x + ", " + gridSize.y);
+        }
         // 그리드 크기를 기반으로 Plane 생성 또는 Gizmos로 그리드 그리기
         // Plane의 크기를 gridSize에 맞게 조절
+        // if old plane already exists, remove it
+        if (gridPlane != null)
+        {
+            Destroy(gridPlane);
+        }
         gridPlane = GameObject.CreatePrimitive(PrimitiveType.Plane);
-        gridPlane.transform.position = new Vector3(0, 0, 0);
+        planePosOffset.x = gridSize.x / 2 - 10; // TODO: Full HD
+        planePosOffset.y = gridSize.y / 2 - 5; // TODO: Full HD
+
+        gridPlane.transform.position = new Vector3(planePosOffset.x, planePosOffset.y, 0);
         // rotation을 90도로 설정하여 Plane이 수평으로 생성되도록 함
         gridPlane.transform.rotation = Quaternion.Euler(90, 0, 0);
         gridPlane.transform.localScale = new Vector3(gridSize.x, 1, gridSize.y);
@@ -66,13 +84,52 @@ public class GridManager : MonoBehaviour
             {
                 // gridPlane의 중심을 기준으로 x, y만큼 이동한 위치 계산
                 Vector3 cellCenter = gridPlane.transform.position + new Vector3(x - gridSize.x / 2 + 0.5f, y - gridSize.y / 2 + 0.5f, 0);
+                string cellName = "Cell_" + x + "_" + y;
+                // in case scaling up grid size
+                // if cell already exists, skip creating new cell
+                if (GameObject.Find(cellName) != null)
+                {
+                    continue;
+                }
                 GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                sphere.name = "Cell_" + x + "_" + y;
+                sphere.name = cellName;
+                sphere.tag = "Cell";
                 sphere.transform.position = cellCenter;
                 sphere.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 sphere.GetComponent<Renderer>().material.color = Color.black;
             }
         }
+
+        // remove all objects/cells outside of current gridSize
+        List<SerializableVector2Int> keysToRemove = new List<SerializableVector2Int>();
+        foreach (var entry in placedObjects)
+        {
+            SerializableVector2Int gridPos = entry.Key;
+            if (gridPos.x < 0 || gridPos.x >= gridSize.x || gridPos.y < 0 || gridPos.y >= gridSize.y)
+            {
+                Destroy(entry.Value);
+                keysToRemove.Add(gridPos);
+            }
+        }
+
+        foreach (var key in keysToRemove)
+        {
+            placedObjects.Remove(key);
+        }
+        
+        // remove all spheres outside of current gridSize
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("Cell");
+        foreach (GameObject obj in objects)
+        {
+            string[] cellName = obj.name.Split('_');
+            int x = int.Parse(cellName[1]);
+            int y = int.Parse(cellName[2]);
+            if (x < 0 || x >= gridSize.x || y < 0 || y >= gridSize.y)
+            {
+                Destroy(obj);
+            }
+        }
+        
     }
 
     void OnDrawGizmos()
@@ -118,17 +175,26 @@ public class GridManager : MonoBehaviour
 
     public void StartGridMode()
     {
-        // 그리드 모드 시작
-        // 팔레트 활성화
         isGridMode = true;
+        startTime = Time.time;
     }
 
     void Update()
     {
-        if (isGridMode && gridSize.x > 0 && gridSize.y > 0)
+        float elapsedTime = Time.time - startTime;
+
+        if (elapsedTime >= delayTime && isGridMode && gridSize.x > 0 && gridSize.y > 0)
         {
+            // keep tracking numGrids for scaling grid size
+            if (numGrids != gridSize.x * gridSize.y)
+            {
+                CreateGrid();
+            }
+            numGrids = gridSize.x * gridSize.y;
             HandleMouseInput();
         }
+
+        
     }
 
     SerializableVector2Int WorldToGrid(Vector3 worldPos)
@@ -218,12 +284,19 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    SerializableVector2Int WorldToGrid(Vector3 worldPos)
+    {
+        // 월드 좌표를 그리드 좌표로 변환
+        int x = Mathf.RoundToInt(worldPos.x - planePosOffset.x + gridSize.x / 2 - 0.5f);
+        int y = Mathf.RoundToInt(worldPos.y - planePosOffset.y + gridSize.y / 2 - 0.5f);
+        return new SerializableVector2Int(x, y);
+    }
 
     Vector3 GridToWorld(SerializableVector2Int gridPos)
     {
         // 그리드 좌표를 월드 좌표로 변환
-        float x = gridPos.x - gridSize.x / 2 + 0.5f;
-        float y = gridPos.y - gridSize.y / 2 + 0.5f;
+        float x = gridPos.x + planePosOffset.x - gridSize.x / 2 + 0.5f;
+        float y = gridPos.y + planePosOffset.y - gridSize.y / 2 + 0.5f;
         return new Vector3(x, y, 0);
     }
 
@@ -232,6 +305,7 @@ public class GridManager : MonoBehaviour
         // save grid data to terrainDataLoader
         Debug.Log("Save grid data");
         terrainDataLoader.terrainData.objectPositions = new ObjPosList();
+        terrainDataLoader.terrainData.gridSize = gridSize;
 
         Dictionary<string, List<Vector3>> objectPositionsDict = new Dictionary<string, List<Vector3>>();
         foreach (var entry in placedObjects)
@@ -253,8 +327,27 @@ public class GridManager : MonoBehaviour
             terrainDataLoader.terrainData.objectPositions.objPos.Add(objectPosition);
         }
     }
-
-
+    
+    public void LoadGridData()
+    {
+        // load grid data from terrainDataLoader
+        Debug.Log("Load grid data");
+        placedObjects.Clear();
+        foreach (var entry in terrainDataLoader.terrainData.objectPositions.objPos)
+        {
+            string prefabName = entry.name;
+            List<Vector3> positions = entry.positions;
+            GameObject prefab = Resources.Load<GameObject>("LevelObject/" + prefabName);
+            foreach (Vector3 pos in positions)
+            {
+                SerializableVector2Int gridPos = WorldToGrid(pos);
+                GameObject obj = Instantiate(prefab, pos, Quaternion.identity);
+                Debug.Log("Placing object at " + gridPos.x + ", " + gridPos.y);
+                placedObjects.Add(gridPos, obj);
+            }
+        }
+    }
+    
     void PlaceObjectsInRange()
     {
         // 드래그된 범위 내의 그리드 좌표 계산
@@ -273,13 +366,17 @@ public class GridManager : MonoBehaviour
             for (int y = minGridPos.y; y <= maxGridPos.y; y++)
             {
                 SerializableVector2Int gridPos = new SerializableVector2Int(x, y);
-                if (placedObjects.ContainsKey(gridPos))
-                {
-                    continue;
-                }
 
-                if (selectedPrefabName != null)
+                // erase object if selectedPrefabName is empty
+                if (selectedPrefabName != "" || selectedPrefabName != null)
                 {
+                    if (placedObjects.ContainsKey(gridPos))
+                    {
+                        Debug.Log("Already placed object at " + x + ", " + y);
+                        Debug.Log("minGridPos: " + minGridPos.x + ", " + minGridPos.y);
+                        Debug.Log("maxGridPos: " + maxGridPos.x + ", " + maxGridPos.y);
+                        continue;
+                    }
                     // grid bounds 내에 있는지 확인
                     if (x < 0 || x >= gridSize.x || y < 0 || y >= gridSize.y)
                     {
