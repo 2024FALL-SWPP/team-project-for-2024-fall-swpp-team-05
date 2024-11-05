@@ -37,6 +37,8 @@ public class GridManager : MonoBehaviour
 
     public int numGrids = 0;
 
+    public Material nonSelectedMaterial, selectedMaterial;
+
     private float startTime;
 
     // 배치된 오브젝트들
@@ -51,6 +53,11 @@ public class GridManager : MonoBehaviour
 
         palleteScroll.SetActive(false);
         gridControllPanel.SetActive(false);
+
+        nonSelectedMaterial = Resources.Load<Material>("Materials/NonSelectedMaterial");
+        selectedMaterial = Resources.Load<Material>("Materials/SelectedMaterial");
+        nonSelectedMaterial.color = Color.black;
+        selectedMaterial.color = Color.red;
     }
 
     public void CreateGrid()
@@ -98,7 +105,7 @@ public class GridManager : MonoBehaviour
                 sphere.tag = "Cell";
                 sphere.transform.position = cellCenter;
                 sphere.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                sphere.GetComponent<Renderer>().material.color = Color.black;
+                sphere.GetComponent<MeshRenderer>().material = nonSelectedMaterial;
             }
         }
 
@@ -171,6 +178,8 @@ public class GridManager : MonoBehaviour
         gridSizeY = int.Parse(gridSizeYInputField.GetComponentInChildren<TMP_InputField>().text);
         
         terrainDataLoader.terrainData.gridSize = new SerializableVector2Int(gridSizeX, gridSizeY);
+        gridSize.x = gridSizeX;
+        gridSize.y = gridSizeY;
 
         Debug.Log($"Grid size set to: {terrainDataLoader.terrainData.gridSize.x} x {terrainDataLoader.terrainData.gridSize.y}");
     }
