@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using System;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 using TMPro;
 using UnityEngine.EventSystems;
 
@@ -37,6 +39,8 @@ public class GridManager : MonoBehaviour
 
     public int numGrids = 0;
 
+    public Material nonSelectedMaterial, selectedMaterial;
+
     private float startTime;
 
     // 배치된 오브젝트들
@@ -48,6 +52,11 @@ public class GridManager : MonoBehaviour
         terrainDataLoader = GameObject.FindObjectOfType<TerrainDataLoader>();
         palleteScroll.SetActive(false);
         gridControllPanel.SetActive(false);
+
+        nonSelectedMaterial = Resources.Load<Material>("Materials/NonSelectedMaterial");
+        selectedMaterial = Resources.Load<Material>("Materials/SelectedMaterial");
+        nonSelectedMaterial.color = Color.black;
+        selectedMaterial.color = Color.red;
     }
 
     public void CreateGrid()
@@ -95,7 +104,7 @@ public class GridManager : MonoBehaviour
                 sphere.tag = "Cell";
                 sphere.transform.position = cellCenter;
                 sphere.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                sphere.GetComponent<Renderer>().material.color = Color.black;
+                sphere.GetComponent<MeshRenderer>().material = nonSelectedMaterial;
             }
         }
 
@@ -175,7 +184,6 @@ public class GridManager : MonoBehaviour
         gridSize.x = gridSizeX;
         gridSize.y = gridSizeY;
         CreateGrid();
-
         Debug.Log($"Grid size set to: {terrainDataLoader.terrainData.gridSize.x} x {terrainDataLoader.terrainData.gridSize.y}");
     }
 
@@ -317,9 +325,10 @@ public class GridManager : MonoBehaviour
             objectPosition.positions = entry.Value;
             terrainDataLoader.terrainData.objectPositions.objPos.Add(objectPosition);
         }
+
         SavePipeData();
     }
-    
+
     public void SavePipeData()
     {
         // save pipe data to terrainDataLoader
