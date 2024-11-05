@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 
 public class GridManager : MonoBehaviour
 {
@@ -260,6 +262,30 @@ public class GridManager : MonoBehaviour
             objectPosition.name = entry.Key;
             objectPosition.positions = entry.Value;
             terrainDataLoader.terrainData.objectPositions.objPos.Add(objectPosition);
+        }
+
+        SavePipeData();
+    }
+
+    public void SavePipeData()
+    {
+        // save pipe data to terrainDataLoader
+        Debug.Log("Save pipe data");
+        terrainDataLoader.terrainData.pipeConnections.pipeList.Clear();
+
+        foreach (var entry in placedObjects)
+        {
+            if (entry.Value.GetComponent<Pipe>() != null)
+            {
+                Pipe pipe = entry.Value.GetComponent<Pipe>();
+                int pipeID = pipe.pipeID;
+                int targetPipeID = pipe.targetPipeID;
+                PipeData pipeData = new PipeData();
+                pipeData.targetTerrainIndex = pipe.targetTerrainIndex;
+                pipeData.targetPipeID = targetPipeID;
+                pipeData.pipeID = pipeID;
+                terrainDataLoader.terrainData.pipeConnections.pipeList.Add(pipeData);
+            }
         }
     }
 
