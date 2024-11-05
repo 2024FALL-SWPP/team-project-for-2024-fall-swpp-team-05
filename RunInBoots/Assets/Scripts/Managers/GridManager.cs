@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
+using TMPro;
+using UnityEngine.EventSystems;
 
 public class GridManager : MonoBehaviour
 {
@@ -15,11 +17,18 @@ public class GridManager : MonoBehaviour
     public ToggleGroup paletteToggleGroup;
     public Toggle paletteTogglePrefab;
     public RectTransform paletteContent;
-    
+    public GameObject palleteScroll;
+    public GameObject gridControllPanel;
+    public GameObject gridSizeXInputField;
+    public GameObject gridSizeYInputField;
+
+    private int gridSizeX;
+    private int gridSizeY;
+
     public Vector3 dragStartWorldPos, dragEndWorldPos;
 
-    // 현재 선택된 오브젝트 (TODO: 팔레트에서 선택한 오브젝트로 변경)
-    public string selectedPrefabName = "Block";
+    // 현재 선택된 오브젝트
+    private string selectedPrefabName = null;
     bool isGridMode = false;
 
     public Vector2 planePosOffset = new Vector2(0, 0);
@@ -36,12 +45,17 @@ public class GridManager : MonoBehaviour
 
     void Start()
     {
-        // 팔레트 생성
-        // LoadPalette();
+        terrainDataLoader = GameObject.FindObjectOfType<TerrainDataLoader>();
+        // 그리드 생성
+        //CreateGrid();
+
+        palleteScroll.SetActive(false);
+        gridControllPanel.SetActive(false);
     }
 
     public void CreateGrid()
     {
+
         terrainDataLoader = GameObject.FindObjectOfType<TerrainDataLoader>();
         if (gridSize.x == 0 || gridSize.y == 0) {
             gridSize = terrainDataLoader.terrainData.gridSize;
@@ -119,10 +133,21 @@ public class GridManager : MonoBehaviour
         }
         
     }
-        
 
-    void LoadPalette()
+    void OnDrawGizmos()
     {
+        // Draw a colored sphere at the transform's position
+        Gizmos.color = Color.black;
+        //Debug.Log("Drawing gizmos at " + transform.position);
+        Gizmos.DrawSphere(transform.position, 0.1f);
+    }
+
+    public void LoadPalette()
+    {
+        Debug.Log("Load Palette");
+        palleteScroll.SetActive(true);
+        gridControllPanel.SetActive(true);
+
         // Resources/LevelObject 폴더에서 프리팹 목록 로드
         GameObject[] prefabs = Resources.LoadAll<GameObject>("LevelObject");
         foreach (GameObject prefab in prefabs)
@@ -138,6 +163,16 @@ public class GridManager : MonoBehaviour
                 }
             });
         }
+    }
+
+    public void OnSetGridButtonClicked()
+    {
+        gridSizeX = int.Parse(gridSizeXInputField.GetComponentInChildren<TMP_InputField>().text);
+        gridSizeY = int.Parse(gridSizeYInputField.GetComponentInChildren<TMP_InputField>().text);
+        
+        terrainDataLoader.terrainData.gridSize = new SerializableVector2Int(gridSizeX, gridSizeY);
+
+        Debug.Log($"Grid size set to: {terrainDataLoader.terrainData.gridSize.x} x {terrainDataLoader.terrainData.gridSize.y}");
     }
 
     public void StartGridMode()
@@ -163,12 +198,16 @@ public class GridManager : MonoBehaviour
 
         
     }
-
+    
     void HandleMouseInput()
     {
         // 마우스 좌클릭 드래그로 배치 범위 선택 및 오브젝트 배치
         if (Input.GetMouseButtonDown(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
             // 드래그 시작 지점 저장
             Debug.Log("Mouse Down");
             dragStartWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -cameraPosZ));
@@ -177,6 +216,10 @@ public class GridManager : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
             // 드래그 중인 범위 내에 있는 cell 표시
             Vector3 currentWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -cameraPosZ));
             Vector3 minWorldPos = new Vector3(Mathf.Min(dragStartWorldPos.x, currentWorldPos.x), Mathf.Min(dragStartWorldPos.y, currentWorldPos.y), 0);
@@ -194,7 +237,8 @@ public class GridManager : MonoBehaviour
                         GameObject sphere = GameObject.Find("Cell_" + x + "_" + y);
                         sphere.GetComponent<Renderer>().material.color = Color.red;
                     }
-                    else {
+                    else
+                    {
                         GameObject sphere = GameObject.Find("Cell_" + x + "_" + y);
                         sphere.GetComponent<Renderer>().material.color = Color.black;
                     }
@@ -204,6 +248,10 @@ public class GridManager : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
             Debug.Log("Mouse Up");
             // 드래그 종료 지점 저장
             dragEndWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -cameraPosZ));
@@ -214,10 +262,19 @@ public class GridManager : MonoBehaviour
         // 마우스 우클릭 드래그로 카메라 이동
         if (Input.GetMouseButton(1))
         {
-            float moveSpeed = 0.1f;
+            float moveSpeed = 0.5f;
             float h = -Input.GetAxis("Mouse X") * moveSpeed;
             float v = -Input.GetAxis("Mouse Y") * moveSpeed;
             mainCamera.transform.Translate(new Vector3(h, v, 0));
+
+            Vector3 cameraPos = mainCamera.transform.position;
+            float halfGridWidth = gridSize.x / 3f;
+            float halfGridHeight = gridSize.y / 3f;
+
+            cameraPos.x = Mathf.Clamp(cameraPos.x, -halfGridWidth, halfGridWidth);
+            cameraPos.y = Mathf.Clamp(cameraPos.y, -halfGridHeight, halfGridHeight);
+
+            mainCamera.transform.position = cameraPos;
         }
     }
 
@@ -288,7 +345,7 @@ public class GridManager : MonoBehaviour
             }
         }
     }
-
+    
     public void LoadGridData()
     {
         // load grid data from terrainDataLoader
@@ -308,7 +365,7 @@ public class GridManager : MonoBehaviour
             }
         }
     }
-
+    
     void PlaceObjectsInRange()
     {
         // 드래그된 범위 내의 그리드 좌표 계산
