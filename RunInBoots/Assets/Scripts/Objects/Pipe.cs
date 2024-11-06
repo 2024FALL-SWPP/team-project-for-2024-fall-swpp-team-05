@@ -20,7 +20,7 @@ public class Pipe : MonoBehaviour
         if (targetTerrainIndex != TerrainDataLoader.Instance.terrainData.terrainIndex)
         {
             // 다른 지형으로 이동
-            SceneLoadManager.Instance.LoadScene("Stage_" + TerrainDataLoader.Instance.terrainData.stage + "_" + targetTerrainIndex);
+            SceneLoadManager_old.Instance.LoadScene("Stage_" + TerrainDataLoader.Instance.terrainData.stage + "_" + targetTerrainIndex);
         }
         else
         {

@@ -1,39 +1,32 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
-using Cinemachine;
 
-
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSingleton<GameManager>
 {
-    public static GameManager Instance;
-    public GameObject playerPrefab;
-    private GameObject playerInstance;
-
-    void Awake()
+    private IGameState _currentState;
+    // Start is called before the first frame update
+    void Start()
     {
-        if (Instance == null)
+        _currentState = new StageState();
+        _currentState.Start();
+    }
+
+    // Update is called once per frame  
+    void Update()
+    {
+        if (_currentState != null && _currentState.IsStarted)
         {
-            Instance = this;
-            // 씬 전환 시 파괴되지 않도록 설정
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
+            _currentState.Update();
         }
     }
 
-    public void SpawnPlayer(Vector3 position)
+    public void GameOver()
     {
-        if (playerInstance != null)
+        if (_currentState != null)
         {
-            Destroy(playerInstance);
-        }
-        playerInstance = Instantiate(playerPrefab, position, Quaternion.identity);
-        // 카메라의 Follow 타겟 설정
-        Cinemachine.CinemachineVirtualCamera vcam = FindObjectOfType<Cinemachine.CinemachineVirtualCamera>();
-        if (vcam != null)
-        {
-            vcam.Follow = playerInstance.transform;
+            _currentState.Exit();
         }
     }
 }

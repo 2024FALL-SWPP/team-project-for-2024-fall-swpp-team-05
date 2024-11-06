@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Goal : MonoBehaviour
+public class Goal_old : MonoBehaviour
 {
     public UnityEvent onInteract;
 
@@ -19,7 +19,7 @@ public class Goal : MonoBehaviour
         // 씬이 존재하는지 확인
         if (Application.CanStreamedLevelBeLoaded(nextSceneName))
         {
-            SceneLoadManager.Instance.LoadScene(nextSceneName);
+            SceneLoadManager_old.Instance.LoadScene(nextSceneName);
         }
         else
         {
