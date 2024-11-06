@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe88e032f73dec24f97143978d3853ee, type: 3}
+  m_Name: ActionTable
+  m_EditorClassIdentifier: 
+  Actions:
+  - Key: 101
+    Clip: cat_idle
+    ColliderX: 0.8
+    ColliderY: 1.6
+    TransitionDuration: 0.2
+    GravityScale: 1
+    MaxVelocityX: 3
+    MaxVelocityY: 3
+    NextAction: 0
+    FrameUpdates: '[{InputX,1,SetAction,102},{InputY,-1,SetAction,103},{JumpValid,1,SetAction,104},{Attack,1,SetAction,106}]'
+  - Key: 102
+    Clip: cat_move
+    ColliderX: 0.8
+    ColliderY: 1.6
+    TransitionDuration: 0.2
+    GravityScale: 1
+    MaxVelocityX: 3
+    MaxVelocityY: 3
+    NextAction: 0
+    FrameUpdates: '[{InputX,1,MoveInputX,1},{InputX,0,SetAction,101}]'
+  - Key: 103
+    Clip: cat_crouch
+    ColliderX: 0.8
+    ColliderY: 0.8
+    TransitionDuration: 0.2
+    GravityScale: 1
+    MaxVelocityX: 3
+    MaxVelocityY: 3
+    NextAction: 0
+    FrameUpdates: '[{Risable,1,SetAction,101}]'
+  - Key: 104
+    Clip: cat_jump
+    ColliderX: 0.8
+    ColliderY: 1.6
+    TransitionDuration: 0.2
+    GravityScale: 1
+    MaxVelocityX: 3
+    MaxVelocityY: 3
+    NextAction: 0
+    FrameUpdates: '[{InputX,1,MoveInputX,1},{Jump,1,MoveY,3},{OnLand,1,SetAction,101},{Frame,20,SetAction,105}]'
+  - Key: 105
+    Clip: cat_jump
+    ColliderX: 0.8
+    ColliderY: 1.6
+    TransitionDuration: 0.2
+    GravityScale: 1
+    MaxVelocityX: 3
+    MaxVelocityY: 3
+    NextAction: 0
+    FrameUpdates: '[{InputX,1,MoveInputX,1},{OnLand,1,SetAction,101}]'
+  - Key: 106
+    Clip: cat_attack
+    ColliderX: 0.8
+    ColliderY: 1.6
+    TransitionDuration: 0.2
+    GravityScale: 1
+    MaxVelocityX: 3
+    MaxVelocityY: 3
+    NextAction: 101
+    FrameUpdates: '[{Frame,5,Spawn,10100001}]'
