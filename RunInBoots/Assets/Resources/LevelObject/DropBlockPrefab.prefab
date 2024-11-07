@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1741226825905310436}
   - component: {fileID: 4009987420832789122}
   - component: {fileID: 1944230447481155310}
+  - component: {fileID: -4621103393962298859}
   - component: {fileID: -7490545218634347385}
   - component: {fileID: -1436212380307713193}
   m_Layer: 0
@@ -99,6 +100,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &-4621103393962298859
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3186531326411940127}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-7490545218634347385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38321b4c8be9b4abfab1e90afedc50cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallSpeed: 5
+  fallSpeed: 15
   fallDelay: 2
   resetTimeOutsideView: 3
 --- !u!54 &-1436212380307713193

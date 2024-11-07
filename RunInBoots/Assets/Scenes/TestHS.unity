@@ -478,7 +478,7 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
---- !u!1001 &1628570781
+--- !u!1001 &1554747367
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -488,6 +488,11 @@ PrefabInstance:
     - target: {fileID: 579227948677741591, guid: 580ef257c013a4697923beaf86dcc81a,
         type: 3}
       propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 579227948677741591, guid: 580ef257c013a4697923beaf86dcc81a,
+        type: 3}
+      propertyPath: m_LocalScale.x
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 579227948677741591, guid: 580ef257c013a4697923beaf86dcc81a,

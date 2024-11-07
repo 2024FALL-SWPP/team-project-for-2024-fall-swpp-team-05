@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class DropBlockManager : MonoBehaviour
 {
-    public float fallSpeed = 5.0f;               // 낙하 속도
-    public float fallDelay = 2.0f;               // 낙하 시작 대기 시간
+    public float fallSpeed = 10.0f;               // 낙하 속도
+    public float fallDelay = 0.5f;               // 낙하 시작 대기 시간
     public float resetTimeOutsideView = 3.0f;    // 화면 밖에서 대기 후 초기화 시간
 
     private Vector3 startPosition;               // 초기 위치 저장
     private bool isFalling = false;              // 현재 낙하 중인지 여부
     private float timeOutsideView = 0.0f;        // 화면 밖에 머문 시간
     private bool playerOnTop = false;            // 플레이어가 블록 위에 있는지 여부
-    private Rigidbody playerRigidbody;           // 플레이어의 Rigidbody 참조
 
-    private Collider blockCollider;              // 블록의 3D Collider
+    private Collider blockPhysicalCollider, blockTriggerCollider; // 블록의 3D Collider
 
     // Start is called before the first frame update
     void Start()
@@ -26,18 +25,22 @@ public class DropBlockManager : MonoBehaviour
         // 처음 위치 저장
         startPosition = transform.position;
 
-        // Collider 가져오기
-        blockCollider = GetComponent<Collider>();
+        // 모든 Collider를 가져옵니다.
+        Collider[] colliders = GetComponents<Collider>();
+        blockPhysicalCollider = colliders[0];
+        blockTriggerCollider = colliders[1];
+
+        blockPhysicalCollider.isTrigger = false;
+        blockTriggerCollider.isTrigger = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isFalling && playerRigidbody != null)
+        if (isFalling)
         {
-            // 플레이어와 같은 속도로 낙하
-            Vector3 fallVelocity = new Vector3(0, playerRigidbody.velocity.y, 0);
-            transform.position += fallVelocity * Time.deltaTime;
+            // 블록 낙하
+            transform.position += Vector3.down * fallSpeed * Time.deltaTime;
 
             // 화면 밖에서 일정 시간 동안 머물면 초기 위치로 복귀
             if (!IsVisibleToCamera())
@@ -55,23 +58,28 @@ public class DropBlockManager : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         // 플레이어가 블록 위에 있는 경우
-        if (other.collider.CompareTag("Player"))
+        if (other.GetComponent<Collider>().CompareTag("Player"))
         {
-            playerOnTop = true;
-            playerRigidbody = other.collider.GetComponent<Rigidbody>(); // 플레이어의 Rigidbody 참조 저장
-            Invoke("StartFalling", fallDelay);  // 일정 시간 후 낙하 시작
+            // 플레이어의 Y 좌표가 블록의 상단 Y 좌표보다 높은 경우에만 playerOnTop 설정
+            if (other.transform.position.y > transform.position.y) {
+                playerOnTop = true;
+                Debug.Log("Player Stay");
+                blockPhysicalCollider.enabled = true;  // 충돌 활성화
+                Invoke("StartFalling", fallDelay);  // 일정 시간 후 낙하 시작
+            }
         }
     }
 
-    private void OnCollisionExit(Collision other)
+    private void OnTriggerExit(Collider other)
     {
         // 플레이어가 블록에서 내려가면 낙하 취소
-        if (other.collider.CompareTag("Player"))
+        if (other.GetComponent<Collider>().CompareTag("Player"))
         {
             playerOnTop = false;
+            Debug.Log("Player Exit");
             CancelInvoke("StartFalling");
         }
     }
@@ -81,7 +89,7 @@ public class DropBlockManager : MonoBehaviour
         if (playerOnTop && !isFalling)
         {
             isFalling = true;
-            blockCollider.enabled = false;  // 낙하 중 충돌 비활성화
+            blockPhysicalCollider.enabled = false;  // 낙하 중 충돌 비활성화
         }
     }
 
@@ -97,7 +105,6 @@ public class DropBlockManager : MonoBehaviour
         transform.position = startPosition;
         isFalling = false;
         timeOutsideView = 0f;
-        blockCollider.enabled = true;  // 충돌 다시 활성화
-        playerRigidbody = null;        // 플레이어 Rigidbody 참조 초기화
+        blockPhysicalCollider.enabled = false;  // 충돌 다시 활성화
     }
 }
