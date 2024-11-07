@@ -12,7 +12,7 @@ public class LevelLoader : MonoBehaviour
 
     private string fileName;
     private string path;
-    private TerrainData terrainData;
+    public TerrainData terrainData;
 
     private void Start()
     {

@@ -15,7 +15,7 @@ public class TerrainDataLoader : MonoBehaviour
     public TerrainData terrainData;
 
     private string stage;
-    private string terrainIndex;
+    public string terrainIndex;
     private string fileName;
     private string path;
     

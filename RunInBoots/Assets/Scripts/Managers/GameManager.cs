@@ -6,6 +6,9 @@ using UnityEngine;
 public class GameManager : MonoSingleton<GameManager>
 {
     private IGameState _currentState;
+
+    public int enteredPipeID;
+    public bool isComingFromPipe;
     // Start is called before the first frame update
     void Start()
     {
