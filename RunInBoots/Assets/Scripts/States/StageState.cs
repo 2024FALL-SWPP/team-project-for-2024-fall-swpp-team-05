@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Cinemachine;
+using TMPro;
 
 public class StageState : IGameState
 {
@@ -15,7 +16,7 @@ public class StageState : IGameState
 
     private GameObject _player;
     private CinemachineVirtualCamera _virtualCamera;
-    private Text _timerText;
+    private TextMeshProUGUI  _timerText;
 
     private float _gridYLowerBound = -10f;
 
@@ -31,32 +32,43 @@ public class StageState : IGameState
         if(_levelObject != null)
         {
             _levelObject.SetActive(true);
+            Debug.Log("Level Object load");
         }
         else
         {
             Debug.Log("Level Object loading failed");
         }
 
-        _virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
-        if(_virtualCamera != null)
+        _virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>(); if (_virtualCamera != null)
         {
+            Debug.Log("Find virtual camera");
             _player = GameObject.FindWithTag("Player");
 
-            if(_player != null)
+
+            if (_player != null)
             {
                 _virtualCamera.Follow = _player.transform;
                 _virtualCamera.OnTargetObjectWarped(_player.transform, _player.transform.position - _virtualCamera.transform.position);
             }
+            else
+            {
+                Debug.LogWarning("Player를 찾을 수 없습니다.");
+            }
             GameObject timerObject = GameObject.Find("TimerText"); // 타이머 UI 텍스트의 이름이 "TimerText"라고 가정
             if (timerObject != null)
             {
-                _timerText = timerObject.GetComponent<Text>();
+                Debug.Log("Find TimerText");
+                _timerText = timerObject.GetComponent<TextMeshProUGUI>();
                 UpdateTimerUI();
             }
             else
             {
                 Debug.LogWarning("TimerText UI 요소를 찾을 수 없습니다.");
             }
+        }
+        else
+        {
+            Debug.LogWarning("PlayerCamera를 찾을 수 없습니다.");
         }
     }
 
