@@ -18,7 +18,7 @@ public class StageState : IGameState
     private CinemachineVirtualCamera _virtualCamera;
     private TextMeshProUGUI  _timerText;
 
-    private float _gridYLowerBound = -10f;
+    private float _gridYLowerBound = -2.0f;
 
     private GameObject _levelObject;
 
@@ -82,17 +82,14 @@ public class StageState : IGameState
 
         if (_remainingTime <= 0f)
         {
-            // 시간이 0 이하가 되면 게임 오버 처리
             GameOver();
             return;
         }
 
-        // 플레이어 캐릭터의 Y 위치 체크
         if (_player != null)
         {
             if (_player.transform.position.y < _gridYLowerBound)
             {
-                // 플레이어가 낙사했을 경우 게임 오버 처리
                 GameOver();
                 return;
             }
@@ -100,7 +97,7 @@ public class StageState : IGameState
     }
     public void Exit()
     {
-        // (임시) 현재 씬을 다시 로드합니다.
+        // (임시) 현재 씬을 다시 로드
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
     }
@@ -109,7 +106,6 @@ public class StageState : IGameState
     {
         if (_timerText != null)
         {
-            // 타이머 UI 업데이트
             int minutes = Mathf.FloorToInt(_remainingTime / 60f);
             int seconds = Mathf.FloorToInt(_remainingTime % 60f);
             _timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
@@ -119,7 +115,6 @@ public class StageState : IGameState
     private void GameOver()
     {
         _isStarted = false;
-        // 업데이트를 멈추고 게임 오버 처리
         Exit();
     }
 

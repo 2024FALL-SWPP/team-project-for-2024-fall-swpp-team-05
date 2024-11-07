@@ -42,6 +42,8 @@ public class LevelLoader : MonoBehaviour
     {
         Transform parentTransform = this.transform;
 
+        Vector3 minPosition = FindMinPosition();
+
         foreach (var objectPosition in terrainData.objectPositions.objPos)
         {
             // 프리팹 이름
@@ -57,7 +59,8 @@ public class LevelLoader : MonoBehaviour
             // 각 위치에 오브젝트를 생성
             foreach (Vector3 position in objectPosition.positions)
             {
-                Instantiate(prefab, position, Quaternion.identity, parentTransform);
+                Vector3 adjustedPosition = position - minPosition;
+                Instantiate(prefab, adjustedPosition, Quaternion.identity, parentTransform);
                 Debug.Log($"Placing object '{prefabName}' at {position}");
             }
         }
@@ -68,5 +71,19 @@ public class LevelLoader : MonoBehaviour
             Debug.Log($"Pipe ID: {pipeData.pipeID}, Target Terrain Index: {pipeData.targetTerrainIndex}, Target Pipe ID: {pipeData.targetPipeID}");
             // 필요한 경우 파이프에 연결 로직을 추가할 수 있습니다
         }
+    }
+
+    private Vector3 FindMinPosition()
+    {
+        Vector3 minPosition = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+
+        foreach (var objectPosition in terrainData.objectPositions.objPos)
+        {
+            foreach (Vector3 position in objectPosition.positions)
+            {
+                minPosition = Vector3.Min(minPosition, position);
+            }
+        }
+        return minPosition;
     }
 }
