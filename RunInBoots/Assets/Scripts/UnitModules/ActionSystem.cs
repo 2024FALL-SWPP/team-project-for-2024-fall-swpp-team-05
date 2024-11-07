@@ -27,7 +27,8 @@ public class ActionSystem : MonoBehaviour
     void ParseUpdateRules(string updates)
     {
         updates = updates.Substring(2, updates.Length - 4);
-        string[] updateArray = updates.Split('{').Select(x => x.Substring(0, x.Length - 2)).ToArray();
+        updates = updates.Replace("},{", ",");
+        string[] updateArray = updates.Split(',').ToArray();
         frameUpdates = new FrameUpdateRule[updateArray.Length];
         for(int i = 0; i < updateArray.Length; i++)
         {
