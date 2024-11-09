@@ -23,7 +23,9 @@ public class ActionSystem : MonoBehaviour
     private int actionFrames = 0;
 
     private TransformModule transformModule;
+    private BoxCollider coll;
 
+    #region Functions for setting new action
     void ParseUpdateRules(string updates)
     {
         updates = updates.Substring(2, updates.Length - 4);
@@ -54,12 +56,187 @@ public class ActionSystem : MonoBehaviour
 
         Debug.Log("Change action: " + currentAction.Key);
     }
+    #endregion
+
+    #region Functions for checking conditions
+    bool VerticalSpaceCheck()
+    {
+        // Check if there is enough space above the character
+        Vector3 origin = transform.position;
+        origin.y += coll.size.y / 2;
+        RaycastHit hit;
+        float distance = coll.size.y;
+        if(Physics.Raycast(origin, Vector3.up, out hit, distance))
+        {
+            // Check if there is enough space under the character
+            origin = transform.position;
+            origin.y -= coll.size.y / 2;
+            if(Physics.Raycast(origin, Vector3.down, out hit, distance))
+            {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    bool CheckOnLand()
+    {
+        // Check if character is on the ground
+        Vector3 origin = transform.position;
+        origin.y -= coll.size.y / 2;
+        RaycastHit hit;
+        float distance = 1.0f;
+        if(Physics.Raycast(origin, Vector3.down, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool CheckOnWall()
+    {
+        // Check if character is on the wall
+        Vector3 origin = transform.position;
+        origin.x += coll.size.x / 2;
+        RaycastHit hit;
+        float distance = 1.0f;
+        if(Physics.Raycast(origin, Vector3.right, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            return true;
+        }
+
+        origin = transform.position;
+        origin.x -= coll.size.x / 2;
+        if(Physics.Raycast(origin, Vector3.left, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool CheckPlayerInSight()
+    {
+        // Check if player is in sight
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 7.0f);
+        foreach(Collider col in colliders)
+        {
+            if(col.gameObject.CompareTag("Player"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool CheckWalkable()
+    {
+        Vector3 direction = transform.forward;
+        if(direction.x > 0) direction = Vector3.right;
+        else if(direction.x < 0) direction = Vector3.left;
+
+        Vector3 origin = transform.position;
+        if(direction.x > 0) origin.x += coll.size.x / 2;
+        else origin.x -= coll.size.x / 2;
+
+        float distance = 1.0f;
+        RaycastHit hit;
+
+        if(Physics.Raycast(origin, direction, out hit, distance))
+        {
+            BattleModule unit = hit.collider.gameObject.GetComponent<BattleModule>();
+            if(unit != null && unit.team == transformModule.team)
+            {
+                return false;
+            }
+            if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                return false;
+            }
+        }
+
+        // Check if there is a hole in front of the character
+        origin = transform.position;
+        origin.x += 1.0f;
+        origin.y -= coll.size.y / 2;
+        direction = Vector3.down;
+
+        if(Physics.Raycast(origin, direction, out hit, distance))
+        {
+            if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     bool CheckCondition(eActionCondition cond, int val)
     {
+        int cond_val = 0;
+        switch(cond) {
+            case eActionCondition.InputX:
+                if(Input.GetAxis("Horizontal") > 0) cond_val = 1;
+                else if(Input.GetAxis("Horizontal") < 0) cond_val = -1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.InputY:
+                if(Input.GetAxis("Vertical") > 0) cond_val = 1;
+                else if(Input.GetAxis("Vertical") < 0) cond_val = -1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.Risable:
+                if(Input.GetAxis("Vertical") != -1 && VerticalSpaceCheck()) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.Jump:
+                if(Input.GetKey(KeyCode.X)) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.JumpValid:
+                if(transformModule.jumpAllowed && Input.GetKey(KeyCode.X)) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.Attack:
+                if(Input.GetKey(KeyCode.Z)) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.Run:
+                if(Input.GetKey(KeyCode.Z)) {
+                    if(Input.GetAxis("Horizontal") != 0) cond_val = 1;
+                    else cond_val = 0;
+                }
+                else cond_val = 0;
+                break;
+            case eActionCondition.OnLand:
+                if(CheckOnLand()) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.OnWall:
+                if(CheckOnWall()) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.ShrinkEnd:
+                if(coll.size.x == currentAction.ColliderX && coll.size.y == currentAction.ColliderY) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.Frame:
+                cond_val = actionFrames;
+                break;
+            case eActionCondition.Walkable:
+                if(CheckWalkable()) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.PlayerInSight:
+                if(CheckPlayerInSight()) cond_val = 1;
+                else cond_val = 0;
+                break;
+
+        }
         Debug.Log("Check condition: " + cond + " " + val);
-        return true;
+        return cond_val == val;
     }
+    #endregion
 
     void RunFunction(eActionFunction func, float val)
     {
@@ -71,6 +248,7 @@ public class ActionSystem : MonoBehaviour
     void Start()
     {
         transformModule = GetComponent<TransformModule>();
+        coll = GetComponent<BoxCollider>();
         SetAction(initAction);
     }
 
