@@ -27,8 +27,8 @@ public class ActionSystem : MonoBehaviour
     void ParseUpdateRules(string updates)
     {
         updates = updates.Substring(2, updates.Length - 4);
-        updates = updates.Replace("},{", ",");
-        string[] updateArray = updates.Split(',').ToArray();
+        updates = updates.Replace("},{", ":");
+        string[] updateArray = updates.Split(':').ToArray();
         frameUpdates = new FrameUpdateRule[updateArray.Length];
         for(int i = 0; i < updateArray.Length; i++)
         {
@@ -57,12 +57,14 @@ public class ActionSystem : MonoBehaviour
 
     bool CheckCondition(eActionCondition cond, int val)
     {
+        Debug.Log("Check condition: " + cond + " " + val);
         return true;
     }
 
     void RunFunction(eActionFunction func, float val)
     {
         // Run function
+        Debug.Log("Run function: " + func + " " + val);
     }
 
     // Start is called before the first frame update
