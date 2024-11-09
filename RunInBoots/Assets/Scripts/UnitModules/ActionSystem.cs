@@ -16,13 +16,14 @@ public class ActionSystem : MonoBehaviour
 {
     public ActionTable actions;
     public int initAction;
-    public Animator animator;
+    // public Animator animator;
 
     private ActionTableEntity currentAction;
     private FrameUpdateRule[] frameUpdates;
     private int actionFrames = 0;
 
     private TransformModule transformModule;
+    private BattleModule battleModule;
     private BoxCollider coll;
 
     #region Functions for setting new action
@@ -45,6 +46,8 @@ public class ActionSystem : MonoBehaviour
 
     public void SetAction(int nextAction)
     {
+        Debug.Log("Change action: " + nextAction);
+
         currentAction = actions.Actions.Find(x => x.Key == nextAction);
         string updates = currentAction.FrameUpdates;
         ParseUpdateRules(updates);
@@ -52,9 +55,7 @@ public class ActionSystem : MonoBehaviour
         transformModule.g_scale = currentAction.GravityScale;
         transformModule.maxSpeedX = currentAction.MaxVelocityX;
         transformModule.maxSpeedY = currentAction.MaxVelocityY;
-        animator.CrossFade(currentAction.Clip, currentAction.TransitionDuration);
-
-        Debug.Log("Change action: " + currentAction.Key);
+        // animator.CrossFade(currentAction.Clip, currentAction.TransitionDuration);
     }
     #endregion
 
@@ -145,7 +146,7 @@ public class ActionSystem : MonoBehaviour
         if(Physics.Raycast(origin, direction, out hit, distance))
         {
             BattleModule unit = hit.collider.gameObject.GetComponent<BattleModule>();
-            if(unit != null && unit.team == transformModule.team)
+            if(unit != null && unit.team == battleModule.team)
             {
                 return false;
             }
@@ -175,40 +176,40 @@ public class ActionSystem : MonoBehaviour
     {
         int cond_val = 0;
         switch(cond) {
-            case eActionCondition.InputX:
+            case eActionCondition.InputX: 
                 if(Input.GetAxis("Horizontal") > 0) cond_val = 1;
                 else if(Input.GetAxis("Horizontal") < 0) cond_val = -1;
                 else cond_val = 0;
                 break;
-            case eActionCondition.InputY:
+            case eActionCondition.InputY: 
                 if(Input.GetAxis("Vertical") > 0) cond_val = 1;
                 else if(Input.GetAxis("Vertical") < 0) cond_val = -1;
                 else cond_val = 0;
                 break;
-            case eActionCondition.Risable:
-                if(Input.GetAxis("Vertical") != -1 && VerticalSpaceCheck()) cond_val = 1;
+            case eActionCondition.Risable: 
+                if(Input.GetAxis("Vertical") >= 0 && VerticalSpaceCheck()) cond_val = 1;
                 else cond_val = 0;
                 break;
-            case eActionCondition.Jump:
-                if(Input.GetKey(KeyCode.X)) cond_val = 1;
+            case eActionCondition.Jump: 
+                if(Input.GetKeyDown(KeyCode.X)) cond_val = 1;
                 else cond_val = 0;
                 break;
-            case eActionCondition.JumpValid:
-                if(transformModule.jumpAllowed && Input.GetKey(KeyCode.X)) cond_val = 1;
+            case eActionCondition.JumpValid: 
+                if(transformModule.jumpAllowed && Input.GetKeyDown(KeyCode.X)) cond_val = 1;
                 else cond_val = 0;
                 break;
-            case eActionCondition.Attack:
-                if(Input.GetKey(KeyCode.Z)) cond_val = 1;
+            case eActionCondition.Attack: 
+                if(Input.GetKeyDown(KeyCode.Z)) cond_val = 1;
                 else cond_val = 0;
                 break;
-            case eActionCondition.Run:
-                if(Input.GetKey(KeyCode.Z)) {
+            case eActionCondition.Run: 
+                if(Input.GetKeyDown(KeyCode.Z)) {
                     if(Input.GetAxis("Horizontal") != 0) cond_val = 1;
                     else cond_val = 0;
                 }
                 else cond_val = 0;
                 break;
-            case eActionCondition.OnLand:
+            case eActionCondition.OnLand: 
                 if(CheckOnLand()) cond_val = 1;
                 else cond_val = 0;
                 break;
@@ -220,7 +221,7 @@ public class ActionSystem : MonoBehaviour
                 if(coll.size.x == currentAction.ColliderX && coll.size.y == currentAction.ColliderY) cond_val = 1;
                 else cond_val = 0;
                 break;
-            case eActionCondition.Frame:
+            case eActionCondition.Frame: 
                 cond_val = actionFrames;
                 break;
             case eActionCondition.Walkable:
@@ -233,8 +234,8 @@ public class ActionSystem : MonoBehaviour
                 break;
 
         }
-        Debug.Log("Check condition: " + cond + " " + val);
-        return cond_val == val;
+        if(cond_val == val) Debug.Log("Check condition: " + cond + " " + val);
+        return (cond_val == val);
     }
     #endregion
 
@@ -248,6 +249,7 @@ public class ActionSystem : MonoBehaviour
     void Start()
     {
         transformModule = GetComponent<TransformModule>();
+        battleModule = GetComponent<BattleModule>();
         coll = GetComponent<BoxCollider>();
         SetAction(initAction);
     }
@@ -264,12 +266,12 @@ public class ActionSystem : MonoBehaviour
                 if(CheckCondition(rule.cond_name, rule.cond_value))
                 {
                     SetAction((int)rule.func_value);
-                    return;
+                    break;
                 }
             }
         }
         // if current clip is not looping and animation is finished, set next action
-        if(currentAction.NextAction != 0 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+        if(currentAction.NextAction != 0 && actionFrames == 10) // && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
         {
             SetAction(currentAction.NextAction);
             return;
