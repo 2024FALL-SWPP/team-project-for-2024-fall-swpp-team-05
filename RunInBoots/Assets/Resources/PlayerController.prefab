@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5993877854204006932}
   m_Layer: 0
   m_Name: PlayerController
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,6 +136,17 @@ MonoBehaviour:
   actions: {fileID: 11400000, guid: 4d02f5c2264e91947b3d186e35a17e0e, type: 2}
   initAction: 101
   animator: {fileID: 1550151427339422317}
+  currentAction:
+    Key: 0
+    Clip: 
+    ColliderX: 0
+    ColliderY: 0
+    TransitionDuration: 0
+    GravityScale: 0
+    MaxVelocityX: 0
+    MaxVelocityY: 0
+    NextAction: 0
+    FrameUpdates: 
 --- !u!1001 &5672245530577891954
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -257,6 +268,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cat16-AdditionalMotions
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb98d5ec79d6b1a4a9cff8d377e1cffd,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8416272007918961125, guid: fb98d5ec79d6b1a4a9cff8d377e1cffd,
         type: 3}

@@ -490,11 +490,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerController
       objectReference: {fileID: 0}
-    - target: {fileID: 5287369822939886713, guid: 730a61bd11ee98942827d06face8081b,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 5287369822939886715, guid: 730a61bd11ee98942827d06face8081b,
         type: 3}
       propertyPath: m_RootOrder
@@ -550,16 +545,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5287369823677401388, guid: 730a61bd11ee98942827d06face8081b,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5287369823677401396, guid: 730a61bd11ee98942827d06face8081b,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 730a61bd11ee98942827d06face8081b, type: 3}
 --- !u!1001 &1554747367
@@ -573,11 +558,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 579227948677741591, guid: 580ef257c013a4697923beaf86dcc81a,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 579227948677741591, guid: 580ef257c013a4697923beaf86dcc81a,
         type: 3}
@@ -846,11 +826,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2428321824606393351, guid: b0ffc985184e3477f92477e38199fb5b,
-        type: 3}
-      propertyPath: repelForce
-      value: 150
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0ffc985184e3477f92477e38199fb5b, type: 3}
 --- !u!1001 &7973731800165823313
@@ -920,5 +895,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6611212, guid: 249775c625adf4bda987f6abee06dfc9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 249775c625adf4bda987f6abee06dfc9, type: 3}

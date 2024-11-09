@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class Claw : MonoBehaviour
 {
-    public int pcActionKey = 100;          // PC에게 실행시킬 액션 키
-    public int clawActionKey = 100;        // Claw에게 실행시킬 액션 키
+    public int pcActionKey = 103;          // PC에게 실행시킬 액션 키
+    public int clawActionKey = 102;        // Claw에게 실행시킬 액션 키
 
     private GameObject player;           // PC 참조
+    private Transform parent;            // PC의 부모 참조
     private bool isGrabbing = false;     // 현재 붙잡고 있는 상태인지
     private HingeJoint hingeJoint;       // PC를 흔들리게 할 Hinge Joint
 
@@ -35,6 +36,7 @@ public class Claw : MonoBehaviour
         isGrabbing = true;
 
         // 플레이어를 Claw의 자식으로 설정
+        parent = player.transform.parent;
         player.transform.SetParent(transform);
 
         // Hinge Joint 추가
@@ -52,7 +54,10 @@ public class Claw : MonoBehaviour
         {
             // 부모-자식 관계 해제
             Debug.Log("Release Player");
-            player.transform.SetParent(null);
+            player.transform.SetParent(parent);
+
+            // PC action 초기화
+            ExecuteActionOnPC(101);
 
             // Hinge Joint 제거
             if (hingeJoint != null)
@@ -75,7 +80,7 @@ public class Claw : MonoBehaviour
     {
         // Claw에 대한 특정 액션을 실행
         Debug.Log("Claw에 대한 액션 실행: " + actionKey);
-        // actionSystem.SetAction(actionKey);
+        // GetComponent<ActionSystem>().SetAction(actionKey);
     }
 
     private bool IsPlayerInAction()
@@ -83,8 +88,7 @@ public class Claw : MonoBehaviour
         // PC가 특정 액션 상태인지 확인하는 로직 필요
         if (player != null)
         {
-            // return player.GetComponent<ActionSystem>().currentAction.Key == pcActionKey;
-            return true;
+            return player.GetComponent<ActionSystem>().currentAction.Key == pcActionKey;
         }
         return false;
     }
@@ -93,6 +97,6 @@ public class Claw : MonoBehaviour
     {
         // Claw가 특정 액션 상태인지 확인하는 로직 필요
         // return GetComponent<ActionSystem>().currentAction.Key == clawActionKey;
-        return true;
+        return false;
     }
 }
