@@ -22,7 +22,7 @@ MonoBehaviour:
     MaxVelocityX: 3
     MaxVelocityY: 3
     NextAction: 0
-    FrameUpdates: '[{InputX,1,SetAction,102},{InputY,-1,SetAction,103},{JumpValid,1,SetAction,104},{Attack,1,SetAction,106}]'
+    FrameUpdates: '[{InputX,1,SetAction,102},{InputY,-1,SetAction,103},{InputY,1,SetAction,108},{Attack,1,SetAction,106},{OnLand,0,SetAction,105},{JumpValid,1,SetAction,104}]'
   - Key: 102
     Clip: cat_move
     ColliderX: 0.8
@@ -32,7 +32,7 @@ MonoBehaviour:
     MaxVelocityX: 3
     MaxVelocityY: 3
     NextAction: 0
-    FrameUpdates: '[{InputX,1,MoveInputX,1},{InputX,0,SetAction,101}]'
+    FrameUpdates: '[{InputX,1,MoveInputX,1},{InputX,0,SetAction,101},{InputY,-1,SetAction,103},{InputY,1,SetAction,108},{Attack,1,SetAction,106},{Run,1,SetAction,107},{OnLand,0,SetAction,105},{JumpValid,1,SetAction,104}]'
   - Key: 103
     Clip: cat_crouch
     ColliderX: 0.8
@@ -42,19 +42,19 @@ MonoBehaviour:
     MaxVelocityX: 3
     MaxVelocityY: 3
     NextAction: 0
-    FrameUpdates: '[{Risable,1,SetAction,101}]'
+    FrameUpdates: '[{Risable,1,SetAction,101},{InputX,1,SetAction,131},{Attack,1,SetAction,133},{OnLand,0,SetAction,105},{JumpValid,1,SetAction,132}]'
   - Key: 104
     Clip: cat_jump
     ColliderX: 0.8
     ColliderY: 1.6
-    TransitionDuration: 0.2
+    TransitionDuration: 0
     GravityScale: 1
     MaxVelocityX: 3
     MaxVelocityY: 3
-    NextAction: 0
-    FrameUpdates: '[{InputX,1,MoveInputX,1},{Jump,1,MoveY,3},{OnLand,1,SetAction,101},{Frame,20,SetAction,105}]'
+    NextAction: 105
+    FrameUpdates: '[{InputX,1,MoveInputX,1},{Jump,1,MoveY,3},{OnLand,1,SetAction,101}]'
   - Key: 105
-    Clip: cat_jump
+    Clip: cat_jump_loop
     ColliderX: 0.8
     ColliderY: 1.6
     TransitionDuration: 0.2
@@ -62,7 +62,7 @@ MonoBehaviour:
     MaxVelocityX: 3
     MaxVelocityY: 3
     NextAction: 0
-    FrameUpdates: '[{InputX,1,MoveInputX,1},{OnLand,1,SetAction,101}]'
+    FrameUpdates: '[{InputX,1,MoveInputX,1},{InputY,-1,SetAction,152},{Attack,1,SetAction,151},{OnWall,1,SetAction,155},{OnLand,1,SetAction,101}]'
   - Key: 106
     Clip: cat_attack
     ColliderX: 0.8
@@ -73,3 +73,163 @@ MonoBehaviour:
     MaxVelocityY: 3
     NextAction: 101
     FrameUpdates: '[{Frame,5,Spawn,10100001}]'
+  - Key: 107
+    Clip: cat_run
+    ColliderX: 0.8
+    ColliderY: 1.6
+    TransitionDuration: 0.2
+    GravityScale: 1
+    MaxVelocityX: 6
+    MaxVelocityY: 3
+    NextAction: 0
+    FrameUpdates: '[{InputX,1,MoveInputX,2},{Attack,0,SetAction,102},{InputX,0,SetAction,101},{InputY,-1,SetAction,103},{InputY,1,SetAction,108},{OnLand,0,SetAction,105},{JumpValid,1,SetAction,104}]'
+  - Key: 108
+    Clip: cat_stretch
+    ColliderX: 0.8
+    ColliderY: 1.6
+    TransitionDuration: 0.2
+    GravityScale: 1
+    MaxVelocityX: 3
+    MaxVelocityY: 3
+    NextAction: 0
+    FrameUpdates: '[{InputX,1,SetAction,181},{InputY,0,SetAction,184},{InputY,-1,SetAction,184},{OnLand,0,SetAction,183},{JumpValid,1,SetAction,182}]'
+  - Key: 131
+    Clip: cat_crouch_move
+    ColliderX: 0.8
+    ColliderY: 0.8
+    TransitionDuration: 0.2
+    GravityScale: 1
+    MaxVelocityX: 2
+    MaxVelocityY: 3
+    NextAction: 0
+    FrameUpdates: '[{InputX,1,MoveInputX,1},{InputX,0,SetAction,103},{Attack,1,SetAction,133},{OnLand,0,SetAction,105},{JumpValid,1,SetAction,134}]'
+  - Key: 132
+    Clip: cat_crouch_jump
+    ColliderX: 0.8
+    ColliderY: 0.8
+    TransitionDuration: 0.2
+    GravityScale: 1
+    MaxVelocityX: 0
+    MaxVelocityY: 6
+    NextAction: 105
+    FrameUpdates: '[{Frame,1,MoveY,6}]'
+  - Key: 133
+    Clip: cat_crouch_tackle
+    ColliderX: 0.8
+    ColliderY: 0.8
+    TransitionDuration: 0.2
+    GravityScale: 0.1
+    MaxVelocityX: 6
+    MaxVelocityY: 0.1
+    NextAction: 0
+    FrameUpdates: '[{Frame,1,MoveLocalX,6},{InputX,0,MoveLocalX,0.01},{InputX,1,MoveLocalX,0.01},{Frame,1,Spawn,10100001}]'
+  - Key: 134
+    Clip: cat_crouch_long_jump
+    ColliderX: 0.8
+    ColliderY: 0.8
+    TransitionDuration: 0.2
+    GravityScale: 1
+    MaxVelocityX: 6
+    MaxVelocityY: 3
+    NextAction: 105
+    FrameUpdates: '[{Frame,1,MoveLocalX,6},{Frame,1,MoveY,3},{InputX,0,MoveLocalX,0.01},{InputX,1,MoveLocalX,0.01},{OnLand,1,SetAction,101}]'
+  - Key: 151
+    Clip: cat_jump_attack
+    ColliderX: 0.8
+    ColliderY: 1.6
+    TransitionDuration: 0.2
+    GravityScale: 0.1
+    MaxVelocityX: 3
+    MaxVelocityY: 0.1
+    NextAction: 105
+    FrameUpdates: '[{Frame,5,Spawn,10100001},{OnLand,1,SetAction,101}]'
+  - Key: 152
+    Clip: cat_jump_take_down_ready
+    ColliderX: 0.8
+    ColliderY: 1.6
+    TransitionDuration: 0.2
+    GravityScale: 0
+    MaxVelocityX: 0
+    MaxVelocityY: 0
+    NextAction: 154
+    FrameUpdates: '[{Attack,1,SetAction,153}]'
+  - Key: 153
+    Clip: cat_jump_tackle
+    ColliderX: 0.8
+    ColliderY: 0.8
+    TransitionDuration: 0.2
+    GravityScale: 0.1
+    MaxVelocityX: 6
+    MaxVelocityY: 0.1
+    NextAction: 0
+    FrameUpdates: '[{Frame,1,MoveLocalX,6},{InputX,0,MoveLocalX,0.01},{InputX,1,MoveLocalX,0.01},{Frame,1,Spawn,10100001}]'
+  - Key: 154
+    Clip: cat_jump_take_down
+    ColliderX: 0.8
+    ColliderY: 1.6
+    TransitionDuration: 0.2
+    GravityScale: 0
+    MaxVelocityX: 6
+    MaxVelocityY: 6
+    NextAction: 0
+    FrameUpdates: '[{InputX,0,MoveLocalX,6},{InputX,1,MoveLocalX,6},{InputX,0,MoveY,-6},{InputX,1,MoveY,-6}]'
+  - Key: 155
+    Clip: cat_jump_scratch
+    ColliderX: 0.8
+    ColliderY: 1.6
+    TransitionDuration: 0.2
+    GravityScale: 1
+    MaxVelocityX: 0
+    MaxVelocityY: 1
+    NextAction: 0
+    FrameUpdates: '[{JumpValid,1,SetAction,156},{OnWall,1,SetAction,155},{OnLand,1,SetAction,101}]'
+  - Key: 156
+    Clip: cat_jump_scratch_jump
+    ColliderX: 0.8
+    ColliderY: 1.6
+    TransitionDuration: 0.2
+    GravityScale: 1
+    MaxVelocityX: 3
+    MaxVelocityY: 3
+    NextAction: 105
+    FrameUpdates: '[{Frame,1,MoveLocalX,-3},{Frame,1,MoveY,3}]'
+  - Key: 181
+    Clip: cat_stretch_move
+    ColliderX: 0.8
+    ColliderY: 1.6
+    TransitionDuration: 0.2
+    GravityScale: 1
+    MaxVelocityX: 2
+    MaxVelocityY: 3
+    NextAction: 0
+    FrameUpdates: '[{InputX,1,MoveInputX,1},{InputX,0,SetAction,108},{InputY,0,SetAction,184},{InputY,-1,SetAction,184},{OnLand,0,SetAction,183},{JumpValid,1,SetAction,182}]'
+  - Key: 182
+    Clip: cat_stretch_jump
+    ColliderX: 0.8
+    ColliderY: 1.6
+    TransitionDuration: 0.2
+    GravityScale: 1
+    MaxVelocityX: 2
+    MaxVelocityY: 2
+    NextAction: 183
+    FrameUpdates: '[{InputX,1,MoveInputX,1},{Jump,1,MoveY,1},{InputY,0,SetAction,184},{InputY,-1,SetAction,184},{OnLand,1,SetAction,108}]'
+  - Key: 183
+    Clip: cat_stretch_jump_loop
+    ColliderX: 0.8
+    ColliderY: 1.6
+    TransitionDuration: 0.2
+    GravityScale: 1
+    MaxVelocityX: 3
+    MaxVelocityY: 3
+    NextAction: 0
+    FrameUpdates: '[{InputX,1,MoveInputX,1},{InputY,0,SetAction,184},{InputY,-1,SetAction,184},{OnLand,1,SetAction,108}]'
+  - Key: 184
+    Clip: cat_stretch_shrink
+    ColliderX: 0.8
+    ColliderY: 1.6
+    TransitionDuration: 0.2
+    GravityScale: 0.1
+    MaxVelocityX: 3
+    MaxVelocityY: 3
+    NextAction: 105
+    FrameUpdates: '[{InputX,1,MoveInputX,1},{ShrinkEnd,1,MoveY,3}]'
