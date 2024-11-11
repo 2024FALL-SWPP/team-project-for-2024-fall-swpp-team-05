@@ -32,6 +32,9 @@ public class DropBlockManager : MonoBehaviour
 
         blockPhysicalCollider.isTrigger = false;
         blockTriggerCollider.isTrigger = true;
+
+        blockTriggerCollider.enabled = true;
+        blockPhysicalCollider.enabled = false;
     }
 
     // Update is called once per frame
