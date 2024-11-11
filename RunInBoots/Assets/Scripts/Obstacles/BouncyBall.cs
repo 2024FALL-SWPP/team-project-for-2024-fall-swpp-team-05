@@ -39,7 +39,7 @@ public class BouncyBall : MonoBehaviour
         if (playerRb != null)
         {
             Debug.Log("Repel Player");
-            playerRb.AddForce(repelDirection * repelForce, ForceMode.Impulse);
+            playerRb.AddForce(repelDirection * repelForce, ForceMode.VelocityChange);
         }
     }
 
