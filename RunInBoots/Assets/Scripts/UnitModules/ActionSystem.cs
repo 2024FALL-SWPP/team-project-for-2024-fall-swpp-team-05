@@ -18,7 +18,7 @@ public class ActionSystem : MonoBehaviour
     public int initAction;
     // public Animator animator;
 
-    private ActionTableEntity currentAction;
+    [SerializeField] private ActionTableEntity currentAction;
     private FrameUpdateRule[] frameUpdates;
     private int actionFrames = 0;
 
@@ -64,14 +64,13 @@ public class ActionSystem : MonoBehaviour
     {
         // Check if there is enough space above the character
         Vector3 origin = transform.position;
-        origin.y += coll.size.y / 2;
+        origin.y += coll.size.y;
         RaycastHit hit;
         float distance = coll.size.y;
         if(Physics.Raycast(origin, Vector3.up, out hit, distance))
         {
             // Check if there is enough space under the character
             origin = transform.position;
-            origin.y -= coll.size.y / 2;
             if(Physics.Raycast(origin, Vector3.down, out hit, distance))
             {
                 return false;
@@ -85,9 +84,9 @@ public class ActionSystem : MonoBehaviour
     {
         // Check if character is on the ground
         Vector3 origin = transform.position;
-        origin.y -= coll.size.y / 2;
+        origin.y += coll.size.y / 2;
         RaycastHit hit;
-        float distance = 1.0f;
+        float distance = 1 + coll.size.y / 2;
         if(Physics.Raycast(origin, Vector3.down, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             return true;
@@ -99,16 +98,13 @@ public class ActionSystem : MonoBehaviour
     {
         // Check if character is on the wall
         Vector3 origin = transform.position;
-        origin.x += coll.size.x / 2;
         RaycastHit hit;
-        float distance = 1.0f;
+        float distance = 1 + coll.size.x / 2;
         if(Physics.Raycast(origin, Vector3.right, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             return true;
         }
 
-        origin = transform.position;
-        origin.x -= coll.size.x / 2;
         if(Physics.Raycast(origin, Vector3.left, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             return true;
@@ -133,14 +129,12 @@ public class ActionSystem : MonoBehaviour
     bool CheckWalkable()
     {
         Vector3 direction = transform.forward;
-        if(direction.x > 0) direction = Vector3.right;
-        else if(direction.x < 0) direction = Vector3.left;
+        if(direction.y == 0) direction = Vector3.right;
+        else direction = Vector3.left;
 
         Vector3 origin = transform.position;
-        if(direction.x > 0) origin.x += coll.size.x / 2;
-        else origin.x -= coll.size.x / 2;
 
-        float distance = 1.0f;
+        float distance = 1 + coll.size.x / 2;
         RaycastHit hit;
 
         if(Physics.Raycast(origin, direction, out hit, distance))
@@ -158,9 +152,12 @@ public class ActionSystem : MonoBehaviour
 
         // Check if there is a hole in front of the character
         origin = transform.position;
-        origin.x += 1.0f;
-        origin.y -= coll.size.y / 2;
+        if(direction.y == 0) origin.x += 1.0f;
+        else origin.x -= 1.0f;
+        origin.y += coll.size.y / 2;
+        distance = 1 + coll.size.y / 2;
         direction = Vector3.down;
+        hit = new RaycastHit();
 
         if(Physics.Raycast(origin, direction, out hit, distance))
         {
