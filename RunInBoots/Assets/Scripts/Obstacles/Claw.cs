@@ -7,15 +7,36 @@ public class Claw : MonoBehaviour
 
     private GameObject player;           // PC 참조
     private Transform parent;            // PC의 부모 참조
-    private bool isGrabbing = false;     // 현재 붙잡고 있는 상태인지
+    public bool isGrabbing = false;     // 현재 붙잡고 있는 상태인지
     private HingeJoint hingeJoint;       // PC를 흔들리게 할 Hinge Joint
+    Collider clawTriggerCollider, clawCollider;
+
+    private void Start()
+    {
+        // get all colliders
+        Collider[] colliders = GetComponents<Collider>();
+        clawTriggerCollider = colliders[0];
+        clawCollider = colliders[1];
+        clawTriggerCollider.isTrigger = true;
+        clawCollider.isTrigger = false;
+        clawTriggerCollider.enabled = true;
+        clawCollider.enabled = false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !isGrabbing)
         {
             GrabPlayer(other.gameObject);
+            clawCollider.enabled = true;
+            clawTriggerCollider.enabled = false;
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        clawCollider.enabled = false;
+        clawTriggerCollider.enabled = true;
     }
 
     private void Update()
@@ -43,6 +64,14 @@ public class Claw : MonoBehaviour
         hingeJoint = gameObject.AddComponent<HingeJoint>();
         hingeJoint.connectedBody = player.GetComponent<Rigidbody>();
 
+        // 무게중심이 변하지 않도록 Anchor 설정
+        hingeJoint.anchor = Vector3.zero;
+        Debug.Log("Anchor: " + hingeJoint.anchor);
+
+        // HingeJoint의 회전 축을 Y축으로 설정
+        hingeJoint.axis = Vector3.up;
+        Debug.Log("Connected Anchor: " + hingeJoint.connectedAnchor);
+
         // PC와 Claw에 각각 지정된 액션 실행
         ExecuteActionOnPC(pcActionKey);
         ExecuteActionOnClaw(clawActionKey);
@@ -55,9 +84,6 @@ public class Claw : MonoBehaviour
             // 부모-자식 관계 해제
             Debug.Log("Release Player");
             player.transform.SetParent(parent);
-
-            // PC action 초기화
-            ExecuteActionOnPC(101);
 
             // Hinge Joint 제거
             if (hingeJoint != null)
@@ -87,7 +113,8 @@ public class Claw : MonoBehaviour
     {
         // PC가 특정 액션 상태인지 확인하는 로직 필요
         if (player != null)
-        {
+        {   
+            Debug.Log("Player Action Key: " + player.GetComponent<ActionSystem>().currentAction.Key);
             return player.GetComponent<ActionSystem>().currentAction.Key == pcActionKey;
         }
         return false;
@@ -97,6 +124,6 @@ public class Claw : MonoBehaviour
     {
         // Claw가 특정 액션 상태인지 확인하는 로직 필요
         // return GetComponent<ActionSystem>().currentAction.Key == clawActionKey;
-        return false;
+        return true;
     }
 }
