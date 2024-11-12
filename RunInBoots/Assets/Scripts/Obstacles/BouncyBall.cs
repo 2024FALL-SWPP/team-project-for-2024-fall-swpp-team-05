@@ -18,21 +18,8 @@ public class BouncyBall : MonoBehaviour
     private void RepelPlayer(Collision collision)
     {
         // 충돌 방향 계산
-        Vector3 repelDirection = (collision.transform.position - transform.position).normalized;
-        
-        
-        // choose left/right/up/down direction
-        if (Mathf.Abs(repelDirection.x) > Mathf.Abs(repelDirection.y))
-        {
-            repelDirection.y = 0;
-            repelDirection.x = repelDirection.x > 0 ? 1 : -1;
-        }
-        else
-        {
-            repelDirection.x = 0;
-            repelDirection.y = repelDirection.y > 0 ? 1 : -1;
-        }
-        Debug.Log("Repel Direction: " + repelDirection);
+        var collisionDirection = (collision.transform.position - transform.position).normalized;
+        var repelDirection = new Vector2(collisionDirection.x, collisionDirection.y).normalized;
 
         // PC의 Rigidbody에 힘을 가하여 밀어냄
         Rigidbody playerRb = collision.gameObject.GetComponent<Rigidbody>();
@@ -47,6 +34,6 @@ public class BouncyBall : MonoBehaviour
     {
         // 고무공에 대한 특정 액션을 실행
         Debug.Log("고무공에 대한 액션 실행: " + actionKey);
-        // GetComponent<ActionSystem>().SetAction(actionKey);
+        GetComponent<ActionSystem>().SetAction(actionKey);
     }
 }

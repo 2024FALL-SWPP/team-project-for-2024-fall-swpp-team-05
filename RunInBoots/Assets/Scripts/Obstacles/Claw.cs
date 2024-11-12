@@ -8,7 +8,7 @@ public class Claw : MonoBehaviour
     private GameObject player;           // PC 참조
     private Transform parent;            // PC의 부모 참조
     public bool isGrabbing = false;     // 현재 붙잡고 있는 상태인지
-    private HingeJoint hingeJoint;       // PC를 흔들리게 할 Hinge Joint
+    private ConfigurableJoint configurableJoint;       // PC를 흔들리게 할 Configurable Joint
 
     private void OnTriggerEnter(Collider other)
     {
@@ -38,18 +38,22 @@ public class Claw : MonoBehaviour
         // 플레이어를 Claw의 자식으로 설정
         parent = player.transform.parent;
         player.transform.SetParent(transform);
+        player.transform.localPosition = Vector3.zero;
 
-        // Hinge Joint 추가
-        hingeJoint = gameObject.AddComponent<HingeJoint>();
-        hingeJoint.connectedBody = player.GetComponent<Rigidbody>();
+        configurableJoint = player.gameObject.AddComponent<ConfigurableJoint>();
+        configurableJoint.connectedBody = this.GetComponent<Rigidbody>();
 
-        // 무게중심이 변하지 않도록 Anchor 설정
-        hingeJoint.anchor = Vector3.zero;
-        Debug.Log("Anchor: " + hingeJoint.anchor);
+        // 세부 설정
+        configurableJoint.axis = Vector3.right;
+        configurableJoint.secondaryAxis = Vector3.up;
 
-        // HingeJoint의 회전 축을 Y축으로 설정
-        hingeJoint.axis = Vector3.up;
-        Debug.Log("Connected Anchor: " + hingeJoint.connectedAnchor);
+        configurableJoint.xMotion = ConfigurableJointMotion.Locked;
+        configurableJoint.yMotion = ConfigurableJointMotion.Locked;
+        configurableJoint.zMotion = ConfigurableJointMotion.Locked;
+
+        configurableJoint.angularXMotion = ConfigurableJointMotion.Free;
+        configurableJoint.angularYMotion = ConfigurableJointMotion.Free;
+        configurableJoint.angularZMotion = ConfigurableJointMotion.Free;
 
         // PC와 Claw에 각각 지정된 액션 실행
         ExecuteActionOnPC(pcActionKey);
@@ -65,9 +69,9 @@ public class Claw : MonoBehaviour
             player.transform.SetParent(parent);
 
             // Hinge Joint 제거
-            if (hingeJoint != null)
+            if (configurableJoint != null)
             {
-                Destroy(hingeJoint);
+                Destroy(configurableJoint);
             }
 
             isGrabbing = false;
@@ -85,7 +89,7 @@ public class Claw : MonoBehaviour
     {
         // Claw에 대한 특정 액션을 실행
         Debug.Log("Claw에 대한 액션 실행: " + actionKey);
-        // GetComponent<ActionSystem>().SetAction(actionKey);
+        GetComponent<ActionSystem>().SetAction(actionKey);
     }
 
     private bool IsPlayerInAction()
