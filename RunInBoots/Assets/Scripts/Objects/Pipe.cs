@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 public class Pipe : MonoBehaviour
 {
     public int pipeID;
-    public string targetTerrainIndex;
     public int targetPipeID;
+    public int targetStage;
+    public int targetIndex;
     public UnityEvent onInteract;
 
 
@@ -22,25 +23,35 @@ public class Pipe : MonoBehaviour
             return;
         }
         onInteract.AddListener(HandlePipeInteraction);
+
+        if (GameManager.Instance.isComingFromPipe && GameManager.Instance.enteredPipeID == pipeID)
+        {
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null)
+            {
+                Vector3 targetPosition = transform.position + Vector3.right * 1.5f;
+                player.transform.position = targetPosition;
+                GameManager.Instance.ResetPipeData(); // 상태 초기화
+            }
+        }
     }
 
     void HandlePipeInteraction()
-    {
+    {   
         PipeData currentPipeData = levelLoader.terrainData.pipeConnections.pipeList.Find(pipe => pipe.pipeID == pipeID);
-        if(currentPipeData == null )
+        if(currentPipeData == null)
         {
             Debug.LogError($"pipeID {pipeID}에 해당하는 PipeData를 찾을 수 없습니다.");
             return;
         }
 
-        if (currentPipeData.targetTerrainIndex != levelLoader.index)
+        if (currentPipeData.targetStage != levelLoader.stage || currentPipeData.targetIndex != levelLoader.index)
         {
             // 다른 씬으로 이동
             GameManager.Instance.enteredPipeID = currentPipeData.targetPipeID;
             GameManager.Instance.isComingFromPipe = true;
 
-            string stage = levelLoader.stage;
-            SceneManager.LoadScene($"Stage_{stage}_{currentPipeData.targetTerrainIndex}");
+            SceneManager.LoadScene($"Stage_{currentPipeData.targetStage}_{currentPipeData.targetIndex}");
         }
         else
         {
@@ -72,6 +83,7 @@ public class Pipe : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             onInteract.Invoke();
+            Debug.Log("Player meet Pipe");
         }
     }
 }

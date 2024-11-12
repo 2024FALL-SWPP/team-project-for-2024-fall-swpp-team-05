@@ -2,14 +2,19 @@
     "stage": "",
     "terrainIndex": "",
     "gridSize": {
-        "x": 10,
-        "y": 10
+        "x": 40,
+        "y": 20
     },
     "objectPositions": {
         "objPos": [
             {
                 "name": "Pipe",
                 "positions": [
+                    {
+                        "x": -2.5,
+                        "y": -4.5,
+                        "z": 0.0
+                    },
                     {
                         "x": -9.5,
                         "y": -4.5,
@@ -22,8 +27,14 @@
     "pipeConnections": {
         "pipeList": [
             {
-                "pipeID": 1,
-                "targetPipeID": 2,
+                "pipeID": 3,
+                "targetPipeID": 4,
+                "targetStage": 3,
+                "targetIndex": 1
+            },
+            {
+                "pipeID": 2,
+                "targetPipeID": 3,
                 "targetStage": 2,
                 "targetIndex": 1
             }

@@ -1,0 +1,54 @@
+{
+    "stage": "",
+    "terrainIndex": "",
+    "gridSize": {
+        "x": 200,
+        "y": 80
+    },
+    "objectPositions": {
+        "objPos": [
+            {
+                "name": "Pipe",
+                "positions": [
+                    {
+                        "x": 10.5,
+                        "y": -4.5,
+                        "z": 0.0
+                    },
+                    {
+                        "x": -0.5,
+                        "y": -4.5,
+                        "z": 0.0
+                    },
+                    {
+                        "x": -9.5,
+                        "y": -4.5,
+                        "z": 0.0
+                    }
+                ]
+            }
+        ]
+    },
+    "pipeConnections": {
+        "pipeList": [
+            {
+                "pipeID": 6,
+                "targetPipeID": 7,
+                "targetStage": 3,
+                "targetIndex": 1
+            },
+            {
+                "pipeID": 5,
+                "targetPipeID": 6,
+                "targetStage": 3,
+                "targetIndex": 1
+            },
+            {
+                "pipeID": 4,
+                "targetPipeID": 5,
+                "targetStage": 3,
+                "targetIndex": 1
+            }
+        ]
+    }
+}

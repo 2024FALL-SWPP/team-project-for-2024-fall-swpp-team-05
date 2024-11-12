@@ -42,9 +42,10 @@ public class ObjPosList
 [Serializable]
 public class PipeData
 {
-    public string targetTerrainIndex;
     public int pipeID;
     public int targetPipeID;
+    public int targetStage;
+    public int targetIndex;
 }
 
 

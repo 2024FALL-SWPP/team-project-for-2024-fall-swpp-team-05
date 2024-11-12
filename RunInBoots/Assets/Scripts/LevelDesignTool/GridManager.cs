@@ -350,12 +350,11 @@ public class GridManager : MonoBehaviour
             if (entry.Value.GetComponent<Pipe>() != null)
             {
                 Pipe pipe = entry.Value.GetComponent<Pipe>();
-                int pipeID = pipe.pipeID;
-                int targetPipeID = pipe.targetPipeID;
                 PipeData pipeData = new PipeData();
-                pipeData.targetTerrainIndex = pipe.targetTerrainIndex;
-                pipeData.targetPipeID = targetPipeID;
-                pipeData.pipeID = pipeID;
+                pipeData.pipeID = pipe.pipeID;
+                pipeData.targetPipeID = pipe.targetPipeID;
+                pipeData.targetStage = pipe.targetStage;
+                pipeData.targetIndex = pipe.targetIndex;
                 terrainDataLoader.terrainData.pipeConnections.pipeList.Add(pipeData);
             }
         }

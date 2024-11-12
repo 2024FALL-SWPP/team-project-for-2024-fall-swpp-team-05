@@ -7,8 +7,8 @@ public class GameManager : MonoSingleton<GameManager>
 {
     private IGameState _currentState;
 
-    public int enteredPipeID;
-    public bool isComingFromPipe;
+    public int enteredPipeID = -1;
+    public bool isComingFromPipe = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,5 +31,11 @@ public class GameManager : MonoSingleton<GameManager>
         {
             _currentState.Exit();
         }
+    }
+
+    public void ResetPipeData()
+    {
+        enteredPipeID = -1;
+        isComingFromPipe = false;
     }
 }

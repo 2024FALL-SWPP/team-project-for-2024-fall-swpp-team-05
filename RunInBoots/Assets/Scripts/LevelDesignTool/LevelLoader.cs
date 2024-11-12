@@ -6,8 +6,8 @@ using System.IO;
 public class LevelLoader : MonoBehaviour
 {
     // Start is called before the first frame update
-    public string stage;
-    public string index;
+    public int stage;
+    public int index;
 
 
     private string fileName;
@@ -44,9 +44,11 @@ public class LevelLoader : MonoBehaviour
 
         Vector3 minPosition = FindMinPosition();
 
+        // 먼저 모든 파이프를 위치에 맞게 생성하고 리스트에 저장
+        List<GameObject> createdPipes = new List<GameObject>();
+
         foreach (var objectPosition in terrainData.objectPositions.objPos)
         {
-            // 프리팹 이름
             string prefabName = objectPosition.name;
             GameObject prefab = Resources.Load<GameObject>("LevelObject/" + prefabName);
 
@@ -56,20 +58,47 @@ public class LevelLoader : MonoBehaviour
                 continue;
             }
 
-            // 각 위치에 오브젝트를 생성
             foreach (Vector3 position in objectPosition.positions)
             {
                 Vector3 adjustedPosition = position - minPosition;
-                Instantiate(prefab, adjustedPosition, Quaternion.identity, parentTransform);
-                Debug.Log($"Placing object '{prefabName}' at {position}");
+                GameObject instance = Instantiate(prefab, adjustedPosition, Quaternion.identity, parentTransform);
+                Debug.Log($"Placing object '{prefabName}' at {adjustedPosition}");
+
+                // 파이프 오브젝트를 발견하면 리스트에 저장
+                if (prefabName == "Pipe")
+                {
+                    createdPipes.Add(instance);
+                }
             }
         }
 
-        // 파이프 연결 데이터 처리 (옵션)
-        foreach (var pipeData in terrainData.pipeConnections.pipeList)
+        // 파이프 데이터 처리: pipeData 리스트의 순서대로 각 파이프에 설정 정보 적용
+        for (int i = 0; i < terrainData.pipeConnections.pipeList.Count; i++)
         {
-            Debug.Log($"Pipe ID: {pipeData.pipeID}, Target Terrain Index: {pipeData.targetTerrainIndex}, Target Pipe ID: {pipeData.targetPipeID}");
-            // 필요한 경우 파이프에 연결 로직을 추가할 수 있습니다
+            // 생성된 파이프 수와 pipeData 수가 일치하는지 확인
+            if (i >= createdPipes.Count)
+            {
+                Debug.LogWarning("생성된 파이프의 수가 pipeData의 수보다 적습니다. 남은 pipeData는 적용되지 않습니다.");
+                break;
+            }
+
+            PipeData pipeData = terrainData.pipeConnections.pipeList[i];
+            GameObject pipeInstance = createdPipes[i];
+            Pipe pipeComponent = pipeInstance.GetComponent<Pipe>();
+
+            if (pipeComponent != null)
+            {
+                pipeComponent.pipeID = pipeData.pipeID;
+                pipeComponent.targetPipeID = pipeData.targetPipeID;
+                pipeComponent.targetStage = pipeData.targetStage;
+                pipeComponent.targetIndex = pipeData.targetIndex;
+
+                Debug.Log($"Pipe configured with ID: {pipeComponent.pipeID}, Target Pipe ID: {pipeComponent.targetPipeID}, Target Stage: {pipeComponent.targetStage}, Target Index: {pipeComponent.targetIndex}");
+            }
+            else
+            {
+                Debug.LogError("Pipe prefab에 Pipe 컴포넌트가 없습니다.");
+            }
         }
     }
 
