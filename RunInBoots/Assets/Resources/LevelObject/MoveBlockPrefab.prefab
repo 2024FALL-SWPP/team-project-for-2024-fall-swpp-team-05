@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3904648399371876634}
   - component: {fileID: 1976240288221537654}
   - component: {fileID: 693443945601202062}
+  - component: {fileID: 1144954536}
   m_Layer: 0
   m_Name: MoveBlockPrefab
   m_TagString: Untagged
@@ -93,7 +94,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3291737719317621383}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -110,6 +111,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdcca5375002c41d4a017c513f7f20cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
   moveAmount: {x: 3, y: 0}
+  moveSpeed: 2
   waitTime: 1
+--- !u!65 &1144954536
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3291737719317621383}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
