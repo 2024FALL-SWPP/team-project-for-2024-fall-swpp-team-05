@@ -9,34 +9,13 @@ public class Claw : MonoBehaviour
     private Transform parent;            // PC의 부모 참조
     public bool isGrabbing = false;     // 현재 붙잡고 있는 상태인지
     private HingeJoint hingeJoint;       // PC를 흔들리게 할 Hinge Joint
-    Collider clawTriggerCollider, clawCollider;
-
-    private void Start()
-    {
-        // get all colliders
-        Collider[] colliders = GetComponents<Collider>();
-        clawTriggerCollider = colliders[0];
-        clawCollider = colliders[1];
-        clawTriggerCollider.isTrigger = true;
-        clawCollider.isTrigger = false;
-        clawTriggerCollider.enabled = true;
-        clawCollider.enabled = false;
-    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !isGrabbing)
         {
             GrabPlayer(other.gameObject);
-            clawCollider.enabled = true;
-            clawTriggerCollider.enabled = false;
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        clawCollider.enabled = false;
-        clawTriggerCollider.enabled = true;
     }
 
     private void Update()
