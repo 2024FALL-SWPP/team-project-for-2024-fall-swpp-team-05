@@ -18,7 +18,7 @@ public class ActionSystem : MonoBehaviour
     public int initAction;
     public Animator animator;
 
-    private ActionTableEntity currentAction;
+    public ActionTableEntity currentAction;
     private FrameUpdateRule[] frameUpdates;
     private int actionFrames = 0;
 
@@ -43,6 +43,7 @@ public class ActionSystem : MonoBehaviour
 
     public void SetAction(int nextAction)
     {
+        transformModule = GetComponent<TransformModule>();
         currentAction = actions.Actions.Find(x => x.Key == nextAction);
         string updates = currentAction.FrameUpdates;
         ParseUpdateRules(updates);
