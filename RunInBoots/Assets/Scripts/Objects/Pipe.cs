@@ -49,6 +49,7 @@ public class Pipe : MonoBehaviour
 
         if (currentStage != targetStage || currentIndex != targetIndex)
         {
+            //새로운 씬으로 이동
             GameManager.Instance.enteredPipeID = targetPipeID;
             GameManager.Instance.isComingFromPipe = true;
 

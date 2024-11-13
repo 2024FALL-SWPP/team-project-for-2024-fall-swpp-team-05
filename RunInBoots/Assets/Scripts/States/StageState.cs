@@ -16,7 +16,7 @@ public class StageState : IGameState
 
     private GameObject _player;
     private CinemachineVirtualCamera _virtualCamera;
-    private TextMeshProUGUI  _timerText;
+    //private TextMeshProUGUI  _timerText;
 
     private float _gridYLowerBound = -2.0f;
 
@@ -54,17 +54,8 @@ public class StageState : IGameState
             {
                 Debug.LogWarning("Player를 찾을 수 없습니다.");
             }
-            GameObject timerObject = GameObject.Find("TimerText"); // 타이머 UI 텍스트의 이름이 "TimerText"라고 가정
-            if (timerObject != null)
-            {
-                Debug.Log("Find TimerText");
-                _timerText = timerObject.GetComponent<TextMeshProUGUI>();
-                UpdateTimerUI();
-            }
-            else
-            {
-                Debug.LogWarning("TimerText UI 요소를 찾을 수 없습니다.");
-            }
+            
+            UIManager.Instance.UpdateTimerUI(_remainingTime);
         }
         else
         {
@@ -78,11 +69,11 @@ public class StageState : IGameState
             return;
 
         _remainingTime -= Time.deltaTime;
-        UpdateTimerUI();
+        UIManager.Instance.UpdateTimerUI(_remainingTime);
 
         if (_remainingTime <= 0f)
         {
-            GameOver();
+            Exit();
             return;
         }
 
@@ -90,32 +81,16 @@ public class StageState : IGameState
         {
             if (_player.transform.position.y < _gridYLowerBound)
             {
-                GameOver();
+                Exit();
                 return;
             }
         }
     }
     public void Exit()
     {
+        _isStarted = false;
         // (임시) 현재 씬을 다시 로드
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
     }
-
-    private void UpdateTimerUI()
-    {
-        if (_timerText != null)
-        {
-            int minutes = Mathf.FloorToInt(_remainingTime / 60f);
-            int seconds = Mathf.FloorToInt(_remainingTime % 60f);
-            _timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-        }
-    }
-
-    private void GameOver()
-    {
-        _isStarted = false;
-        Exit();
-    }
-
 }
