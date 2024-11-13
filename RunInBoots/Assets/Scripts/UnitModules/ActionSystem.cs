@@ -18,12 +18,16 @@ public class ActionSystem : MonoBehaviour
     public int initAction;
     public Animator animator;
 
+
     public ActionTableEntity currentAction;
     private FrameUpdateRule[] frameUpdates;
     private int actionFrames = 0;
 
     private TransformModule transformModule;
+    private BattleModule battleModule;
+    private BoxCollider coll;
 
+    #region Functions for setting new action
     void ParseUpdateRules(string updates)
     {
         updates = updates.Substring(2, updates.Length - 4);
@@ -43,7 +47,7 @@ public class ActionSystem : MonoBehaviour
 
     public void SetAction(int nextAction)
     {
-        transformModule = GetComponent<TransformModule>();
+        Debug.Log("Change action: " + nextAction);
         currentAction = actions.Actions.Find(x => x.Key == nextAction);
         string updates = currentAction.FrameUpdates;
         ParseUpdateRules(updates);
@@ -52,15 +56,185 @@ public class ActionSystem : MonoBehaviour
         transformModule.maxSpeedX = currentAction.MaxVelocityX;
         transformModule.maxSpeedY = currentAction.MaxVelocityY;
         animator.CrossFade(currentAction.Clip, currentAction.TransitionDuration);
+    }
+    #endregion
 
-        Debug.Log("Change action: " + currentAction.Key);
+    #region Functions for checking conditions
+    bool VerticalSpaceCheck()
+    {
+        // Check if there is enough space above the character
+        Vector3 origin = transform.position;
+        origin.y += coll.size.y;
+        RaycastHit hit;
+        float distance = coll.size.y;
+        if(Physics.Raycast(origin, Vector3.up, out hit, distance))
+        {
+            // Check if there is enough space under the character
+            origin = transform.position;
+            if(Physics.Raycast(origin, Vector3.down, out hit, distance))
+            {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    bool CheckOnLand()
+    {
+        // Check if character is on the ground
+        Vector3 origin = transform.position;
+        origin.y += coll.size.y / 2;
+        RaycastHit hit;
+        float distance = 1 + coll.size.y / 2;
+        if(Physics.Raycast(origin, Vector3.down, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool CheckOnWall()
+    {
+        // Check if character is on the wall
+        Vector3 origin = transform.position;
+        RaycastHit hit;
+        float distance = 1 + coll.size.x / 2;
+        if(Physics.Raycast(origin, Vector3.right, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            return true;
+        }
+
+        if(Physics.Raycast(origin, Vector3.left, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool CheckPlayerInSight()
+    {
+        // Check if player is in sight
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 7.0f);
+        foreach(Collider col in colliders)
+        {
+            if(col.gameObject.CompareTag("Player"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool CheckWalkable()
+    {
+        Vector3 direction = transform.forward;
+        if(direction.y == 0) direction = Vector3.right;
+        else direction = Vector3.left;
+
+        Vector3 origin = transform.position;
+
+        float distance = 1 + coll.size.x / 2;
+        RaycastHit hit;
+
+        if(Physics.Raycast(origin, direction, out hit, distance))
+        {
+            BattleModule unit = hit.collider.gameObject.GetComponent<BattleModule>();
+            if(unit != null && unit.team == battleModule.team)
+            {
+                return false;
+            }
+            if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                return false;
+            }
+        }
+
+        // Check if there is a hole in front of the character
+        origin = transform.position;
+        if(direction.y == 0) origin.x += 1.0f;
+        else origin.x -= 1.0f;
+        origin.y += coll.size.y / 2;
+        distance = 1 + coll.size.y / 2;
+        direction = Vector3.down;
+        hit = new RaycastHit();
+
+        if(Physics.Raycast(origin, direction, out hit, distance))
+        {
+            if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     bool CheckCondition(eActionCondition cond, int val)
     {
-        Debug.Log("Check condition: " + cond + " " + val);
-        return true;
+        int cond_val = 0;
+        switch(cond) {
+            case eActionCondition.InputX: 
+                if(Input.GetAxis("Horizontal") > 0) cond_val = 1;
+                else if(Input.GetAxis("Horizontal") < 0) cond_val = -1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.InputY: 
+                if(Input.GetAxis("Vertical") > 0) cond_val = 1;
+                else if(Input.GetAxis("Vertical") < 0) cond_val = -1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.Risable: 
+                if(Input.GetAxis("Vertical") >= 0 && VerticalSpaceCheck()) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.Jump: 
+                if(Input.GetKeyDown(KeyCode.X)) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.JumpValid: 
+                if(transformModule.jumpAllowed && Input.GetKeyDown(KeyCode.X)) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.Attack: 
+                if(Input.GetKeyDown(KeyCode.Z)) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.Run: 
+                if(Input.GetKeyDown(KeyCode.Z)) {
+                    if(Input.GetAxis("Horizontal") != 0) cond_val = 1;
+                    else cond_val = 0;
+                }
+                else cond_val = 0;
+                break;
+            case eActionCondition.OnLand: 
+                if(CheckOnLand()) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.OnWall:
+                if(CheckOnWall()) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.ShrinkEnd:
+                if(coll.size.x == currentAction.ColliderX && coll.size.y == currentAction.ColliderY) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.Frame: 
+                cond_val = actionFrames;
+                break;
+            case eActionCondition.Walkable:
+                if(CheckWalkable()) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.PlayerInSight:
+                if(CheckPlayerInSight()) cond_val = 1;
+                else cond_val = 0;
+                break;
+
+        }
+        if(cond_val == val) Debug.Log("Check condition: " + cond + " " + val);
+        return (cond_val == val);
     }
+    #endregion
 
     void RunFunction(eActionFunction func, float val)
     {
@@ -72,6 +246,8 @@ public class ActionSystem : MonoBehaviour
     void Start()
     {
         transformModule = GetComponent<TransformModule>();
+        battleModule = GetComponent<BattleModule>();
+        coll = GetComponent<BoxCollider>();
         SetAction(initAction);
     }
 
@@ -87,12 +263,12 @@ public class ActionSystem : MonoBehaviour
                 if(CheckCondition(rule.cond_name, rule.cond_value))
                 {
                     SetAction((int)rule.func_value);
-                    return;
+                    break;
                 }
             }
         }
         // if current clip is not looping and animation is finished, set next action
-        if(currentAction.NextAction != 0 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+        if(currentAction.NextAction != 0 && actionFrames == 10) // && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
         {
             SetAction(currentAction.NextAction);
             return;
