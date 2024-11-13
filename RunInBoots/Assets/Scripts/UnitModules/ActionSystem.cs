@@ -16,7 +16,7 @@ public class ActionSystem : MonoBehaviour
 {
     public ActionTable actions;
     public int initAction;
-    // public Animator animator;
+    public Animator animator;
 
 
     public ActionTableEntity currentAction;
@@ -55,7 +55,7 @@ public class ActionSystem : MonoBehaviour
         transformModule.g_scale = currentAction.GravityScale;
         transformModule.maxSpeedX = currentAction.MaxVelocityX;
         transformModule.maxSpeedY = currentAction.MaxVelocityY;
-        // animator.CrossFade(currentAction.Clip, currentAction.TransitionDuration);
+        animator.CrossFade(currentAction.Clip, currentAction.TransitionDuration);
     }
     #endregion
 
