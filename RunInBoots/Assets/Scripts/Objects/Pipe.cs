@@ -38,6 +38,7 @@ public class Pipe : MonoBehaviour
 
     void HandlePipeInteraction()
     {
+        
         string sceneName = SceneManager.GetActiveScene().name;
         int currentStage, currentIndex;
 
