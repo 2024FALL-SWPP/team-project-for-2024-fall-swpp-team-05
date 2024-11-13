@@ -85,7 +85,7 @@ MonoBehaviour:
   maxSpeedY: 10
   jumpAllowed: 0
   speedXCoef: 10
-  speedYCoef: 20
+  speedYCoef: 40
   speedX: 0
   speedY: 0
 --- !u!114 &4527542165740899190
