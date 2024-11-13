@@ -9,6 +9,19 @@ public class GameManager : MonoSingleton<GameManager>
 
     public int enteredPipeID = -1;
     public bool isComingFromPipe = false;
+    private GameObject playerPrefab;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        playerPrefab = Resources.Load<GameObject>("Prefabs/Player");
+        if(playerPrefab == null)
+        {
+            Debug.LogError("Player prefab가 Resources/Prefabs/에 존재하지 않음");
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +43,21 @@ public class GameManager : MonoSingleton<GameManager>
         if (_currentState != null)
         {
             _currentState.Exit();
+        }
+    }
+
+    public void SpawnPlayer(Vector3 position)
+    {
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player == null)
+        {
+            Debug.Log("GameManager.SpawnManager에서 Player를 못 찾음");
+            player = Instantiate(playerPrefab, position, Quaternion.identity);
+        }
+        else
+        {
+            player.transform.position = position;
+            Debug.Log($"Player moved to position: {position}");
         }
     }
 

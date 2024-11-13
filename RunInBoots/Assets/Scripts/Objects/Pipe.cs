@@ -37,45 +37,54 @@ public class Pipe : MonoBehaviour
     }
 
     void HandlePipeInteraction()
-    {   
-        PipeData currentPipeData = levelLoader.terrainData.pipeConnections.pipeList.Find(pipe => pipe.pipeID == pipeID);
-        if(currentPipeData == null)
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+        int currentStage, currentIndex;
+
+        if (!ParseSceneName(sceneName, out currentStage, out currentIndex))
         {
-            Debug.LogError($"pipeID {pipeID}에 해당하는 PipeData를 찾을 수 없습니다.");
+            Debug.LogError($"현재 씬 이름에서 Stage와 Index를 파싱할 수 없습니다: {sceneName}");
             return;
         }
 
-        if (currentPipeData.targetStage != levelLoader.stage || currentPipeData.targetIndex != levelLoader.index)
+        if (currentStage != targetStage || currentIndex != targetIndex)
         {
-            // 다른 씬으로 이동
-            GameManager.Instance.enteredPipeID = currentPipeData.targetPipeID;
+            GameManager.Instance.enteredPipeID = targetPipeID;
             GameManager.Instance.isComingFromPipe = true;
 
-            SceneManager.LoadScene($"Stage_{currentPipeData.targetStage}_{currentPipeData.targetIndex}");
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.LoadScene($"Stage_{targetStage}_{targetIndex}");
         }
         else
         {
             // 동일한 씬 내에서 이동
-            Pipe targetPipe = GameUtils.FindPipeByID(currentPipeData.targetPipeID);
+            Pipe targetPipe = GameUtils.FindPipeByID(targetPipeID);
 
-            if(targetPipe != null)
+            if (targetPipe != null)
             {
                 Vector3 targetPosition = targetPipe.transform.position + Vector3.right * 1.5f;
-                GameObject player = GameObject.FindWithTag("Player");
-                if(player != null)
-                {
-                    player.transform.position = targetPosition;
-                }
-                else
-                {
-                    Debug.LogError("Player를 찾을 수 없습니다.");
-                }
+                GameManager.Instance.SpawnPlayer(targetPosition);
             }
-            else 
+            else
             {
                 Debug.LogError($"ID가 {targetPipeID}인 파이프를 찾을 수 없습니다.");
             }
         }
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Pipe targetPipe = GameUtils.FindPipeByID(GameManager.Instance.enteredPipeID);
+        if(targetPipe != null)
+        {
+            Vector3 targetPosition = targetPipe.transform.position + Vector3.right * 1.5f;
+            GameManager.Instance.SpawnPlayer(targetPosition);
+        }
+        else
+        {
+            Debug.LogError("다음 씬에서 target Pipe를 찾을 수 없습니다.");
+        }
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     void OnTriggerEnter(Collider other)
@@ -85,5 +94,20 @@ public class Pipe : MonoBehaviour
             onInteract.Invoke();
             Debug.Log("Player meet Pipe");
         }
+    }
+
+    private bool ParseSceneName(string sceneName, out int stage, out int index)
+    {
+        stage = 0;
+        index = 0;
+
+        // 씬 이름이 "Stage_{stage}_{index}" 형태인지 확인
+        string[] parts = sceneName.Split('_');
+        if (parts.Length == 3 && parts[0] == "Stage" && int.TryParse(parts[1], out stage) && int.TryParse(parts[2], out index))
+        {
+            return true;
+        }
+
+        return false;
     }
 }
