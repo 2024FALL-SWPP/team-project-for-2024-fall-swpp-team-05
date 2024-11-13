@@ -312,7 +312,7 @@ public class GridManager : MonoBehaviour
     public void SaveGridData()
     {
         // save grid data to terrainDataLoader
-        Debug.Log("Save grid data");
+        //Debug.Log("Save grid data");
         terrainDataLoader.terrainData.objectPositions = new ObjPosList();
         terrainDataLoader.terrainData.gridSize = gridSize;
 
@@ -417,6 +417,44 @@ public class GridManager : MonoBehaviour
                     GameObject prefab = Resources.Load<GameObject>("LevelObject/" + selectedPrefabName);
                     GameObject obj = Instantiate(prefab, GridToWorld(gridPos), Quaternion.identity);
                     placedObjects.Add(gridPos, obj);
+
+                    LevelObjectData data = null;
+
+                    if (selectedPrefabName == "Pipe")
+                    {
+                        PipeData pipeData = new PipeData();
+                        pipeData.pipeID = obj.GetComponent<Pipe>().pipeID;
+                        pipeData.targetPipeID = obj.GetComponent<Pipe>().targetPipeID;
+                        pipeData.targetStage = obj.GetComponent<Pipe>().targetStage;
+                        pipeData.targetIndex = obj.GetComponent<Pipe>().targetIndex;
+                        data = pipeData;
+                    }
+                    else if (selectedPrefabName == "StartPoint")
+                    {
+                        data = new StartPointData();
+                    }
+                    else if (selectedPrefabName == "GoalPoint")
+                    {
+                        GoalPointData goalData = new GoalPointData();
+                        goalData.targetStage = obj.GetComponent<GoalPoint>().targetStage;
+                        goalData.targetIndex = obj.GetComponent<GoalPoint>().targetIndex;
+                        data = goalData;
+                    }
+                    else if (selectedPrefabName == "Catnip")
+                    {
+                        CatnipData catnipData = new CatnipData();
+                        catnipData.catnipID = obj.GetComponent<Catnip>().catnipID;
+                        data = catnipData;
+                    }
+                    else
+                    {
+                        data = new LevelObjectData();
+                    }
+
+                    data.gridPosition = gridPos;
+                    data.objectType = selectedPrefabName;
+
+                    terrainDataLoader.terrainData.levelObjects.Add(data);
                 }
                 else
                 {
@@ -424,6 +462,8 @@ public class GridManager : MonoBehaviour
                     {
                         Destroy(placedObjects[gridPos]);
                         placedObjects.Remove(gridPos);
+
+                        terrainDataLoader.terrainData.levelObjects.RemoveAll(data => data.gridPosition.Equals(gridPos));
                     }
                 }
             }

@@ -1,4 +1,16 @@
-using System;
+[Serializable]
+public class TerrainData
+{
+    public string stage;
+    public string terrainIndex;
+    public SerializableVector2Int gridSize;
+    public List<LevelObjectData> levelObjects = new List<LevelObjectData>();
+}
+
+
+
+
+/*using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -64,3 +76,4 @@ public class TerrainData
     public ObjPosList objectPositions = new ObjPosList();
     public PipeList pipeConnections = new PipeList();
 }
+*/

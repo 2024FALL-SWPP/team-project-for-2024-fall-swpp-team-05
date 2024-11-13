@@ -16,7 +16,6 @@ public class StageState : IGameState
 
     private GameObject _player;
     private CinemachineVirtualCamera _virtualCamera;
-    //private TextMeshProUGUI  _timerText;
 
     private float _gridYLowerBound = -2.0f;
 
