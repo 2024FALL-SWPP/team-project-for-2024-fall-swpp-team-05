@@ -61,6 +61,8 @@ public class ActionSystem : MonoBehaviour
                 }
             }
         }
+        
+        return false;
     }
 
     public void SetAction(int nextAction)
