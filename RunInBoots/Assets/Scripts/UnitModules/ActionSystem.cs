@@ -48,19 +48,16 @@ public class ActionSystem : MonoBehaviour
 
     bool IsLooping()
     {
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        if (stateInfo.length > 0)
+        AnimatorClipInfo[] clipInfo = animator.GetCurrentAnimatorClipInfo(0);
+        if (clipInfo.Length > 0)
         {
-            AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
-
-            foreach (AnimationClip clip in clips)
-            {
-                if (clip.name == stateInfo.shortNameHash.ToString())
-                {
-                    return clip.isLooping;
-                }
-            }
+            AnimationClip currentClip = clipInfo[0].clip;
+            bool isLooping = currentClip.isLooping;
+            //Debug.Log($"Current clip '{currentClip.name}' is looping: {isLooping}");
+            return isLooping;
         }
+        // else
+        //     Debug.Log("No clip info found");
         
         return false;
     }
@@ -241,7 +238,7 @@ public class ActionSystem : MonoBehaviour
                 else cond_val = 0;
                 break;
             case eActionCondition.Attack: 
-                if(Input.GetKey(KeyCode.Z)) cond_val = 1;
+                if(Input.GetKeyDown(KeyCode.Z)) cond_val = 1;
                 else cond_val = 0;
                 break;
             case eActionCondition.Run: 
@@ -284,7 +281,7 @@ public class ActionSystem : MonoBehaviour
     void RunFunction(eActionFunction func, float val)
     {
         // Run function
-        Debug.Log("Run function: " + func + " " + val);
+        //Debug.Log("Run function: " + func + " " + val);
     }
 
     // Start is called before the first frame update
@@ -299,10 +296,13 @@ public class ActionSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var nextAction = 0;
         // if current clip is not looping and animation is finished, set next action
-        if(currentAction.NextAction != 0 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+        var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        if(stateInfo.IsName(currentAction.Clip) && stateInfo.normalizedTime > 1 && !IsLooping() && animator.GetCurrentAnimatorClipInfo(0).Length > 0)
         {
-            SetAction(currentAction.NextAction);
+            //Debug.Log("Animation finished"+ currentAction.Clip);
+            nextAction = currentAction.NextAction != 0 ? currentAction.NextAction : initAction;
         }
         // Check all frame updates if func_value is SetAction
         foreach(FrameUpdateRule rule in frameUpdates)
@@ -312,10 +312,12 @@ public class ActionSystem : MonoBehaviour
                 // Check if condition is met 
                 if(CheckCondition(rule.cond_name, rule.cond_value))
                 {
-                    SetAction((int)rule.func_value);
+                    nextAction=((int)rule.func_value);
                 }
             }
         }
+        if(nextAction != 0)
+            SetAction(nextAction);
         // Check all frame updates if func_value is not SetAction
         foreach(FrameUpdateRule rule in frameUpdates)
         {
