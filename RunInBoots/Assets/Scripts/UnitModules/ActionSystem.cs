@@ -19,7 +19,7 @@ public class ActionSystem : MonoBehaviour
     // public Animator animator;
 
 
-    [SerializeField] private ActionTableEntity currentAction;
+    public ActionTableEntity currentAction;
     private FrameUpdateRule[] frameUpdates;
     private int actionFrames = 0;
 
