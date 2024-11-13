@@ -35,15 +35,16 @@ public class StretchModule : MonoBehaviour
     // **늘리기** 기능: 늘릴 길이만큼 스트레칭 적용
     public void Stretch(float stretchAmount)
     {
-        // 늘리기 길이를 누적하고 최대 길이로 제한
-        currentStretchAmount = Mathf.Min(currentStretchAmount + stretchAmount, maxStretchLength);
-
-        // 천장 제한에 맞춰야 할 경우, 최대 길이를 조절 가능
+        // 천장 제한에 맞춰야 할 경우
         RaycastHit hit;
-        if (Physics.Raycast(targetBone.localPosition, Vector3.up, out hit, currentStretchAmount))
-        {   
-            currentStretchAmount = hit.distance;
-        }
+        if (Physics.Raycast(transform.position+Vector3.up*(unitCollider.size.y-0.1f), Vector3.up, out hit, stretchAmount+0.1f))
+            currentStretchAmount += hit.distance - 0.1f;
+        // 늘리기 길이를 누적하고 최대 길이로 제한
+        else
+            currentStretchAmount +=stretchAmount;
+
+        // 최대 길이 제한
+        currentStretchAmount = Mathf.Clamp(currentStretchAmount, 0, maxStretchLength);
 
         isStretching = true;
     }
@@ -58,7 +59,6 @@ public class StretchModule : MonoBehaviour
             unitCollider.size = new Vector3(unitCollider.size.x, initialColliderSize.y + currentStretchAmount, unitCollider.size.z);
             unitCollider.center = new Vector3(0, unitCollider.size.y / 2, 0);
         }
-
         if (targetBone != null)
         {
             targetBone.localPosition = initialBonePosition + Vector3.up * currentStretchAmount / targetBone.lossyScale.y;
@@ -70,7 +70,6 @@ public class StretchModule : MonoBehaviour
     {
         if (currentStretchAmount > 0 && !isStretching)
         {
-            Debug.Log("Return");
             float old = currentStretchAmount;
             currentStretchAmount = Mathf.Lerp(currentStretchAmount, 0, returnSpeed * Time.deltaTime);
             old = old - currentStretchAmount;
@@ -84,6 +83,7 @@ public class StretchModule : MonoBehaviour
     // 예시: 특정 키로 늘리기 동작 테스트
     void Update()
     {
+        isStretching=false;
         if (Input.GetKey(KeyCode.Space)) // 스페이스 키를 눌렀을 때
         {
             Stretch(0.1f); // 1.0f만큼 늘리기
