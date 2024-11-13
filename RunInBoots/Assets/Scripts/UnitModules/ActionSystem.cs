@@ -18,6 +18,7 @@ public class ActionSystem : MonoBehaviour
     public int initAction;
     // public Animator animator;
 
+
     [SerializeField] private ActionTableEntity currentAction;
     private FrameUpdateRule[] frameUpdates;
     private int actionFrames = 0;
@@ -47,7 +48,6 @@ public class ActionSystem : MonoBehaviour
     public void SetAction(int nextAction)
     {
         Debug.Log("Change action: " + nextAction);
-
         currentAction = actions.Actions.Find(x => x.Key == nextAction);
         string updates = currentAction.FrameUpdates;
         ParseUpdateRules(updates);
