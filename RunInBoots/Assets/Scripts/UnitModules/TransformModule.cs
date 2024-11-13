@@ -34,13 +34,16 @@ public class TransformModule : MonoBehaviour
     void FixedUpdate()
     {
         // Apply acceleration
+        float fixedDelta = Time.fixedDeltaTime;
+        speedX = rb.velocity.x;
+        speedY = rb.velocity.y;
         speedX += accelSumX;
         speedY += accelSumY;
 
         // Apply deceleration
         if(accelSumX == 0 && deaccelerating)
         {
-            deltaTime += Time.deltaTime;
+            deltaTime += fixedDelta;
             speedX = Mathf.Lerp(speedX, 0, deltaTime * deceleration);
         }
         else if(accelSumX == 0)
@@ -64,7 +67,7 @@ public class TransformModule : MonoBehaviour
         }
 
         // Apply gravity when jumping
-        speedY -= gravity * g_scale;
+        speedY -= gravity * g_scale * fixedDelta;
 
         // Apply speed limits
         if(speedX > maxSpeedX)

@@ -16,6 +16,6 @@ public class TestController : MonoBehaviour
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        transformModule.Accelerate(horizontal, vertical);
+        transformModule.Accelerate(horizontal * Time.deltaTime, vertical * Time.deltaTime);
     }
 }
