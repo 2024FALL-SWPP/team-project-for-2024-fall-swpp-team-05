@@ -17,11 +17,12 @@ public class ActionSystem : MonoBehaviour
     public ActionTable actions;
     public int initAction;
     public Animator animator;
-
+    public float contactDistance = 1.0f;
 
     public ActionTableEntity currentAction;
     private FrameUpdateRule[] frameUpdates;
     private int actionFrames = 0;
+    private Coroutine currentCouroutine = null;
 
     private TransformModule transformModule;
     private BattleModule battleModule;
@@ -45,8 +46,26 @@ public class ActionSystem : MonoBehaviour
         }
     }
 
+    bool IsLooping()
+    {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        if (stateInfo.length > 0)
+        {
+            AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
+
+            foreach (AnimationClip clip in clips)
+            {
+                if (clip.name == stateInfo.shortNameHash.ToString())
+                {
+                    return clip.isLooping;
+                }
+            }
+        }
+    }
+
     public void SetAction(int nextAction)
     {
+        int pastAction = currentAction.Key;
         Debug.Log("Change action: " + nextAction);
         currentAction = actions.Actions.Find(x => x.Key == nextAction);
         string updates = currentAction.FrameUpdates;
@@ -55,7 +74,32 @@ public class ActionSystem : MonoBehaviour
         transformModule.g_scale = currentAction.GravityScale;
         transformModule.maxSpeedX = currentAction.MaxVelocityX;
         transformModule.maxSpeedY = currentAction.MaxVelocityY;
-        animator.CrossFade(currentAction.Clip, currentAction.TransitionDuration);
+
+        if(pastAction == nextAction && IsLooping()) return;
+        else animator.CrossFadeInFixedTime(currentAction.Clip, currentAction.TransitionDuration, 0, 0);
+        
+        // Change collider size
+        if(currentCouroutine != null) StopCoroutine(currentCouroutine);
+        Vector3 targetSize = new Vector3(currentAction.ColliderX, currentAction.ColliderY, coll.size.z);
+        currentCouroutine = StartCoroutine(ChangeColliderSize(targetSize, currentAction.TransitionDuration));
+    }
+
+    IEnumerator ChangeColliderSize(Vector3 newSize, float time)
+    {
+        Vector3 startSize = coll.size;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < time)
+        {
+            coll.size = Vector3.Lerp(startSize, newSize, elapsedTime / time);
+            coll.center = new Vector3(0, coll.size.y / 2, 0);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure the final size is set exactly
+        coll.size = newSize;
+        currentCouroutine = null;
     }
     #endregion
 
@@ -86,7 +130,7 @@ public class ActionSystem : MonoBehaviour
         Vector3 origin = transform.position;
         origin.y += coll.size.y / 2;
         RaycastHit hit;
-        float distance = 1 + coll.size.y / 2;
+        float distance = contactDistance + coll.size.y / 2;
         if(Physics.Raycast(origin, Vector3.down, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             return true;
@@ -99,7 +143,7 @@ public class ActionSystem : MonoBehaviour
         // Check if character is on the wall
         Vector3 origin = transform.position;
         RaycastHit hit;
-        float distance = 1 + coll.size.x / 2;
+        float distance = contactDistance + coll.size.x / 2;
         if(Physics.Raycast(origin, Vector3.right, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             return true;
@@ -155,7 +199,7 @@ public class ActionSystem : MonoBehaviour
         if(direction.y == 0) origin.x += 1.0f;
         else origin.x -= 1.0f;
         origin.y += coll.size.y / 2;
-        distance = 1 + coll.size.y / 2;
+        distance = contactDistance + coll.size.y / 2;
         direction = Vector3.down;
         hit = new RaycastHit();
 
@@ -174,9 +218,8 @@ public class ActionSystem : MonoBehaviour
         int cond_val = 0;
         switch(cond) {
             case eActionCondition.InputX: 
-                if(Input.GetAxis("Horizontal") > 0) cond_val = 1;
-                else if(Input.GetAxis("Horizontal") < 0) cond_val = -1;
-                else cond_val = 0;
+                if(Input.GetAxis("Horizontal") == 0) cond_val = 0;
+                else cond_val = 1;
                 break;
             case eActionCondition.InputY: 
                 if(Input.GetAxis("Vertical") > 0) cond_val = 1;
@@ -188,19 +231,19 @@ public class ActionSystem : MonoBehaviour
                 else cond_val = 0;
                 break;
             case eActionCondition.Jump: 
-                if(Input.GetKeyDown(KeyCode.X)) cond_val = 1;
+                if(Input.GetKey(KeyCode.X)) cond_val = 1;
                 else cond_val = 0;
                 break;
             case eActionCondition.JumpValid: 
-                if(transformModule.jumpAllowed && Input.GetKeyDown(KeyCode.X)) cond_val = 1;
+                if(transformModule.jumpAllowed && Input.GetKey(KeyCode.X)) cond_val = 1;
                 else cond_val = 0;
                 break;
             case eActionCondition.Attack: 
-                if(Input.GetKeyDown(KeyCode.Z)) cond_val = 1;
+                if(Input.GetKey(KeyCode.Z)) cond_val = 1;
                 else cond_val = 0;
                 break;
             case eActionCondition.Run: 
-                if(Input.GetKeyDown(KeyCode.Z)) {
+                if(Input.GetKey(KeyCode.Z)) {
                     if(Input.GetAxis("Horizontal") != 0) cond_val = 1;
                     else cond_val = 0;
                 }
@@ -254,6 +297,11 @@ public class ActionSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // if current clip is not looping and animation is finished, set next action
+        if(currentAction.NextAction != 0 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+        {
+            SetAction(currentAction.NextAction);
+        }
         // Check all frame updates if func_value is SetAction
         foreach(FrameUpdateRule rule in frameUpdates)
         {
@@ -263,15 +311,8 @@ public class ActionSystem : MonoBehaviour
                 if(CheckCondition(rule.cond_name, rule.cond_value))
                 {
                     SetAction((int)rule.func_value);
-                    break;
                 }
             }
-        }
-        // if current clip is not looping and animation is finished, set next action
-        if(currentAction.NextAction != 0 && actionFrames == 10) // && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
-        {
-            SetAction(currentAction.NextAction);
-            return;
         }
         // Check all frame updates if func_value is not SetAction
         foreach(FrameUpdateRule rule in frameUpdates)
