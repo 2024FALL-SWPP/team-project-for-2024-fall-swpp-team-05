@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections.Generic;
 using TMPro;
+using Newtonsoft.Json;
 
 
 public class TerrainDataLoader : MonoBehaviour
@@ -45,8 +46,17 @@ public class TerrainDataLoader : MonoBehaviour
 
     public void SaveTerrainData()
     {
+        terrainData.stage = stage;
+        terrainData.terrainIndex = terrainIndex;
         gridManager.SaveGridData();
-        string json = JsonUtility.ToJson(terrainData, true); // prettyPrint 옵션을 true로 설정하여 가독성을 높임
+
+        var settings = new JsonSerializerSettings
+        {
+            Formatting = Formatting.Indented,
+            TypeNameHandling = TypeNameHandling.Auto
+        };
+
+        string json = JsonConvert.SerializeObject(terrainData, settings); // prettyPrint 옵션을 true로 설정하여 가독성을 높임
         File.WriteAllText(path, json);
         Debug.Log("Level data saved to " + path);
     }
@@ -60,7 +70,13 @@ public class TerrainDataLoader : MonoBehaviour
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
-            terrainData = JsonUtility.FromJson<TerrainData>(json);
+
+
+            var settings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            };
+            terrainData = JsonConvert.DeserializeObject<TerrainData>(json, settings);
             Debug.Log("Level data loaded from " + path);
             LoadTerrain();
         }

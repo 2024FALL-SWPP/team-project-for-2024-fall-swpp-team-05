@@ -110,9 +110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bb3324060109456fb61e660e8a4dd5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pipeID: 6
-  targetPipeID: 7
-  targetStage: 3
+  pipeID: 7
+  targetPipeID: 8
+  targetStage: 4
   targetIndex: 1
   onInteract:
     m_PersistentCalls:

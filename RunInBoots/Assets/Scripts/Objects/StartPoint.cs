@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Catnip : MonoBehaviour
+public class StartPoint : MonoBehaviour
 {
-    public int catnipID;
-
     // Start is called before the first frame update
     void Start()
     {

@@ -15,10 +15,10 @@ public class GameManager : MonoSingleton<GameManager>
     {
         base.Awake();
 
-        playerPrefab = Resources.Load<GameObject>("Prefabs/Player");
+        playerPrefab = Resources.Load<GameObject>("PlayerController");
         if(playerPrefab == null)
         {
-            Debug.LogError("Player prefab가 Resources/Prefabs/에 존재하지 않음");
+            Debug.LogError("PlayerController prefab이 Resources/에 존재하지 않음");
         }
     }
 

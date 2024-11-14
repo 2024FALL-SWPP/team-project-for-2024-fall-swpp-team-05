@@ -313,71 +313,133 @@ public class GridManager : MonoBehaviour
     {
         // save grid data to terrainDataLoader
         //Debug.Log("Save grid data");
-        terrainDataLoader.terrainData.objectPositions = new ObjPosList();
+        terrainDataLoader.terrainData.levelObjects.Clear();
         terrainDataLoader.terrainData.gridSize = gridSize;
 
-        Dictionary<string, List<Vector3>> objectPositionsDict = new Dictionary<string, List<Vector3>>();
+        //Dictionary<string, List<Vector3>> objectPositionsDict = new Dictionary<string, List<Vector3>>();
         foreach (var entry in placedObjects)
         {
             SerializableVector2Int gridPos = entry.Key;
-            string prefabName = entry.Value.name.Replace("(Clone)", "");
-            if (!objectPositionsDict.ContainsKey(prefabName))
+            GameObject obj = entry.Value;
+            string prefabName = obj.name.Replace("(Clone)", "");
+
+            LevelObjectData data = null;
+            if (prefabName == "Pipe")
             {
-                objectPositionsDict.Add(prefabName, new List<Vector3>());
+                PipeData pipeData = new PipeData
+                {
+                    pipeID = obj.GetComponent<Pipe>().pipeID,
+                    targetPipeID = obj.GetComponent<Pipe>().targetPipeID,
+                    targetStage = obj.GetComponent<Pipe>().targetStage,
+                    targetIndex = obj.GetComponent<Pipe>().targetIndex
+                };
+                data = pipeData;
             }
-            objectPositionsDict[prefabName].Add(GridToWorld(gridPos));
-        }
+            else if (prefabName == "StartPoint")
+            {
+                data = new StartPointData();
+            }
+            else if (prefabName == "GoalPoint")
+            {
+                GoalPointData goalData = new GoalPointData
+                {
+                    targetStage = obj.GetComponent<GoalPoint>().targetStage,
+                    targetIndex = obj.GetComponent<GoalPoint>().targetIndex
+                };
+                data = goalData;
+            }
+            else if (prefabName == "Catnip")
+            {
+                CatnipData catnipData = new CatnipData
+                {
+                    catnipID = obj.GetComponent<Catnip>().catnipID
+                };
+                data = catnipData;
+            }
+            else
+            {
+                data = new LevelObjectData();
+            }
 
-        foreach (var entry in objectPositionsDict)
-        {
-            ObjectPosition objectPosition = new ObjectPosition();
-            objectPosition.name = entry.Key;
-            objectPosition.positions = entry.Value;
-            terrainDataLoader.terrainData.objectPositions.objPos.Add(objectPosition);
-        }
+            data.gridPosition = gridPos;
+            data.objectType = prefabName;
 
-        SavePipeData();
+            // 생성된 데이터를 levelObjects 리스트에 추가
+            terrainDataLoader.terrainData.levelObjects.Add(data);
+        }
     }
 
-    public void SavePipeData()
-    {
-        // save pipe data to terrainDataLoader
-        Debug.Log("Save pipe data");
-        terrainDataLoader.terrainData.pipeConnections.pipeList.Clear();
+    //public void SavePipeData()
+    //{
+    //    // save pipe data to terrainDataLoader
+    //    Debug.Log("Save pipe data");
+    //    terrainDataLoader.terrainData.pipeConnections.pipeList.Clear();
 
-        foreach (var entry in placedObjects)
-        {
-            if (entry.Value.GetComponent<Pipe>() != null)
-            {
-                Pipe pipe = entry.Value.GetComponent<Pipe>();
-                PipeData pipeData = new PipeData();
-                pipeData.pipeID = pipe.pipeID;
-                pipeData.targetPipeID = pipe.targetPipeID;
-                pipeData.targetStage = pipe.targetStage;
-                pipeData.targetIndex = pipe.targetIndex;
-                terrainDataLoader.terrainData.pipeConnections.pipeList.Add(pipeData);
-            }
-        }
-    }
+    //    foreach (var entry in placedObjects)
+    //    {
+    //        if (entry.Value.GetComponent<Pipe>() != null)
+    //        {
+    //            Pipe pipe = entry.Value.GetComponent<Pipe>();
+    //            PipeData pipeData = new PipeData();
+    //            pipeData.pipeID = pipe.pipeID;
+    //            pipeData.targetPipeID = pipe.targetPipeID;
+    //            pipeData.targetStage = pipe.targetStage;
+    //            pipeData.targetIndex = pipe.targetIndex;
+    //            terrainDataLoader.terrainData.pipeConnections.pipeList.Add(pipeData);
+    //        }
+    //    }
+    //}
 
     public void LoadGridData()
     {
         // load grid data from terrainDataLoader
         Debug.Log("Load grid data");
         placedObjects.Clear();
-        foreach (var entry in terrainDataLoader.terrainData.objectPositions.objPos)
+        foreach (var levelObjectData in terrainDataLoader.terrainData.levelObjects)
         {
-            string prefabName = entry.name;
-            List<Vector3> positions = entry.positions;
+            string prefabName = levelObjectData.objectType;
             GameObject prefab = Resources.Load<GameObject>("LevelObject/" + prefabName);
-            foreach (Vector3 pos in positions)
+            if (prefab == null)
             {
-                SerializableVector2Int gridPos = WorldToGrid(pos);
-                GameObject obj = Instantiate(prefab, pos, Quaternion.identity);
-                Debug.Log("Placing object at " + gridPos.x + ", " + gridPos.y);
-                placedObjects.Add(gridPos, obj);
+                Debug.LogWarning($"Prefab '{prefabName}'을 찾을 수 없습니다.");
+                continue;
+            }
+
+            Vector3 position = GridToWorld(levelObjectData.gridPosition);
+            GameObject obj = Instantiate(prefab, position, Quaternion.identity);
+            placedObjects.Add(levelObjectData.gridPosition, obj);
+
+            // 생성된 오브젝트에 데이터 할당
+            if (levelObjectData is PipeData pipeData)
+            {
+                Pipe pipeComponent = obj.GetComponent<Pipe>();
+                if (pipeComponent != null)
+                {
+                    pipeComponent.pipeID = pipeData.pipeID;
+                    pipeComponent.targetPipeID = pipeData.targetPipeID;
+                    pipeComponent.targetStage = pipeData.targetStage;
+                    pipeComponent.targetIndex = pipeData.targetIndex;
+                }
+            }
+            else if (levelObjectData is GoalPointData goalData)
+            {
+                GoalPoint goalComponent = obj.GetComponent<GoalPoint>();
+                if (goalComponent != null)
+                {
+                    goalComponent.targetStage = goalData.targetStage;
+                    goalComponent.targetIndex = goalData.targetIndex;
+                }
+            }
+            else if (levelObjectData is CatnipData catnipData)
+            {
+                Catnip catnipComponent = obj.GetComponent<Catnip>();
+                if (catnipComponent != null)
+                {
+                    catnipComponent.catnipID = catnipData.catnipID;
+                }
             }
         }
+    
     }
     
     void PlaceObjectsInRange()
@@ -400,13 +462,10 @@ public class GridManager : MonoBehaviour
                 SerializableVector2Int gridPos = new SerializableVector2Int(x, y);
 
                 // erase object if selectedPrefabName is empty
-                if (selectedPrefabName != "" && selectedPrefabName != null)
+                if (!string.IsNullOrEmpty(selectedPrefabName))
                 {
                     if (placedObjects.ContainsKey(gridPos))
                     {
-                        Debug.Log("Already placed object at " + x + ", " + y);
-                        Debug.Log("minGridPos: " + minGridPos.x + ", " + minGridPos.y);
-                        Debug.Log("maxGridPos: " + maxGridPos.x + ", " + maxGridPos.y);
                         continue;
                     }
                     // grid bounds 내에 있는지 확인

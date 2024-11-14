@@ -1,43 +1,57 @@
 {
-    "stage": "",
-    "terrainIndex": "",
-    "gridSize": {
-        "x": 40,
-        "y": 20
+  "stage": "2",
+  "terrainIndex": "1",
+  "gridSize": {
+    "x": 50,
+    "y": 10
+  },
+  "levelObjects": [
+    {
+      "objectType": "CapsulePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 0
+      }
     },
-    "objectPositions": {
-        "objPos": [
-            {
-                "name": "Pipe",
-                "positions": [
-                    {
-                        "x": -2.5,
-                        "y": -4.5,
-                        "z": 0.0
-                    },
-                    {
-                        "x": -9.5,
-                        "y": -4.5,
-                        "z": 0.0
-                    }
-                ]
-            }
-        ]
+    {
+      "objectType": "CapsulePrefab",
+      "gridPosition": {
+        "x": 1,
+        "y": 0
+      }
     },
-    "pipeConnections": {
-        "pipeList": [
-            {
-                "pipeID": 3,
-                "targetPipeID": 4,
-                "targetStage": 3,
-                "targetIndex": 1
-            },
-            {
-                "pipeID": 2,
-                "targetPipeID": 3,
-                "targetStage": 2,
-                "targetIndex": 1
-            }
-        ]
+    {
+      "objectType": "CapsulePrefab",
+      "gridPosition": {
+        "x": 2,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "EnemyDog",
+      "gridPosition": {
+        "x": 6,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "EnemyDog",
+      "gridPosition": {
+        "x": 5,
+        "y": 0
+      }
+    },
+    {
+      "$type": "PipeData, Assembly-CSharp",
+      "pipeID": 1,
+      "targetPipeID": 2,
+      "targetStage": 2,
+      "targetIndex": 2,
+      "objectType": "Pipe",
+      "gridPosition": {
+        "x": 11,
+        "y": 0
+      }
     }
+  ]
 }

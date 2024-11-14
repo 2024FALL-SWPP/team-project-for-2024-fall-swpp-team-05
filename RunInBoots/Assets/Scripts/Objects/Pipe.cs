@@ -2,27 +2,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class Pipe : MonoBehaviour
+public class Pipe : InteractableObject
 {
     public int pipeID;
     public int targetPipeID;
-    public int targetStage;
-    public int targetIndex;
-    public UnityEvent onInteract;
 
-
-    private LevelLoader levelLoader;
-
-    void Start()
+    protected override void Start()
     {
-        // 게임 시작 시 상호작용 이벤트에 토관 이동 함수 연결
-        levelLoader = FindObjectOfType<LevelLoader>();
-        if (levelLoader == null || levelLoader.terrainData == null)
-        {
-            Debug.LogError("LevelLoader 또는 terrainData를 찾을 수 없습니다.");
-            return;
-        }
-        onInteract.AddListener(HandlePipeInteraction);
+        base.Start();
 
         if (GameManager.Instance.isComingFromPipe && GameManager.Instance.enteredPipeID == pipeID)
         {
@@ -36,9 +23,8 @@ public class Pipe : MonoBehaviour
         }
     }
 
-    void HandlePipeInteraction()
+    protected override void OnInteract()
     {
-        
         string sceneName = SceneManager.GetActiveScene().name;
         int currentStage, currentIndex;
 
@@ -50,18 +36,15 @@ public class Pipe : MonoBehaviour
 
         if (currentStage != targetStage || currentIndex != targetIndex)
         {
-            //새로운 씬으로 이동
             GameManager.Instance.enteredPipeID = targetPipeID;
             GameManager.Instance.isComingFromPipe = true;
 
             SceneManager.sceneLoaded += OnSceneLoaded;
-            SceneManager.LoadScene($"Stage_{targetStage}_{targetIndex}");
+            LoadScene(targetStage, targetIndex);
         }
         else
         {
-            // 동일한 씬 내에서 이동
             Pipe targetPipe = GameUtils.FindPipeByID(targetPipeID);
-
             if (targetPipe != null)
             {
                 Vector3 targetPosition = targetPipe.transform.position + Vector3.right * 1.5f;
@@ -74,10 +57,10 @@ public class Pipe : MonoBehaviour
         }
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Pipe targetPipe = GameUtils.FindPipeByID(GameManager.Instance.enteredPipeID);
-        if(targetPipe != null)
+        if (targetPipe != null)
         {
             Vector3 targetPosition = targetPipe.transform.position + Vector3.right * 1.5f;
             GameManager.Instance.SpawnPlayer(targetPosition);
@@ -89,21 +72,11 @@ public class Pipe : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            onInteract.Invoke();
-            Debug.Log("Player meet Pipe");
-        }
-    }
-
     private bool ParseSceneName(string sceneName, out int stage, out int index)
     {
         stage = 0;
         index = 0;
 
-        // 씬 이름이 "Stage_{stage}_{index}" 형태인지 확인
         string[] parts = sceneName.Split('_');
         if (parts.Length == 3 && parts[0] == "Stage" && int.TryParse(parts[1], out stage) && int.TryParse(parts[2], out index))
         {

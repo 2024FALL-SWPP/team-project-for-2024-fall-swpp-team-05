@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.UIElements;
+using Newtonsoft.Json;
 
 public class LevelLoader : MonoBehaviour
 {
@@ -27,7 +29,11 @@ public class LevelLoader : MonoBehaviour
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
-            terrainData = JsonUtility.FromJson<TerrainData>(json);
+            var settings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            };
+            terrainData = JsonConvert.DeserializeObject<TerrainData>(json, settings);
             Debug.Log("Level data loaded from " + path);
 
             CreateObjectsFromData();
@@ -41,15 +47,11 @@ public class LevelLoader : MonoBehaviour
     private void CreateObjectsFromData()
     {
         Transform parentTransform = this.transform;
-
         Vector3 minPosition = FindMinPosition();
 
-        // 먼저 모든 파이프를 위치에 맞게 생성하고 리스트에 저장
-        List<GameObject> createdPipes = new List<GameObject>();
-
-        foreach (var objectPosition in terrainData.objectPositions.objPos)
+        foreach (var levelObjectData in terrainData.levelObjects)
         {
-            string prefabName = objectPosition.name;
+            string prefabName = levelObjectData.objectType;
             GameObject prefab = Resources.Load<GameObject>("LevelObject/" + prefabName);
 
             if (prefab == null)
@@ -58,46 +60,42 @@ public class LevelLoader : MonoBehaviour
                 continue;
             }
 
-            foreach (Vector3 position in objectPosition.positions)
+            Vector3 adjustedPosition = GridToWorldPosition(levelObjectData.gridPosition) - minPosition;
+            GameObject instance = Instantiate(prefab, adjustedPosition, Quaternion.identity, parentTransform);
+            //Debug.Log($"Placing object '{prefabName}' at {adjustedPosition}");
+            if (levelObjectData is PipeData pipeData)
             {
-                Vector3 adjustedPosition = position - minPosition;
-                GameObject instance = Instantiate(prefab, adjustedPosition, Quaternion.identity, parentTransform);
-                Debug.Log($"Placing object '{prefabName}' at {adjustedPosition}");
-
-                // 파이프 오브젝트를 발견하면 리스트에 저장
-                if (prefabName == "Pipe")
+                Debug.Log("$$$$$$");
+                Pipe pipeComponent = instance.GetComponent<Pipe>();
+                if (pipeComponent != null)
                 {
-                    createdPipes.Add(instance);
+                    Debug.Log("#####");
+                    pipeComponent.pipeID = pipeData.pipeID;
+                    pipeComponent.targetPipeID = pipeData.targetPipeID;
+                    pipeComponent.targetStage = pipeData.targetStage;
+                    pipeComponent.targetIndex = pipeData.targetIndex;
+                }
+                else
+                {
+                    Debug.LogError("No Pipe Script in Pipe");
                 }
             }
-        }
-
-        // 파이프 데이터 처리: pipeData 리스트의 순서대로 각 파이프에 설정 정보 적용
-        for (int i = 0; i < terrainData.pipeConnections.pipeList.Count; i++)
-        {
-            // 생성된 파이프 수와 pipeData 수가 일치하는지 확인
-            if (i >= createdPipes.Count)
+            else if (levelObjectData is GoalPointData goalData)
             {
-                Debug.LogWarning("생성된 파이프의 수가 pipeData의 수보다 적습니다. 남은 pipeData는 적용되지 않습니다.");
-                break;
+                GoalPoint goalComponent = instance.GetComponent<GoalPoint>();
+                if (goalComponent != null)
+                {
+                    goalComponent.targetStage = goalData.targetStage;
+                    goalComponent.targetIndex = goalData.targetIndex;
+                }
             }
-
-            PipeData pipeData = terrainData.pipeConnections.pipeList[i];
-            GameObject pipeInstance = createdPipes[i];
-            Pipe pipeComponent = pipeInstance.GetComponent<Pipe>();
-
-            if (pipeComponent != null)
+            else if (levelObjectData is CatnipData catnipData)
             {
-                pipeComponent.pipeID = pipeData.pipeID;
-                pipeComponent.targetPipeID = pipeData.targetPipeID;
-                pipeComponent.targetStage = pipeData.targetStage;
-                pipeComponent.targetIndex = pipeData.targetIndex;
-
-                Debug.Log($"Pipe configured with ID: {pipeComponent.pipeID}, Target Pipe ID: {pipeComponent.targetPipeID}, Target Stage: {pipeComponent.targetStage}, Target Index: {pipeComponent.targetIndex}");
-            }
-            else
-            {
-                Debug.LogError("Pipe prefab에 Pipe 컴포넌트가 없습니다.");
+                Catnip catnipComponent = instance.GetComponent<Catnip>();
+                if (catnipComponent != null)
+                {
+                    catnipComponent.catnipID = catnipData.catnipID;
+                }
             }
         }
     }
@@ -106,13 +104,18 @@ public class LevelLoader : MonoBehaviour
     {
         Vector3 minPosition = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
 
-        foreach (var objectPosition in terrainData.objectPositions.objPos)
+        foreach (var levelObjectData in terrainData.levelObjects)
         {
-            foreach (Vector3 position in objectPosition.positions)
-            {
-                minPosition = Vector3.Min(minPosition, position);
-            }
+            Vector3 position = GridToWorldPosition(levelObjectData.gridPosition);
+            minPosition = Vector3.Min(minPosition, position);
         }
         return minPosition;
+    }
+
+    private Vector3 GridToWorldPosition(SerializableVector2Int gridPosition)
+    {
+        // 그리드 좌표를 월드 좌표로 변환하는 방법을 정의합니다.
+        // 예시로 1:1 비율을 사용할 수 있습니다.
+        return new Vector3(gridPosition.x, gridPosition.y, 0);
     }
 }

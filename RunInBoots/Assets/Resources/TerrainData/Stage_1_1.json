@@ -1,32 +1,64 @@
 {
-    "stage": "",
-    "terrainIndex": "",
-    "gridSize": {
-        "x": 10,
-        "y": 10
+  "stage": "1",
+  "terrainIndex": "1",
+  "gridSize": {
+    "x": 20,
+    "y": 10
+  },
+  "levelObjects": [
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 0
+      }
     },
-    "objectPositions": {
-        "objPos": [
-            {
-                "name": "Pipe",
-                "positions": [
-                    {
-                        "x": -9.5,
-                        "y": -4.5,
-                        "z": 0.0
-                    }
-                ]
-            }
-        ]
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 1,
+        "y": 0
+      }
     },
-    "pipeConnections": {
-        "pipeList": [
-            {
-                "pipeID": 1,
-                "targetPipeID": 2,
-                "targetStage": 2,
-                "targetIndex": 1
-            }
-        ]
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 2,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CapsulePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CapsulePrefab",
+      "gridPosition": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CapsulePrefab",
+      "gridPosition": {
+        "x": 2,
+        "y": 1
+      }
+    },
+    {
+      "$type": "PipeData, Assembly-CSharp",
+      "pipeID": 1,
+      "targetPipeID": 2,
+      "targetStage": 1,
+      "targetIndex": 2,
+      "objectType": "Pipe",
+      "gridPosition": {
+        "x": 4,
+        "y": 0
+      }
     }
+  ]
 }
