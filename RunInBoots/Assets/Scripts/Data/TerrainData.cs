@@ -70,5 +70,6 @@ public class TerrainData
     public string stage;
     public string terrainIndex;
     public SerializableVector2Int gridSize;
+    public int catnipCount;
     public List<LevelObjectData> levelObjects = new List<LevelObjectData>();
 }

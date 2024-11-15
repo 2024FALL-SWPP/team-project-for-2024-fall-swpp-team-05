@@ -16,7 +16,7 @@ public class TerrainDataLoader : MonoBehaviour
     public TerrainData terrainData;
 
     private string stage;
-    public string terrainIndex;
+    private string terrainIndex;
     private string fileName;
     private string path;
     
@@ -26,22 +26,6 @@ public class TerrainDataLoader : MonoBehaviour
     private void Start()
     {
         loadPanel.SetActive(true);
-    }
-
-
-    void Awake()
-    {
-        // Singleton 패턴 구현
-        if (Instance == null)
-        {
-            Instance = this;
-            // 필요에 따라 씬 전환 시에도 파괴되지 않도록 설정
-            // DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 
     public void SaveTerrainData()

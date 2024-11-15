@@ -46,6 +46,24 @@
         "x": 11,
         "y": 0
       }
+    },
+    {
+      "$type": "CatnipData, Assembly-CSharp",
+      "catnipID": 2,
+      "objectType": "Catnip",
+      "gridPosition": {
+        "x": 8,
+        "y": 0
+      }
+    },
+    {
+      "$type": "CatnipData, Assembly-CSharp",
+      "catnipID": 1,
+      "objectType": "Catnip",
+      "gridPosition": {
+        "x": 4,
+        "y": 0
+      }
     }
   ]
 }

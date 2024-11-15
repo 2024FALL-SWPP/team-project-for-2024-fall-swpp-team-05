@@ -5,6 +5,7 @@
     "x": 20,
     "y": 10
   },
+  "catnipCount": 2,
   "levelObjects": [
     {
       "objectType": "CapsulePrefab",
@@ -63,6 +64,24 @@
       "objectType": "GoalPoint",
       "gridPosition": {
         "x": 16,
+        "y": 1
+      }
+    },
+    {
+      "$type": "CatnipData, Assembly-CSharp",
+      "catnipID": 3,
+      "objectType": "Catnip",
+      "gridPosition": {
+        "x": 5,
+        "y": 1
+      }
+    },
+    {
+      "$type": "CatnipData, Assembly-CSharp",
+      "catnipID": 4,
+      "objectType": "Catnip",
+      "gridPosition": {
+        "x": 9,
         "y": 1
       }
     }

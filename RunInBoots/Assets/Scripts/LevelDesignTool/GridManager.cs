@@ -316,7 +316,8 @@ public class GridManager : MonoBehaviour
         terrainDataLoader.terrainData.levelObjects.Clear();
         terrainDataLoader.terrainData.gridSize = gridSize;
 
-        //Dictionary<string, List<Vector3>> objectPositionsDict = new Dictionary<string, List<Vector3>>();
+        int catnipCount = 0;
+
         foreach (var entry in placedObjects)
         {
             SerializableVector2Int gridPos = entry.Key;
@@ -350,6 +351,7 @@ public class GridManager : MonoBehaviour
             }
             else if (prefabName == "Catnip")
             {
+                catnipCount++;
                 CatnipData catnipData = new CatnipData
                 {
                     catnipID = obj.GetComponent<Catnip>().catnipID
@@ -364,9 +366,9 @@ public class GridManager : MonoBehaviour
             data.gridPosition = gridPos;
             data.objectType = prefabName;
 
-            // 생성된 데이터를 levelObjects 리스트에 추가
             terrainDataLoader.terrainData.levelObjects.Add(data);
         }
+        terrainDataLoader.terrainData.catnipCount = catnipCount;
     }
 
     //public void SavePipeData()

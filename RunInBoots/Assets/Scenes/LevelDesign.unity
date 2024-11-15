@@ -3882,10 +3882,8 @@ MonoBehaviour:
     gridSize:
       x: 0
       y: 0
-    objectPositions:
-      objPos: []
-    pipeConnections:
-      pipeList: []
+    levelObjects: []
+  terrainIndex: 
 --- !u!1 &1803291804
 GameObject:
   m_ObjectHideFlags: 0

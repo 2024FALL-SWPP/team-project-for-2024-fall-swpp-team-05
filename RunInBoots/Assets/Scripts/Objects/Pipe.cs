@@ -25,12 +25,14 @@ public class Pipe : InteractableObject
 
     protected override void OnInteract()
     {
-        string sceneName = SceneManager.GetActiveScene().name;
+        
         int currentStage, currentIndex;
+        currentStage = GameManager.Instance.GetCurrentStage();
+        currentIndex = GameManager.Instance.GetCurrentIndex();
 
-        if (!ParseSceneName(sceneName, out currentStage, out currentIndex))
+        if (currentStage == -1 || currentIndex == -1)
         {
-            Debug.LogError($"현재 씬 이름에서 Stage와 Index를 파싱할 수 없습니다: {sceneName}");
+            Debug.LogError($"현재 씬 이름에서 Stage와 Index를 파싱할 수 없습니다.");
             return;
         }
 

@@ -34,7 +34,7 @@ public class LevelLoader : MonoBehaviour
             terrainData = JsonConvert.DeserializeObject<TerrainData>(json, settings);
             Debug.Log("Level data loaded from " + path);
 
-            CreateObjectsFromData();
+            CreateObjectsFromData(); 
         }
         else
         {

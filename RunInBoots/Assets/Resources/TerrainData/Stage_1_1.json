@@ -5,6 +5,7 @@
     "x": 20,
     "y": 10
   },
+  "catnipCount": 2,
   "levelObjects": [
     {
       "objectType": "CubePrefab",
@@ -37,6 +38,24 @@
       "objectType": "Pipe",
       "gridPosition": {
         "x": 4,
+        "y": 0
+      }
+    },
+    {
+      "$type": "CatnipData, Assembly-CSharp",
+      "catnipID": 1,
+      "objectType": "Catnip",
+      "gridPosition": {
+        "x": 6,
+        "y": 0
+      }
+    },
+    {
+      "$type": "CatnipData, Assembly-CSharp",
+      "catnipID": 2,
+      "objectType": "Catnip",
+      "gridPosition": {
+        "x": 10,
         "y": 0
       }
     }

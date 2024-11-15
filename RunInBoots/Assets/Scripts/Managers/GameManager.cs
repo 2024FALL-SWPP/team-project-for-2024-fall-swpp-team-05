@@ -7,9 +7,16 @@ public class GameManager : MonoSingleton<GameManager>
 {
     private IGameState _currentState;
 
+    private GameObject playerPrefab;
+
     public int enteredPipeID = -1;
     public bool isComingFromPipe = false;
-    private GameObject playerPrefab;
+
+    public int totalCatnipCount;
+    public int collectedCatnipCount;
+    public List<bool> _catnipCollectedStates = new List<bool>();
+
+
 
     protected override void Awake()
     {
@@ -22,16 +29,21 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    // Start is called before the first frame update
-    //void Start()
-    //{
-    //    StartNewStage();
-    //}
-
     public void StartNewStage()
     {
         _currentState = new StageState();
         _currentState.Start();
+
+        int currentStage = GetCurrentStage();
+        totalCatnipCount = GameUtils.CountTotalCatnipInStage(currentStage);
+
+        if (_catnipCollectedStates.Count == 0 || _catnipCollectedStates.Count != totalCatnipCount)
+        {
+            InitializeCatnipStates(totalCatnipCount);
+        }
+
+        collectedCatnipCount = 0;
+        UIManager.Instance.InitializeCatnipUI(totalCatnipCount);
     }
 
     // Update is called once per frame  
@@ -45,6 +57,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void GameOver()
     {
+        UIManager.Instance.ClearCatnipUI();
         if (_currentState != null)
         {
             _currentState.Exit();
@@ -53,10 +66,54 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void GameClear()
     {
+        UIManager.Instance.ClearCatnipUI();
         if (_currentState != null)
         {
             _currentState.Exit();
         }
+    }
+
+    public void CollectCatnip(int catnipID)
+    {
+        collectedCatnipCount++;
+        UIManager.Instance.UpdateCatnipUI(catnipID);
+    }
+
+    public void InitializeCatnipStates(int count)
+    {
+        _catnipCollectedStates = new List<bool>(new bool[count]);
+    }
+
+    public void UpdateCatnipState(int catnipID)
+    {
+        if (catnipID > 0 && catnipID <= _catnipCollectedStates.Count)
+        {
+            _catnipCollectedStates[catnipID - 1] = true;
+        }
+    }
+
+
+
+    public int GetCurrentStage()
+    {
+        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        string[] parts = sceneName.Split('_');
+        if (parts.Length > 1 && int.TryParse(parts[1], out int stage))
+        {
+            return stage;
+        }
+        return -1;
+    }
+
+    public int GetCurrentIndex()
+    {
+        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        string[] parts = sceneName.Split('_');
+        if (parts.Length > 1 && int.TryParse(parts[2], out int index))
+        {
+            return index;
+        }
+        return -1;
     }
 
     public void SpawnPlayer(Vector3 position)

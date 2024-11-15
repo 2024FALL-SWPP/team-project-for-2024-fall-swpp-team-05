@@ -7,14 +7,12 @@ public class Catnip : MonoBehaviour
     public int catnipID;
 
     // Start is called before the first frame update
-    void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (other.CompareTag("Player"))
+        {
+            GameManager.Instance.CollectCatnip(catnipID);
+            Destroy(gameObject);
+        }
     }
 }
