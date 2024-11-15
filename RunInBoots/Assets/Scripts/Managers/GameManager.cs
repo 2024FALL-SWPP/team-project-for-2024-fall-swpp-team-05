@@ -23,7 +23,12 @@ public class GameManager : MonoSingleton<GameManager>
     }
 
     // Start is called before the first frame update
-    void Start()
+    //void Start()
+    //{
+    //    StartNewStage();
+    //}
+
+    public void StartNewStage()
     {
         _currentState = new StageState();
         _currentState.Start();
@@ -39,6 +44,14 @@ public class GameManager : MonoSingleton<GameManager>
     }
 
     public void GameOver()
+    {
+        if (_currentState != null)
+        {
+            _currentState.Exit();
+        }
+    }
+
+    public void GameClear()
     {
         if (_currentState != null)
         {

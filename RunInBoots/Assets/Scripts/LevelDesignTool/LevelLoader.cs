@@ -7,10 +7,8 @@ using Newtonsoft.Json;
 
 public class LevelLoader : MonoBehaviour
 {
-    // Start is called before the first frame update
     public int stage;
     public int index;
-
 
     private string fileName;
     private string path;

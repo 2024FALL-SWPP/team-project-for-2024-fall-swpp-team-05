@@ -47,12 +47,13 @@ public class ActionSystem : MonoBehaviour
 
     public void SetAction(int nextAction)
     {
-        Debug.Log("Change action: " + nextAction);
+        //Debug.Log("Change action: " + nextAction);
         currentAction = actions.Actions.Find(x => x.Key == nextAction);
         string updates = currentAction.FrameUpdates;
         ParseUpdateRules(updates);
         actionFrames = 0;
-        transformModule.g_scale = currentAction.GravityScale;
+        //transformModule.g_scale = currentAction.GravityScale;
+        transformModule.g_scale = 0;                /////####### 나중에 수정하기!!!!!
         transformModule.maxSpeedX = currentAction.MaxVelocityX;
         transformModule.maxSpeedY = currentAction.MaxVelocityY;
         animator.CrossFade(currentAction.Clip, currentAction.TransitionDuration);
@@ -231,7 +232,7 @@ public class ActionSystem : MonoBehaviour
                 break;
 
         }
-        if(cond_val == val) Debug.Log("Check condition: " + cond + " " + val);
+        //if(cond_val == val) Debug.Log("Check condition: " + cond + " " + val);
         return (cond_val == val);
     }
     #endregion
@@ -239,7 +240,7 @@ public class ActionSystem : MonoBehaviour
     void RunFunction(eActionFunction func, float val)
     {
         // Run function
-        Debug.Log("Run function: " + func + " " + val);
+        //Debug.Log("Run function: " + func + " " + val);
     }
 
     // Start is called before the first frame update

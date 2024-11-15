@@ -9,36 +9,16 @@
     {
       "objectType": "CubePrefab",
       "gridPosition": {
-        "x": 0,
-        "y": 0
-      }
-    },
-    {
-      "objectType": "CubePrefab",
-      "gridPosition": {
-        "x": 1,
-        "y": 0
-      }
-    },
-    {
-      "objectType": "CubePrefab",
-      "gridPosition": {
         "x": 2,
         "y": 0
       }
     },
     {
-      "objectType": "CapsulePrefab",
+      "$type": "StartPointData, Assembly-CSharp",
+      "objectType": "StartPoint",
       "gridPosition": {
         "x": 0,
-        "y": 1
-      }
-    },
-    {
-      "objectType": "CapsulePrefab",
-      "gridPosition": {
-        "x": 1,
-        "y": 1
+        "y": 0
       }
     },
     {

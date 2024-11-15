@@ -8,6 +8,16 @@ public abstract class InteractableObject : MonoBehaviour
     public int targetIndex;
     public UnityEvent Interact = new UnityEvent();
 
+    //public void Initialize()
+    //{
+
+    //}
+
+    //public void Interact()
+    //{
+    //    Interact.Invoke();
+    //}
+
     protected virtual void Start()
     {
         Interact.AddListener(OnInteract);
