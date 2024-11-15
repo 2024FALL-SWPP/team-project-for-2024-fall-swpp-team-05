@@ -33,33 +33,43 @@ public class ObjectPosition
     public List<Vector3> positions = new List<Vector3>();
 }
 
+//[Serializable]
+//public class ObjPosList
+//{
+//    public List<ObjectPosition> objPos = new List<ObjectPosition>();
+//}
+
+//[Serializable]
+//public class PipeData
+//{
+//    public int pipeID;
+//    public int targetPipeID;
+//    public int targetStage;
+//    public int targetIndex;
+//}
+
+
+//[Serializable]
+//public class PipeList
+//{
+//    public List<PipeData> pipeList = new List<PipeData>();
+//}
+
+//[System.Serializable]
+//public class TerrainData
+//{
+//    public string stage;
+//    public string terrainIndex;
+//    public SerializableVector2Int gridSize;
+//    public ObjPosList objectPositions = new ObjPosList();
+//    public PipeList pipeConnections = new PipeList();
+//}
 [Serializable]
-public class ObjPosList
-{
-    public List<ObjectPosition> objPos = new List<ObjectPosition>();
-}
-
-[Serializable]
-public class PipeData
-{
-    public string targetTerrainIndex;
-    public int pipeID;
-    public int targetPipeID;
-}
-
-
-[Serializable]
-public class PipeList
-{
-    public List<PipeData> pipeList = new List<PipeData>();
-}
-
-[System.Serializable]
 public class TerrainData
 {
     public string stage;
     public string terrainIndex;
     public SerializableVector2Int gridSize;
-    public ObjPosList objectPositions = new ObjPosList();
-    public PipeList pipeConnections = new PipeList();
+    public int catnipCount;
+    public List<LevelObjectData> levelObjects = new List<LevelObjectData>();
 }

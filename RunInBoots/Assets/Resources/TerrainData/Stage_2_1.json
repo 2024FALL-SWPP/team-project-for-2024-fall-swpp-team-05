@@ -1,19 +1,11 @@
 {
-  "stage": "1",
+  "stage": "2",
   "terrainIndex": "1",
   "gridSize": {
-    "x": 20,
+    "x": 50,
     "y": 10
   },
-  "catnipCount": 2,
   "levelObjects": [
-    {
-      "objectType": "CubePrefab",
-      "gridPosition": {
-        "x": 2,
-        "y": 0
-      }
-    },
     {
       "$type": "StartPointData, Assembly-CSharp",
       "objectType": "StartPoint",
@@ -26,27 +18,32 @@
       "objectType": "CapsulePrefab",
       "gridPosition": {
         "x": 2,
-        "y": 1
+        "y": 0
+      }
+    },
+    {
+      "objectType": "EnemyDog",
+      "gridPosition": {
+        "x": 6,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "EnemyDog",
+      "gridPosition": {
+        "x": 5,
+        "y": 0
       }
     },
     {
       "$type": "PipeData, Assembly-CSharp",
       "pipeID": 1,
       "targetPipeID": 2,
-      "targetStage": 1,
+      "targetStage": 2,
       "targetIndex": 2,
       "objectType": "Pipe",
       "gridPosition": {
-        "x": 4,
-        "y": 0
-      }
-    },
-    {
-      "$type": "CatnipData, Assembly-CSharp",
-      "catnipID": 1,
-      "objectType": "Catnip",
-      "gridPosition": {
-        "x": 6,
+        "x": 11,
         "y": 0
       }
     },
@@ -55,7 +52,16 @@
       "catnipID": 2,
       "objectType": "Catnip",
       "gridPosition": {
-        "x": 10,
+        "x": 8,
+        "y": 0
+      }
+    },
+    {
+      "$type": "CatnipData, Assembly-CSharp",
+      "catnipID": 1,
+      "objectType": "Catnip",
+      "gridPosition": {
+        "x": 4,
         "y": 0
       }
     }

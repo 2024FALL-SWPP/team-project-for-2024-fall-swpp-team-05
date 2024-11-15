@@ -1,37 +1,47 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Goal : MonoBehaviour
 {
-    public UnityEvent onInteract;
+    public UnityEvent onStageClear;
+    public int currentStage;
+    public int currentIndex;
 
+    // Start is called before the first frame update
     void Start()
     {
-        onInteract.AddListener(HandleGoalInteraction);
+        if (onStageClear != null)
+        {
+            onStageClear = new UnityEvent();
+        }
+        onStageClear.AddListener(ClearStage);
     }
 
-    void HandleGoalInteraction()
+    private void OnTriggerEnter(Collider other)
     {
-        // ë‹¤ìŒ ìŠ¤í…Œì´ì§€ê°€ ìˆìœ¼ë©´ í•´ë‹¹ ì”¬ ë¡œë“œ
-        string nextTerrainIndex = TerrainDataLoader.Instance.terrainData.terrainIndex + 1;
-        string nextSceneName = "Stage_" + TerrainDataLoader.Instance.terrainData.stage + "_" + nextTerrainIndex;
+        // "Player" ÅÂ±×¸¦ °¡Áø ¿ÀºêÁ§Æ®°¡ Ãæµ¹ÇÏ¸é ÀÌº¥Æ® È£Ãâ
+        if (other.CompareTag("Player"))
+        {
+            onStageClear.Invoke();
+            Debug.Log("Player reached the goal!");
+        }
+    }
 
-        // ì”¬ì´ ì¡´ì¬í•˜ëŠ”ì§€ í™•ì¸
+    private void ClearStage()
+    {
+        // ´ÙÀ½ ½ºÅ×ÀÌÁö¿¡ ´ëÀÀÇÏ´Â ·¹º§ ¾ÀÀÌ ÀÖ´ÂÁö È®ÀÎ
+        string nextSceneName = $"Stage_{currentStage + 1}_{currentIndex}";
+
+        // ÇØ´ç ¾ÀÀÌ ·Îµå °¡´ÉÇÑ »óÅÂÀÎÁö È®ÀÎ
         if (Application.CanStreamedLevelBeLoaded(nextSceneName))
         {
-            SceneLoadManager.Instance.LoadScene(nextSceneName);
+            SceneManager.LoadScene(nextSceneName);
+            Debug.Log($"Loading next stage: {nextSceneName}");
         }
         else
         {
-            Debug.Log("No more stages.");
-        }
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            onInteract.Invoke();
+            Debug.Log("No next stage available. Ending current stage.");
         }
     }
 }

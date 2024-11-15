@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class StartPoint : MonoBehaviour
 {
-    void Start()
+    public void Start()
     {
-        // 플레이어 생성
-        GameManager.Instance.SpawnPlayer(transform.position);
-        // 자신은 비활성화
-        gameObject.SetActive(false);
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        Vector3 spawnPosition = transform.position + Vector3.up * 1.0f;
+        GameManager.Instance.StartNewStage();
+        GameManager.Instance.SpawnPlayer(spawnPosition);
     }
 }

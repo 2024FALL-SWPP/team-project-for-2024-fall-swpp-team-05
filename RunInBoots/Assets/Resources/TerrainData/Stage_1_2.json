@@ -1,0 +1,89 @@
+{
+  "stage": "1",
+  "terrainIndex": "2",
+  "gridSize": {
+    "x": 20,
+    "y": 10
+  },
+  "catnipCount": 2,
+  "levelObjects": [
+    {
+      "objectType": "CapsulePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CapsulePrefab",
+      "gridPosition": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "$type": "PipeData, Assembly-CSharp",
+      "pipeID": 2,
+      "targetPipeID": 1,
+      "targetStage": 1,
+      "targetIndex": 1,
+      "objectType": "Pipe",
+      "gridPosition": {
+        "x": 3,
+        "y": 1
+      }
+    },
+    {
+      "$type": "PipeData, Assembly-CSharp",
+      "pipeID": 3,
+      "targetPipeID": 4,
+      "targetStage": 1,
+      "targetIndex": 2,
+      "objectType": "Pipe",
+      "gridPosition": {
+        "x": 7,
+        "y": 1
+      }
+    },
+    {
+      "$type": "PipeData, Assembly-CSharp",
+      "pipeID": 4,
+      "targetPipeID": 3,
+      "targetStage": 1,
+      "targetIndex": 2,
+      "objectType": "Pipe",
+      "gridPosition": {
+        "x": 11,
+        "y": 1
+      }
+    },
+    {
+      "$type": "GoalPointData, Assembly-CSharp",
+      "targetStage": 2,
+      "targetIndex": 1,
+      "objectType": "GoalPoint",
+      "gridPosition": {
+        "x": 16,
+        "y": 1
+      }
+    },
+    {
+      "$type": "CatnipData, Assembly-CSharp",
+      "catnipID": 3,
+      "objectType": "Catnip",
+      "gridPosition": {
+        "x": 5,
+        "y": 1
+      }
+    },
+    {
+      "$type": "CatnipData, Assembly-CSharp",
+      "catnipID": 4,
+      "objectType": "Catnip",
+      "gridPosition": {
+        "x": 9,
+        "y": 1
+      }
+    }
+  ]
+}
