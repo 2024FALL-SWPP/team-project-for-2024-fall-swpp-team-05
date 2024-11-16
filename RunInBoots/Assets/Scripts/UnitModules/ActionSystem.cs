@@ -17,6 +17,7 @@ public class ActionSystem : MonoBehaviour
     public ActionTable actions;
     public int initAction;
     public Animator animator;
+    public StretchModule stretchModule;
     public float contactDistance = 1.0f;
 
     public ActionTableEntity currentAction;
@@ -278,17 +279,78 @@ public class ActionSystem : MonoBehaviour
     }
     #endregion
 
+    #region Functions for running functions
+    int GetPlayerDirectionX()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if(player != null)
+        {
+            if(player.transform.position.x > transform.position.x) return 1;
+            else if(player.transform.position.x < transform.position.x) return -1;
+            else return 0;
+        }
+        return 0;
+    }
+
+    int GetPlayerDirectionY()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if(player != null)
+        {
+            if(player.transform.position.y > transform.position.y) return 1;
+            else if(player.transform.position.y < transform.position.y) return -1;
+            else return 0;
+        }
+        return 0;
+    }
+
     void RunFunction(eActionFunction func, float val)
     {
         // Run function
-        //Debug.Log("Run function: " + func + " " + val);
+        switch(func) {
+            case eActionFunction.SetAction:
+                SetAction((int)val);
+                break;
+            case eActionFunction.MoveInputX:
+                if(Input.GetAxis("Horizontal") > 0) transformModule.Accelerate(val, 0);
+                else if(Input.GetAxis("Horizontal") < 0) transformModule.Accelerate(-val, 0);
+                else transformModule.Accelerate(0, 0);
+                break;
+            case eActionFunction.MoveLocalX:
+                Vector3 direction = transform.forward;
+                if(direction.y == 0) transformModule.Accelerate(val, 0);
+                else transformModule.Accelerate(-val, 0);
+                break;
+            case eActionFunction.MoveX:
+                transformModule.Accelerate(val, 0);
+                break;
+            case eActionFunction.MoveY:
+                transformModule.Accelerate(0, val);
+                break;
+            case eActionFunction.Stretch:
+                stretchModule.Stretch(val);
+                break;
+            case eActionFunction.Spawn:
+                string obj = "ActionSpawn/" + ((int)val).ToString();
+                battleModule.SpawnAttackObject(obj);
+                break;
+            case eActionFunction.StalkX:
+                transformModule.Accelerate(val * GetPlayerDirectionX(), 0);
+                break;
+            case eActionFunction.StalkY:
+                transformModule.Accelerate(0, val * GetPlayerDirectionY());
+                break;
+        }
+        Debug.Log("Run function: " + func + " " + val);
     }
+    #endregion
 
     // Start is called before the first frame update
     void Start()
     {
         transformModule = GetComponent<TransformModule>();
         battleModule = GetComponent<BattleModule>();
+        stretchModule = GetComponent<StretchModule>();
         coll = GetComponent<BoxCollider>();
         SetAction(initAction);
     }
