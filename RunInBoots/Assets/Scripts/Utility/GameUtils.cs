@@ -26,16 +26,17 @@ public class GameUtils
 
         for (int index = 1; ; index++)
         {
-            string fileName = $"Stage_{stage}_{index}.json";
-            string path = Path.Combine(Application.dataPath, "Resources", "TerrainData", fileName);
+            string fileName = $"Stage_{stage}_{index}";
+            string path = Path.Combine("TerrainData", fileName);
+            var file = Resources.Load<TextAsset>(path);
 
-            if (!File.Exists(path))
+            if (file==null)
             {
                 Debug.Log($"파일 {fileName}을 찾을 수 없습니다. 종료합니다.");
                 break;
             }
 
-            string json = File.ReadAllText(path);
+            string json = file.text;
             TerrainData terrainData = JsonConvert.DeserializeObject<TerrainData>(json);
 
             totalCatnip += terrainData.catnipCount; // 캣닢 개수 누적
