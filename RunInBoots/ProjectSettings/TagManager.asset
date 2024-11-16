@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Cell
+  - TimerText
+  - CatnipIconContainer
   layers:
   - Default
   - TransparentFX
