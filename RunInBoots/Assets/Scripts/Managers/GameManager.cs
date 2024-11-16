@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -15,6 +16,7 @@ public class GameManager : MonoSingleton<GameManager>
     public int totalCatnipCount;
     public int collectedCatnipCount;
     public List<bool> _catnipCollectedStates = new List<bool>();
+    private int lifeCount = 9;
 
 
 
@@ -55,7 +57,13 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    public void GameOver()
+    public void LifeOver()
+    {
+        // (임시) 현재 씬을 다시 로드
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // 추후 목숨 차감 처리, 목숨 0이면 게임 오버, 아니면 목숨 UI 띄우고 현재 씬 다시 로드
+    }
+    private void GameOver() 
     {
         UIManager.Instance.ClearCatnipUI();
         if (_currentState != null)
@@ -64,13 +72,40 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    public void GameClear()
+    public void StageClear()
     {
         UIManager.Instance.ClearCatnipUI();
         if (_currentState != null)
         {
             _currentState.Exit();
+            if(!LoadNextStage(GetCurrentStage()))
+            {
+                GameClear();
+            }
         }
+    }
+    private bool LoadNextStage(int currentStage)
+    {
+        // 다음 스테이지에 대응하는 레벨 씬이 있는지 확인
+        string nextSceneName = $"Stage_{currentStage + 1}_{1}";
+
+        // 해당 씬이 로드 가능한 상태인지 확인
+        if (SceneUtility.GetBuildIndexByScenePath(nextSceneName) != -1)
+        {
+            SceneManager.LoadScene(nextSceneName);
+            Debug.Log($"Loading next stage: {nextSceneName}");
+            return true;
+        }
+        else
+        {
+            Debug.Log("No next stage available. Ending current stage.");
+            return false;
+        }
+    }
+
+    private void GameClear() 
+    {
+        Debug.Log("Game Clear");
     }
 
     public void CollectCatnip(int catnipID)

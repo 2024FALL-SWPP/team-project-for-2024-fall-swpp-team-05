@@ -13,6 +13,7 @@ public class StageState : IGameState
 
     private float _timeLimit = 300f;
     private float _remainingTime;
+    private float _accumulativeTime = 0f;
 
     private GameObject _player;
     private CinemachineVirtualCamera _virtualCamera;
@@ -72,7 +73,7 @@ public class StageState : IGameState
 
         if (_remainingTime <= 0f)
         {
-            Exit();
+            KillPlayer();
             return;
         }
 
@@ -80,16 +81,20 @@ public class StageState : IGameState
         {
             if (_player.transform.position.y < _gridYLowerBound)
             {
-                Exit();
+                KillPlayer();
                 return;
             }
         }
     }
+
+    private void KillPlayer() 
+    {
+        _accumulativeTime += _timeLimit - _remainingTime;
+        _remainingTime = _timeLimit;
+        GameManager.Instance.LifeOver();
+    }
     public void Exit()
     {
         _isStarted = false;
-        // (임시) 현재 씬을 다시 로드
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
     }
 }
