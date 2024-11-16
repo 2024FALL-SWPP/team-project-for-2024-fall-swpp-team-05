@@ -30,7 +30,7 @@ public class StretchModule : MonoBehaviour
         }
         else if(actionSystem == null)
         {
-            initialColliderSize = unitCollider.size;
+            initialColliderSize = unitCollider.size.y * Vector3.up; // 캡슐 콜라이더의 초기 크기
         }
         if (targetBone != null)
         {
