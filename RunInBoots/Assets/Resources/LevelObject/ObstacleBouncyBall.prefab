@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 6653706109187249953}
   - component: {fileID: 1275584232777106484}
   - component: {fileID: 1275584232777106485}
+  - component: {fileID: 570385434}
   m_Layer: 0
-  m_Name: ObstacleRubberBall
+  m_Name: ObstacleBouncyBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,6 +69,17 @@ MonoBehaviour:
   actions: {fileID: 11400000, guid: 4d02f5c2264e91947b3d186e35a17e0e, type: 2}
   initAction: 401
   animator: {fileID: 6653706109187249953}
+  currentAction:
+    Key: 0
+    Clip: 
+    ColliderX: 0
+    ColliderY: 0
+    TransitionDuration: 0
+    GravityScale: 0
+    MaxVelocityX: 0
+    MaxVelocityY: 0
+    NextAction: 0
+    FrameUpdates: 
 --- !u!95 &6653706109187249953
 Animator:
   serializedVersion: 5
@@ -123,6 +135,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &570385434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507263715420380437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d57261839389e4d168afc97ec149bbe7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ballActionKey: 402
+  repelForce: 80
 --- !u!1 &5447529591821298050
 GameObject:
   m_ObjectHideFlags: 0

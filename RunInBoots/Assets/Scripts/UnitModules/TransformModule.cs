@@ -34,13 +34,16 @@ public class TransformModule : MonoBehaviour
     void FixedUpdate()
     {
         // Apply acceleration
+        float fixedDelta = Time.fixedDeltaTime;
+        speedX = rb.velocity.x;
+        speedY = rb.velocity.y;
         speedX += accelSumX;
         speedY += accelSumY;
 
         // Apply deceleration
         if(accelSumX == 0 && deaccelerating)
         {
-            deltaTime += Time.deltaTime;
+            deltaTime += fixedDelta;
             speedX = Mathf.Lerp(speedX, 0, deltaTime * deceleration);
         }
         else if(accelSumX == 0)
@@ -54,17 +57,10 @@ public class TransformModule : MonoBehaviour
         }
 
         // Rotate the player
-        if(accelSumX > 0)
-        {
-            rb.MoveRotation(Quaternion.Euler(0, 0, 0));
-        }
-        else if(accelSumX < 0)
-        {
-            rb.MoveRotation(Quaternion.Euler(0, 180, 0));
-        }
+        UpdateRotation();
 
         // Apply gravity when jumping
-        speedY -= gravity * g_scale;
+        speedY -= gravity * g_scale * fixedDelta;
 
         // Apply speed limits
         if(speedX > maxSpeedX)
@@ -94,27 +90,51 @@ public class TransformModule : MonoBehaviour
     {
         accelSumX += speedXCoef * Xinput;
         accelSumY += speedYCoef * YInput;
+        UpdateRotation();
     }
 
+    private void UpdateRotation() 
+    {
+        // update rotation
+        if (accelSumX > 0)
+        {
+            rb.MoveRotation(Quaternion.Euler(0, 0, 0));
+        }
+        else if (accelSumX < 0)
+        {
+            rb.MoveRotation(Quaternion.Euler(0, 180, 0));
+        }
+    }
+
+    List<Collider> groundColliders = new List<Collider>();
     private void OnCollisionEnter(Collision collision)
     {
         // check layer collision with ground
-        if(!jumpAllowed && collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             Vector3 contactNormal = collision.GetContact(0).normal;
             // float threshold = -0.1f;
             if (contactNormal.y >= 0)
             {
                 jumpAllowed = true;
+                groundColliders.Add(collision.collider);
             }
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if(jumpAllowed && collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            jumpAllowed = false;
+            if (groundColliders.Contains(collision.collider))
+            {
+                groundColliders.Remove(collision.collider);
+            }
+            foreach(var col in groundColliders)
+                if(col ==null)
+                    groundColliders.Remove(col);
+            if (groundColliders.Count == 0)
+                jumpAllowed = false;
         }
     }
 }

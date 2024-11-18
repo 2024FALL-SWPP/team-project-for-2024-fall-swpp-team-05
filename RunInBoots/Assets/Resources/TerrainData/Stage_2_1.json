@@ -1,0 +1,69 @@
+{
+  "stage": "2",
+  "terrainIndex": "1",
+  "gridSize": {
+    "x": 50,
+    "y": 10
+  },
+  "levelObjects": [
+    {
+      "$type": "StartPointData, Assembly-CSharp",
+      "objectType": "StartPoint",
+      "gridPosition": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CapsulePrefab",
+      "gridPosition": {
+        "x": 2,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "EnemyDog",
+      "gridPosition": {
+        "x": 6,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "EnemyDog",
+      "gridPosition": {
+        "x": 5,
+        "y": 0
+      }
+    },
+    {
+      "$type": "PipeData, Assembly-CSharp",
+      "pipeID": 1,
+      "targetPipeID": 2,
+      "targetStage": 2,
+      "targetIndex": 2,
+      "objectType": "Pipe",
+      "gridPosition": {
+        "x": 11,
+        "y": 0
+      }
+    },
+    {
+      "$type": "CatnipData, Assembly-CSharp",
+      "catnipID": 2,
+      "objectType": "Catnip",
+      "gridPosition": {
+        "x": 8,
+        "y": 0
+      }
+    },
+    {
+      "$type": "CatnipData, Assembly-CSharp",
+      "catnipID": 1,
+      "objectType": "Catnip",
+      "gridPosition": {
+        "x": 4,
+        "y": 0
+      }
+    }
+  ]
+}

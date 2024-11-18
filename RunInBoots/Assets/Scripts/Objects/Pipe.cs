@@ -1,39 +1,90 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
-public class Pipe : MonoBehaviour
+public class Pipe : InteractableObject
 {
     public int pipeID;
-    public string targetTerrainIndex;
     public int targetPipeID;
-    public UnityEvent onInteract;
 
-    void Start()
+    protected override void Start()
     {
-        // 게임 시작 시 상호작용 이벤트에 토관 이동 함수 연결
-        onInteract.AddListener(HandlePipeInteraction);
+        base.Start();
+
+        if (GameManager.Instance.isComingFromPipe && GameManager.Instance.enteredPipeID == pipeID)
+        {
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null)
+            {
+                Vector3 targetPosition = transform.position + Vector3.right * 1.5f;
+                player.transform.position = targetPosition;
+                GameManager.Instance.ResetPipeData(); // 상태 초기화
+            }
+        }
     }
 
-    void HandlePipeInteraction()
+    protected override void OnInteract()
     {
-        // 토관 이동 로직 구현
-        if (targetTerrainIndex != TerrainDataLoader.Instance.terrainData.terrainIndex)
+        
+        int currentStage, currentIndex;
+        currentStage = GameManager.Instance.GetCurrentStage();
+        currentIndex = GameManager.Instance.GetCurrentIndex();
+
+        if (currentStage == -1 || currentIndex == -1)
         {
-            // 다른 지형으로 이동
-            SceneLoadManager.Instance.LoadScene("Stage_" + TerrainDataLoader.Instance.terrainData.stage + "_" + targetTerrainIndex);
+            Debug.LogError($"현재 씬 이름에서 Stage와 Index를 파싱할 수 없습니다.");
+            return;
+        }
+
+        if (currentStage != targetStage || currentIndex != targetIndex)
+        {
+            GameManager.Instance.enteredPipeID = targetPipeID;
+            GameManager.Instance.isComingFromPipe = true;
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            LoadScene(targetStage, targetIndex);
         }
         else
         {
-            // 같은 지형 내에서 이동
-            // 연결된 토관의 위치로 플레이어 이동
+            Pipe targetPipe = GameUtils.FindPipeByID(targetPipeID);
+            if (targetPipe != null)
+            {
+                Vector3 targetPosition = targetPipe.transform.position + Vector3.right * 1.5f;
+                GameManager.Instance.SpawnPlayer(targetPosition);
+            }
+            else
+            {
+                Debug.LogError($"ID가 {targetPipeID}인 파이프를 찾을 수 없습니다.");
+            }
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (other.CompareTag("Player"))
+        Pipe targetPipe = GameUtils.FindPipeByID(GameManager.Instance.enteredPipeID);
+        if (targetPipe != null)
         {
-            onInteract.Invoke();
+            Vector3 targetPosition = targetPipe.transform.position + Vector3.right * 1.5f;
+            GameManager.Instance.SpawnPlayer(targetPosition);
         }
+        else
+        {
+            Debug.LogError("다음 씬에서 target Pipe를 찾을 수 없습니다.");
+        }
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private bool ParseSceneName(string sceneName, out int stage, out int index)
+    {
+        stage = 0;
+        index = 0;
+
+        string[] parts = sceneName.Split('_');
+        if (parts.Length == 3 && parts[0] == "Stage" && int.TryParse(parts[1], out stage) && int.TryParse(parts[2], out index))
+        {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -1,39 +1,174 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
-using Cinemachine;
+using UnityEngine.SceneManagement;
 
-
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSingleton<GameManager>
 {
-    public static GameManager Instance;
-    public GameObject playerPrefab;
-    private GameObject playerInstance;
+    private IGameState _currentState;
 
-    void Awake()
+    private GameObject playerPrefab;
+
+    public int enteredPipeID = -1;
+    public bool isComingFromPipe = false;
+
+    public int totalCatnipCount;
+    public int collectedCatnipCount;
+    public List<bool> _catnipCollectedStates = new List<bool>();
+    private int lifeCount = 9;
+
+
+
+    protected override void Awake()
     {
-        if (Instance == null)
+        base.Awake();
+        Application.targetFrameRate = 60;
+        playerPrefab = Resources.Load<GameObject>("PlayerController");
+        if(playerPrefab == null)
         {
-            Instance = this;
-            // ì”¬ ì „í™˜ ì‹œ íŒŒê´´ë˜ì§€ ì•Šë„ë¡ ì„¤ì •
-            DontDestroyOnLoad(gameObject);
+            Debug.LogError("PlayerController prefabÀÌ Resources/¿¡ Á¸ÀçÇÏÁö ¾ÊÀ½");
+        }
+    }
+
+    public void StartNewStage()
+    {
+        _currentState = new StageState();
+        _currentState.Start();
+
+        int currentStage = GetCurrentStage();
+        totalCatnipCount = GameUtils.CountTotalCatnipInStage(currentStage);
+
+        if (_catnipCollectedStates.Count == 0 || _catnipCollectedStates.Count != totalCatnipCount)
+        {
+            InitializeCatnipStates(totalCatnipCount);
+        }
+
+        collectedCatnipCount = 0;
+        UIManager.Instance.InitializeCatnipUI(totalCatnipCount);
+    }
+
+    // Update is called once per frame  
+    void Update()
+    {
+        if (_currentState != null && _currentState.IsStarted)
+        {
+            _currentState.Update();
+        }
+    }
+
+    public void LifeOver()
+    {
+        // (ÀÓ½Ã) ÇöÀç ¾ÀÀ» ´Ù½Ã ·Îµå
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // ÃßÈÄ ¸ñ¼û Â÷°¨ Ã³¸®, ¸ñ¼û 0ÀÌ¸é °ÔÀÓ ¿À¹ö, ¾Æ´Ï¸é ¸ñ¼û UI ¶ç¿ì°í ÇöÀç ¾À ´Ù½Ã ·Îµå
+    }
+    private void GameOver() 
+    {
+        UIManager.Instance.ClearCatnipUI();
+        if (_currentState != null)
+        {
+            _currentState.Exit();
+        }
+    }
+
+    public void StageClear()
+    {
+        UIManager.Instance.ClearCatnipUI();
+        if (_currentState != null)
+        {
+            _currentState.Exit();
+            if(!LoadNextStage(GetCurrentStage()))
+            {
+                GameClear();
+            }
+        }
+    }
+    private bool LoadNextStage(int currentStage)
+    {
+        // ´ÙÀ½ ½ºÅ×ÀÌÁö¿¡ ´ëÀÀÇÏ´Â ·¹º§ ¾ÀÀÌ ÀÖ´ÂÁö È®ÀÎ
+        string nextSceneName = $"Stage_{currentStage + 1}_{1}";
+
+        // ÇØ´ç ¾ÀÀÌ ·Îµå °¡´ÉÇÑ »óÅÂÀÎÁö È®ÀÎ
+        if (SceneUtility.GetBuildIndexByScenePath(nextSceneName) != -1)
+        {
+            SceneManager.LoadScene(nextSceneName);
+            Debug.Log($"Loading next stage: {nextSceneName}");
+            return true;
         }
         else
         {
-            Destroy(gameObject);
+            Debug.Log("No next stage available. Ending current stage.");
+            return false;
         }
+    }
+
+    private void GameClear() 
+    {
+        Debug.Log("Game Clear");
+    }
+
+    public void CollectCatnip(int catnipID)
+    {
+        collectedCatnipCount++;
+        UIManager.Instance.UpdateCatnipUI(catnipID);
+    }
+
+    public void InitializeCatnipStates(int count)
+    {
+        _catnipCollectedStates = new List<bool>(new bool[count]);
+    }
+
+    public void UpdateCatnipState(int catnipID)
+    {
+        if (catnipID > 0 && catnipID <= _catnipCollectedStates.Count)
+        {
+            _catnipCollectedStates[catnipID - 1] = true;
+        }
+    }
+
+
+
+    public int GetCurrentStage()
+    {
+        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        string[] parts = sceneName.Split('_');
+        if (parts.Length > 1 && int.TryParse(parts[1], out int stage))
+        {
+            return stage;
+        }
+        return -1;
+    }
+
+    public int GetCurrentIndex()
+    {
+        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        string[] parts = sceneName.Split('_');
+        if (parts.Length > 1 && int.TryParse(parts[2], out int index))
+        {
+            return index;
+        }
+        return -1;
     }
 
     public void SpawnPlayer(Vector3 position)
     {
-        if (playerInstance != null)
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player == null)
         {
-            Destroy(playerInstance);
+            Debug.Log("GameManager.SpawnManager¿¡¼­ Player¸¦ ¸ø Ã£À½");
+            player = Instantiate(playerPrefab, position, Quaternion.identity);
         }
-        playerInstance = Instantiate(playerPrefab, position, Quaternion.identity);
-        // ì¹´ë©”ë¼ì˜ Follow íƒ€ê²Ÿ ì„¤ì •
-        Cinemachine.CinemachineVirtualCamera vcam = FindObjectOfType<Cinemachine.CinemachineVirtualCamera>();
-        if (vcam != null)
+        else
         {
-            vcam.Follow = playerInstance.transform;
+            player.transform.position = position;
+            Debug.Log($"Player moved to position: {position}");
         }
+    }
+
+    public void ResetPipeData()
+    {
+        enteredPipeID = -1;
+        isComingFromPipe = false;
     }
 }
