@@ -1,10 +1,13 @@
 public enum eActionCondition
 {
+    None,
     InputX,
     InputY,
+    InputYDown,
     Risable,
     Jump,
     JumpValid,
+    JumpDown,
     Attack,
     Run,
     OnLand,

@@ -10,6 +10,7 @@ public class StretchModule : MonoBehaviour
     // Private variables to track stretching state
     public float currentStretchAmount = 0f; // 현재 늘어난 길이
     private Vector3 initialColliderSize; // 콜라이더 초기 크기
+    private ActionSystem actionSystem; // 액션 시스템
     private Vector3 initialBonePosition; // 본 초기 위치
     private BoxCollider unitCollider; // 유닛의 캡슐 콜라이더
 
@@ -22,7 +23,12 @@ public class StretchModule : MonoBehaviour
         // Initialize collider and bone setting
         unitCollider = GetComponent<BoxCollider>();
         rb = GetComponent<Rigidbody>();
-        if (unitCollider != null)
+        actionSystem = GetComponent<ActionSystem>();
+        if (unitCollider != null && actionSystem != null)
+        {
+            initialColliderSize = new Vector3 (actionSystem.currentAction.ColliderX, actionSystem.currentAction.ColliderY, 1); // 캡슐 콜라이더의 초기 크기
+        }
+        else if(actionSystem == null)
         {
             initialColliderSize = unitCollider.size.y * Vector3.up; // 캡슐 콜라이더의 초기 크기
         }
@@ -56,6 +62,10 @@ public class StretchModule : MonoBehaviour
         // 유닛의 콜라이더 크기 및 본 위치 조정
         if (unitCollider != null)
         {
+            if(actionSystem != null)
+            {
+                initialColliderSize = new Vector3(actionSystem.currentAction.ColliderX, actionSystem.currentAction.ColliderY, 1);
+            }
             unitCollider.size = new Vector3(unitCollider.size.x, initialColliderSize.y + currentStretchAmount, unitCollider.size.z);
             unitCollider.center = new Vector3(0, unitCollider.size.y / 2, 0);
         }
@@ -76,17 +86,11 @@ public class StretchModule : MonoBehaviour
             // 유닛 Y축 위치 조정
             rb.MovePosition(rb.position + Vector3.up * old);
         }
-
-        isStretching = false;
     }
 
     // 예시: 특정 키로 늘리기 동작 테스트
     void Update()
     {
         isStretching=false;
-        if (Input.GetKey(KeyCode.Space)) // 스페이스 키를 눌렀을 때
-        {
-            Stretch(0.1f); // 1.0f만큼 늘리기
-        }
     }
 }

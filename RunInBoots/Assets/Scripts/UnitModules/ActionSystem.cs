@@ -17,6 +17,7 @@ public class ActionSystem : MonoBehaviour
     public ActionTable actions;
     public int initAction;
     public Animator animator;
+    public StretchModule stretchModule;
     public float contactDistance = 1.0f;
 
     public ActionTableEntity currentAction;
@@ -127,10 +128,10 @@ public class ActionSystem : MonoBehaviour
     {
         // Check if character is on the ground
         Vector3 origin = transform.position;
-        origin.y += coll.size.y / 2;
+        origin = new Vector3(origin.x, origin.y + coll.size.y / 2, origin.z);
         RaycastHit hit;
-        float distance = contactDistance + coll.size.y / 2;
-        if(Physics.Raycast(origin, Vector3.down, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        float distance = contactDistance + coll.size.y/2;
+        if (Physics.Raycast(origin, Vector3.down, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             return true;
         }
@@ -171,16 +172,16 @@ public class ActionSystem : MonoBehaviour
 
     bool CheckWalkable()
     {
-        Vector3 direction = transform.forward;
-        if(direction.y == 0) direction = Vector3.right;
+
+        Vector3 direction = animator.transform.forward;;
+        if(direction.x >0) direction = Vector3.right;
         else direction = Vector3.left;
 
         Vector3 origin = transform.position;
 
-        float distance = 1 + coll.size.x / 2;
+        float distance = contactDistance + coll.size.x / 2;
         RaycastHit hit;
-
-        if(Physics.Raycast(origin, direction, out hit, distance))
+        if (Physics.Raycast(origin+Vector3.up*0.1f, direction, out hit, distance))
         {
             BattleModule unit = hit.collider.gameObject.GetComponent<BattleModule>();
             if(unit != null && unit.team == battleModule.team)
@@ -195,7 +196,7 @@ public class ActionSystem : MonoBehaviour
 
         // Check if there is a hole in front of the character
         origin = transform.position;
-        if(direction.y == 0) origin.x += 1.0f;
+        if(direction.x >0) origin.x += 1.0f;
         else origin.x -= 1.0f;
         origin.y += coll.size.y / 2;
         distance = contactDistance + coll.size.y / 2;
@@ -214,7 +215,7 @@ public class ActionSystem : MonoBehaviour
 
     bool CheckCondition(eActionCondition cond, int val)
     {
-        int cond_val = 0;
+        int cond_val = 1;
         switch(cond) {
             case eActionCondition.InputX: 
                 if(Input.GetAxis("Horizontal") == 0) cond_val = 0;
@@ -223,6 +224,14 @@ public class ActionSystem : MonoBehaviour
             case eActionCondition.InputY: 
                 if(Input.GetAxis("Vertical") > 0) cond_val = 1;
                 else if(Input.GetAxis("Vertical") < 0) cond_val = -1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.InputYDown:
+                if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.UpArrow)) 
+                {
+                    if (Input.GetAxis("Vertical") > 0) cond_val = 1;
+                    else if (Input.GetAxis("Vertical") < 0) cond_val = -1;
+                }
                 else cond_val = 0;
                 break;
             case eActionCondition.Risable: 
@@ -235,6 +244,10 @@ public class ActionSystem : MonoBehaviour
                 break;
             case eActionCondition.JumpValid: 
                 if(transformModule.jumpAllowed && Input.GetKey(KeyCode.X)) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.JumpDown:
+                if (Input.GetKeyDown(KeyCode.X)) cond_val = 1;
                 else cond_val = 0;
                 break;
             case eActionCondition.Attack: 
@@ -278,19 +291,98 @@ public class ActionSystem : MonoBehaviour
     }
     #endregion
 
+    #region Functions for running functions
+    int GetPlayerDirectionX()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if(player != null)
+        {
+            if(player.transform.position.x > transform.position.x) return 1;
+            else if(player.transform.position.x < transform.position.x) return -1;
+            else return 0;
+        }
+        return 0;
+    }
+
+    int GetPlayerDirectionY()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if(player != null)
+        {
+            if(player.transform.position.y > transform.position.y) return 1;
+            else if(player.transform.position.y < transform.position.y) return -1;
+            else return 0;
+        }
+        return 0;
+    }
+
+    void SpawnObject(string resourcePath)
+    {
+        GameObject loadedObject = Resources.Load<GameObject>(resourcePath);
+        if (loadedObject != null)
+        {
+            var animTransform = animator.transform;
+            var instance = Instantiate(loadedObject, transform.position, Quaternion.identity);
+            instance.transform.SetParent(animTransform);
+            instance.transform.localRotation = Quaternion.identity;
+            instance.transform.localPosition += loadedObject.transform.position;
+        }
+        else
+        {
+            Debug.LogError("Resource not found: " + resourcePath);
+        }
+    }
+
     void RunFunction(eActionFunction func, float val)
     {
         // Run function
-        //Debug.Log("Run function: " + func + " " + val);
+        switch(func) {
+            case eActionFunction.SetAction:
+                SetAction((int)val);
+                break;
+            case eActionFunction.MoveInputX:
+                if(Input.GetAxis("Horizontal") > 0) transformModule.Accelerate(val, 0);
+                else if(Input.GetAxis("Horizontal") < 0) transformModule.Accelerate(-val, 0);
+                else transformModule.Accelerate(0, 0);
+                break;
+            case eActionFunction.MoveLocalX:
+                Vector3 direction = animator.transform.forward;
+                if(direction.x > 0) transformModule.Accelerate(val, 0);
+                else transformModule.Accelerate(-val, 0);
+                break;
+            case eActionFunction.MoveX:
+                transformModule.Accelerate(val, 0);
+                break;
+            case eActionFunction.MoveY:
+                transformModule.Accelerate(0, val);
+                break;
+            case eActionFunction.Stretch:
+                stretchModule.Stretch(val);
+                break;
+            case eActionFunction.Spawn:
+                string obj = "ActionSpawn/" + ((int)val).ToString();
+                SpawnObject(obj);
+                break;
+            case eActionFunction.StalkX:
+                transformModule.Accelerate(val * GetPlayerDirectionX(), 0);
+                break;
+            case eActionFunction.StalkY:
+                transformModule.Accelerate(0, val * GetPlayerDirectionY());
+                break;
+        }
+        Debug.Log("Run function: " + func + " " + val);
     }
+    #endregion
 
     // Start is called before the first frame update
     void Start()
     {
         transformModule = GetComponent<TransformModule>();
         battleModule = GetComponent<BattleModule>();
+        stretchModule = GetComponent<StretchModule>();
         coll = GetComponent<BoxCollider>();
         SetAction(initAction);
+        Application.targetFrameRate = 60;
     }
 
     // Update is called once per frame
