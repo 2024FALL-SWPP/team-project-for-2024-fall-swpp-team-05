@@ -35,7 +35,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     private void FindTimerText()
     {
-        GameObject timerObject = GameObject.Find("TimerText");
+        GameObject timerObject = GameObject.FindGameObjectWithTag("TimerText");
         if (timerObject != null)
         {
             _timerText = timerObject.GetComponent<TextMeshProUGUI>();
@@ -50,9 +50,7 @@ public class UIManager : MonoSingleton<UIManager>
     {
         if (_timerText != null)
         {
-            int minutes = Mathf.FloorToInt(remainingTime / 60f);
-            int seconds = Mathf.FloorToInt(remainingTime % 60f);
-            _timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            _timerText.text = $"{Mathf.CeilToInt(remainingTime)}";
         }
         else
         {
@@ -64,7 +62,7 @@ public class UIManager : MonoSingleton<UIManager>
     {
         if (catnipIconContainer == null)
         {
-            GameObject containerObject = GameObject.Find("CatnipIconContainer");
+            GameObject containerObject = GameObject.FindGameObjectWithTag("CatnipIconContainer");
             if (containerObject != null)
             {
                 catnipIconContainer = containerObject.transform;
