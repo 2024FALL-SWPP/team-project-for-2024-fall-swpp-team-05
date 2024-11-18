@@ -28,3 +28,12 @@
 
 # Unity3D generated file on crash reports
 sysinfo.txt
+
+# Visual Studio solution user options file
+*.suo
+
+# Visual Studio workspace settings
+*.dwlt
+
+# C# project files
+*.csproj
