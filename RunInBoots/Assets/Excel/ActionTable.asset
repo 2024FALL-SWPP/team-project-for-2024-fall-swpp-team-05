@@ -92,7 +92,7 @@ MonoBehaviour:
     MaxVelocityX: 3
     MaxVelocityY: 3
     NextAction: 0
-    FrameUpdates: '[{InputX,1,SetAction,181},{InputY,0,SetAction,184},{InputY,-1,SetAction,184},{OnLand,0,SetAction,183},{JumpValid,1,SetAction,182}]'
+    FrameUpdates: '[{InputY,1,Stretch,1},{InputX,1,SetAction,181},{InputY,0,SetAction,184},{InputY,-1,SetAction,184},{OnLand,0,SetAction,183},{JumpValid,1,SetAction,182}]'
   - Key: 109
     Clip: cat_crouch
     ColliderX: 0.8

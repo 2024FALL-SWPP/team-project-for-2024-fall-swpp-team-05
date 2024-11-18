@@ -86,8 +86,6 @@ public class StretchModule : MonoBehaviour
             // 유닛 Y축 위치 조정
             rb.MovePosition(rb.position + Vector3.up * old);
         }
-
-        isStretching = false;
     }
 
     // 예시: 특정 키로 늘리기 동작 테스트

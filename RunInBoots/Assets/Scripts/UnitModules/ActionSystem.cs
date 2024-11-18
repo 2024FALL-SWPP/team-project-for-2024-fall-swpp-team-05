@@ -172,18 +172,20 @@ public class ActionSystem : MonoBehaviour
 
     bool CheckWalkable()
     {
-        Vector3 direction = transform.forward;
-        if(direction.y == 0) direction = Vector3.right;
+
+        Vector3 direction = animator.transform.forward;;
+        if(direction.x >0) direction = Vector3.right;
         else direction = Vector3.left;
 
         Vector3 origin = transform.position;
 
-        float distance = 1 + coll.size.x / 2;
+        float distance = contactDistance + coll.size.x / 2;
         RaycastHit hit;
-
-        if(Physics.Raycast(origin, direction, out hit, distance))
+        Debug.LogError($"{direction} {origin + Vector3.up * 0.1f} {distance}");
+        if (Physics.Raycast(origin+Vector3.up*0.1f, direction, out hit, distance))
         {
             BattleModule unit = hit.collider.gameObject.GetComponent<BattleModule>();
+            Debug.LogError(hit.collider.name);
             if(unit != null && unit.team == battleModule.team)
             {
                 return false;
@@ -196,7 +198,7 @@ public class ActionSystem : MonoBehaviour
 
         // Check if there is a hole in front of the character
         origin = transform.position;
-        if(direction.y == 0) origin.x += 1.0f;
+        if(direction.x >0) origin.x += 1.0f;
         else origin.x -= 1.0f;
         origin.y += coll.size.y / 2;
         distance = contactDistance + coll.size.y / 2;
@@ -304,6 +306,23 @@ public class ActionSystem : MonoBehaviour
         return 0;
     }
 
+    void SpawnObject(string resourcePath)
+    {
+        GameObject loadedObject = Resources.Load<GameObject>(resourcePath);
+        if (loadedObject != null)
+        {
+            var animTransform = animator.transform;
+            var instance = Instantiate(loadedObject, transform.position, Quaternion.identity);
+            instance.transform.SetParent(animTransform);
+            instance.transform.localRotation = Quaternion.identity;
+            instance.transform.localPosition += loadedObject.transform.position;
+        }
+        else
+        {
+            Debug.LogError("Resource not found: " + resourcePath);
+        }
+    }
+
     void RunFunction(eActionFunction func, float val)
     {
         // Run function
@@ -317,8 +336,8 @@ public class ActionSystem : MonoBehaviour
                 else transformModule.Accelerate(0, 0);
                 break;
             case eActionFunction.MoveLocalX:
-                Vector3 direction = transform.forward;
-                if(direction.y == 0) transformModule.Accelerate(val, 0);
+                Vector3 direction = animator.transform.forward;
+                if(direction.x > 0) transformModule.Accelerate(val, 0);
                 else transformModule.Accelerate(-val, 0);
                 break;
             case eActionFunction.MoveX:
@@ -332,7 +351,7 @@ public class ActionSystem : MonoBehaviour
                 break;
             case eActionFunction.Spawn:
                 string obj = "ActionSpawn/" + ((int)val).ToString();
-                battleModule.SpawnAttackObject(obj);
+                SpawnObject(obj);
                 break;
             case eActionFunction.StalkX:
                 transformModule.Accelerate(val * GetPlayerDirectionX(), 0);

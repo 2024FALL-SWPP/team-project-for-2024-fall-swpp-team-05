@@ -11,18 +11,6 @@ public class BattleModule : MonoBehaviour
     public UnityEvent death;
     public enum eTeam { Player, Enemy };
     public eTeam team = eTeam.Player;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     
     public void Attacked() {
         health -= 1;
@@ -32,32 +20,30 @@ public class BattleModule : MonoBehaviour
         }
     }
 
-    public void SpawnAttackObject(string resourcePath)
-    {
-        GameObject loadedObject = Resources.Load<GameObject>(resourcePath);
-        if (loadedObject != null)
-        {
-            Instantiate(loadedObject, transform.position, Quaternion.identity);
-        }
-        else
-        {
-            Debug.LogError("Resource not found: " + resourcePath);
-        }
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         BattleModule other = collision.gameObject.GetComponent<BattleModule>();
         // if collision object has battle module, attack
+        Vector3 contactNormal = collision.GetContact(0).normal;
+        Attack(other, contactNormal);
+    }
+    private void OnTriggerEnter(Collider otherCollider)
+    {
+        BattleModule other = otherCollider.gameObject.GetComponent<BattleModule>();
+        Vector3 contactNormal = (otherCollider.transform.position - transform.position).normalized;
+        Attack(other, contactNormal);
+    }
+
+    void Attack(BattleModule other, Vector3 contactNormal) 
+    {
         if (other != null && other.team != team)
         {
-            Vector3 contactNormal = collision.GetContact(0).normal;
             if (Mathf.Abs(contactNormal.x) > Mathf.Abs(contactNormal.y))
             {
-                if(contactNormal.x > 0)
+                if (contactNormal.x > 0)
                 {
                     // attack to the left (0, 0, 1, 0)
-                    if(attackDirection.z > 0 && other.attackAllowed.w > 0)
+                    if (attackDirection.z > 0 && other.attackAllowed.w > 0)
                     {
                         other.Attacked();
                     }

@@ -57,14 +57,7 @@ public class TransformModule : MonoBehaviour
         }
 
         // Rotate the player
-        if(accelSumX > 0)
-        {
-            rb.MoveRotation(Quaternion.Euler(0, 0, 0));
-        }
-        else if(accelSumX < 0)
-        {
-            rb.MoveRotation(Quaternion.Euler(0, 180, 0));
-        }
+        UpdateRotation();
 
         // Apply gravity when jumping
         speedY -= gravity * g_scale * fixedDelta;
@@ -97,6 +90,20 @@ public class TransformModule : MonoBehaviour
     {
         accelSumX += speedXCoef * Xinput;
         accelSumY += speedYCoef * YInput;
+        UpdateRotation();
+    }
+
+    private void UpdateRotation() 
+    {
+        // update rotation
+        if (accelSumX > 0)
+        {
+            rb.MoveRotation(Quaternion.Euler(0, 0, 0));
+        }
+        else if (accelSumX < 0)
+        {
+            rb.MoveRotation(Quaternion.Euler(0, 180, 0));
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
