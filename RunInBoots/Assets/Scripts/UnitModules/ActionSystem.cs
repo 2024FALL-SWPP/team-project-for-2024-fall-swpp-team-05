@@ -128,10 +128,10 @@ public class ActionSystem : MonoBehaviour
     {
         // Check if character is on the ground
         Vector3 origin = transform.position;
-        origin.y += coll.size.y / 2;
+        origin = new Vector3(origin.x, origin.y + coll.size.y / 2, origin.z);
         RaycastHit hit;
-        float distance = contactDistance + coll.size.y / 2;
-        if(Physics.Raycast(origin, Vector3.down, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        float distance = contactDistance + coll.size.y/2;
+        if (Physics.Raycast(origin, Vector3.down, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             return true;
         }
@@ -181,11 +181,9 @@ public class ActionSystem : MonoBehaviour
 
         float distance = contactDistance + coll.size.x / 2;
         RaycastHit hit;
-        Debug.LogError($"{direction} {origin + Vector3.up * 0.1f} {distance}");
         if (Physics.Raycast(origin+Vector3.up*0.1f, direction, out hit, distance))
         {
             BattleModule unit = hit.collider.gameObject.GetComponent<BattleModule>();
-            Debug.LogError(hit.collider.name);
             if(unit != null && unit.team == battleModule.team)
             {
                 return false;
@@ -217,7 +215,7 @@ public class ActionSystem : MonoBehaviour
 
     bool CheckCondition(eActionCondition cond, int val)
     {
-        int cond_val = 0;
+        int cond_val = 1;
         switch(cond) {
             case eActionCondition.InputX: 
                 if(Input.GetAxis("Horizontal") == 0) cond_val = 0;
@@ -226,6 +224,14 @@ public class ActionSystem : MonoBehaviour
             case eActionCondition.InputY: 
                 if(Input.GetAxis("Vertical") > 0) cond_val = 1;
                 else if(Input.GetAxis("Vertical") < 0) cond_val = -1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.InputYDown:
+                if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.UpArrow)) 
+                {
+                    if (Input.GetAxis("Vertical") > 0) cond_val = 1;
+                    else if (Input.GetAxis("Vertical") < 0) cond_val = -1;
+                }
                 else cond_val = 0;
                 break;
             case eActionCondition.Risable: 
@@ -238,6 +244,10 @@ public class ActionSystem : MonoBehaviour
                 break;
             case eActionCondition.JumpValid: 
                 if(transformModule.jumpAllowed && Input.GetKey(KeyCode.X)) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.JumpDown:
+                if (Input.GetKeyDown(KeyCode.X)) cond_val = 1;
                 else cond_val = 0;
                 break;
             case eActionCondition.Attack: 
@@ -372,6 +382,7 @@ public class ActionSystem : MonoBehaviour
         stretchModule = GetComponent<StretchModule>();
         coll = GetComponent<BoxCollider>();
         SetAction(initAction);
+        Application.targetFrameRate = 60;
     }
 
     // Update is called once per frame

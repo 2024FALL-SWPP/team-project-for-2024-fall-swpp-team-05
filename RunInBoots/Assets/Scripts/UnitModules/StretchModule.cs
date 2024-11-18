@@ -92,9 +92,5 @@ public class StretchModule : MonoBehaviour
     void Update()
     {
         isStretching=false;
-        if (Input.GetKey(KeyCode.Space)) // 스페이스 키를 눌렀을 때
-        {
-            Stretch(0.1f); // 1.0f만큼 늘리기
-        }
     }
 }

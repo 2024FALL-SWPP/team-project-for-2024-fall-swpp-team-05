@@ -23,7 +23,7 @@ public class GameManager : MonoSingleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
-
+        Application.targetFrameRate = 60;
         playerPrefab = Resources.Load<GameObject>("PlayerController");
         if(playerPrefab == null)
         {
