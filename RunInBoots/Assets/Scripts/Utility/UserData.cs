@@ -42,7 +42,7 @@ public class UserData
         }
         else
         {
-            lives = 9; // 기본값 3
+            lives = 9; // 기본값 9
         }
         
 
