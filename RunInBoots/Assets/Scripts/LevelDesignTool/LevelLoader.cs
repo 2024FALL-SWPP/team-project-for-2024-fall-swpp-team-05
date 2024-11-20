@@ -54,12 +54,12 @@ public class LevelLoader : MonoBehaviour
 
             if (prefab == null)
             {
-                Debug.LogWarning($"Prefab '{prefabName}'À» Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                Debug.LogWarning($"Prefab '{prefabName}'ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
                 continue;
             }
 
             Vector3 adjustedPosition = GridToWorldPosition(levelObjectData.gridPosition) - minPosition;
-            GameObject instance = Instantiate(prefab, adjustedPosition, Quaternion.identity, parentTransform);
+            GameObject instance = PoolManager.Instance.Pool(prefab, adjustedPosition, parentTransform);
             //Debug.Log($"Placing object '{prefabName}' at {adjustedPosition}");
             if (levelObjectData is PipeData pipeData)
             {
@@ -112,8 +112,8 @@ public class LevelLoader : MonoBehaviour
 
     private Vector3 GridToWorldPosition(SerializableVector2Int gridPosition)
     {
-        // ±×¸®µå ÁÂÇ¥¸¦ ¿ùµå ÁÂÇ¥·Î º¯È¯ÇÏ´Â ¹æ¹ýÀ» Á¤ÀÇÇÕ´Ï´Ù.
-        // ¿¹½Ã·Î 1:1 ºñÀ²À» »ç¿ëÇÒ ¼ö ÀÖ½À´Ï´Ù.
+        // ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
+        // ï¿½ï¿½ï¿½Ã·ï¿½ 1:1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½.
         return new Vector3(gridPosition.x, gridPosition.y, 0);
     }
 }

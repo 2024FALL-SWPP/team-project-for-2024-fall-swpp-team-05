@@ -72,7 +72,7 @@ public class GridManager : MonoBehaviour
         // if old plane already exists, remove it
         if (gridPlane != null)
         {
-            Destroy(gridPlane);
+            gridPlane.SetActive(false);
         }
         gridPlane = GameObject.CreatePrimitive(PrimitiveType.Plane);
         planePosOffset.x = gridSize.x / 2 - 10; // TODO: Full HD
@@ -125,7 +125,7 @@ public class GridManager : MonoBehaviour
             SerializableVector2Int gridPos = entry.Key;
             if (gridPos.x < 0 || gridPos.x >= gridSize.x || gridPos.y < 0 || gridPos.y >= gridSize.y)
             {
-                Destroy(entry.Value);
+                entry.Value.SetActive(false);
                 keysToRemove.Add(gridPos);
             }
         }
@@ -144,7 +144,7 @@ public class GridManager : MonoBehaviour
             int y = int.Parse(cellName[2]);
             if (x < 0 || x >= gridSize.x || y < 0 || y >= gridSize.y)
             {
-                Destroy(obj);
+                obj.SetActive(false);
             }
         }
         
@@ -408,7 +408,7 @@ public class GridManager : MonoBehaviour
             }
 
             Vector3 position = GridToWorld(levelObjectData.gridPosition);
-            GameObject obj = Instantiate(prefab, position, Quaternion.identity);
+            GameObject obj = PoolManager.Instance.Pool(prefab, position, Quaternion.identity);
             placedObjects.Add(levelObjectData.gridPosition, obj);
 
             // 생성된 오브젝트에 데이터 할당
@@ -476,7 +476,7 @@ public class GridManager : MonoBehaviour
                         continue;
                     }
                     GameObject prefab = Resources.Load<GameObject>("LevelObject/" + selectedPrefabName);
-                    GameObject obj = Instantiate(prefab, GridToWorld(gridPos), Quaternion.identity);
+                    GameObject obj = PoolManager.Instance.Pool(prefab, GridToWorld(gridPos), Quaternion.identity);
                     placedObjects.Add(gridPos, obj);
 
                     LevelObjectData data = null;
@@ -521,7 +521,7 @@ public class GridManager : MonoBehaviour
                 {
                     if (placedObjects.ContainsKey(gridPos))
                     {
-                        Destroy(placedObjects[gridPos]);
+                        placedObjects[gridPos].SetActive(false);
                         placedObjects.Remove(gridPos);
 
                         terrainDataLoader.terrainData.levelObjects.RemoveAll(data => data.gridPosition.Equals(gridPos));
