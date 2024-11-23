@@ -11,13 +11,88 @@ public class BattleModule : MonoBehaviour
     public UnityEvent death;
     public enum eTeam { Player, Enemy };
     public eTeam team = eTeam.Player;
+    public int invincibleTime = 10;
+
+    private UnityEvent _attacked;
+    private Material[] _material;
+    private Material[] _invincibleMaterial;
+    private Renderer[] _renderers;
+    private int _defaultLayer;
+    private bool _isTransparent = false;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        _attacked = new UnityEvent();
+        _attacked.AddListener(OnAttacked);
+        _renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+        _material = new Material[_renderers.Length];
+        _invincibleMaterial = new Material[_renderers.Length];
+        for (int i = 0; i < _renderers.Length; i++)
+        {
+            _material[i] = new Material(_renderers[i].material);
+            _invincibleMaterial[i] = new Material(_material[i]);
+            _invincibleMaterial[i].color = new Color(_material[i].color.r, _material[i].color.g, _material[i].color.b, 0.5f);
+        }
+        _defaultLayer = gameObject.layer;
+    }
     
-    public void Attacked() {
+    public void Attacked()
+    {
+        _attacked.Invoke();
+    }
+
+    private void OnAttacked()
+    {
         health -= 1;
-        if(health == 0 && death != null)
+        if (health == 0 && death != null)
         {
             death.Invoke();
         }
+        else if (health > 0)
+        {
+            Debug.Log("Invincible Coroutine");
+            StartCoroutine(Invincible());
+        }
+    }
+
+    IEnumerator Invincible()
+    {
+        float elapsedTime = 0f;
+        float blinkTime = 0.5f;
+        
+        gameObject.layer = LayerMask.NameToLayer("Invincible");
+        while (elapsedTime < invincibleTime)
+        {
+            if(elapsedTime % blinkTime < 0.01f)
+            {
+                if(_isTransparent)
+                {
+                    for(int i = 0; i < _renderers.Length; i++)
+                    {
+                        _renderers[i].material = _material[i];
+                    }
+                    _isTransparent = false;
+                }
+                else
+                {
+                    for(int i = 0; i < _renderers.Length; i++)
+                    {
+                        _renderers[i].material = _invincibleMaterial[i];
+                    }
+                    _isTransparent = true;
+                }
+            }
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        gameObject.layer = _defaultLayer;
+        for(int i = 0; i < _renderers.Length; i++)
+        {
+            _renderers[i].material = _material[i];
+        }
+        _isTransparent = false;
     }
 
     private void OnCollisionEnter(Collision collision)

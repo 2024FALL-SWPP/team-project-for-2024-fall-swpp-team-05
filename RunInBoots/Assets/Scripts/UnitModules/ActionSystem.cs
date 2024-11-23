@@ -286,7 +286,7 @@ public class ActionSystem : MonoBehaviour
                 break;
 
         }
-        if(cond_val == val) Debug.Log("Check condition: " + cond + " " + val);
+        // if(cond_val == val) Debug.Log("Check condition: " + cond + " " + val);
         return (cond_val == val);
     }
     #endregion
@@ -370,7 +370,7 @@ public class ActionSystem : MonoBehaviour
                 transformModule.Accelerate(0, val * GetPlayerDirectionY());
                 break;
         }
-        Debug.Log("Run function: " + func + " " + val);
+        // Debug.Log("Run function: " + func + " " + val);
     }
     #endregion
 
