@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 8453188672796038026}
   - component: {fileID: 4527542165740899190}
   - component: {fileID: 5993877854204006932}
-  - component: {fileID: 7995872060370936922}
   - component: {fileID: 2697353251092631095}
+  - component: {fileID: 7860932896189898387}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Player
@@ -111,7 +111,7 @@ MonoBehaviour:
   initAction: 101
   animator: {fileID: 1550151427339422317}
   stretchModule: {fileID: 0}
-  contactDistance: 0.1
+  contactDistance: 0.04
   currentAction:
     Key: 0
     Clip: 
@@ -123,19 +123,6 @@ MonoBehaviour:
     MaxVelocityY: 0
     NextAction: 0
     FrameUpdates: 
---- !u!65 &7995872060370936922
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5287369822939886713}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.8, y: 2.2, z: 1}
-  m_Center: {x: 0, y: 1.1, z: 0}
 --- !u!114 &2697353251092631095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,11 +136,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxStretchLength: 5
-  returnSpeed: 10
+  returnSpeed: 25
   targetBone: {fileID: 2958337069329773065}
   currentStretchAmount: 0
   rb: {fileID: 3752571735001906548}
   isStretching: 0
+--- !u!65 &7860932896189898387
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5287369822939886713}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 1.6, z: 1}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1001 &5672245530577891954
 PrefabInstance:
   m_ObjectHideFlags: 0
