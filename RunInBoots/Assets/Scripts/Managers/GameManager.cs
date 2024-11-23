@@ -27,7 +27,7 @@ public class GameManager : MonoSingleton<GameManager>
         playerPrefab = Resources.Load<GameObject>("PlayerController");
         if(playerPrefab == null)
         {
-            Debug.LogError("PlayerController prefabÀÌ Resources/¿¡ Á¸ÀçÇÏÁö ¾ÊÀ½");
+            Debug.LogError("PlayerController prefabï¿½ï¿½ Resources/ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         }
     }
 
@@ -59,9 +59,9 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void LifeOver()
     {
-        // (ÀÓ½Ã) ÇöÀç ¾ÀÀ» ´Ù½Ã ·Îµå
+        // (ï¿½Ó½ï¿½) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½Îµï¿½
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        // ÃßÈÄ ¸ñ¼û Â÷°¨ Ã³¸®, ¸ñ¼û 0ÀÌ¸é °ÔÀÓ ¿À¹ö, ¾Æ´Ï¸é ¸ñ¼û UI ¶ç¿ì°í ÇöÀç ¾À ´Ù½Ã ·Îµå
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½, ï¿½ï¿½ï¿½ 0ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Æ´Ï¸ï¿½ ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½Îµï¿½
     }
     private void GameOver() 
     {
@@ -86,10 +86,10 @@ public class GameManager : MonoSingleton<GameManager>
     }
     private bool LoadNextStage(int currentStage)
     {
-        // ´ÙÀ½ ½ºÅ×ÀÌÁö¿¡ ´ëÀÀÇÏ´Â ·¹º§ ¾ÀÀÌ ÀÖ´ÂÁö È®ÀÎ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         string nextSceneName = $"Stage_{currentStage + 1}_{1}";
 
-        // ÇØ´ç ¾ÀÀÌ ·Îµå °¡´ÉÇÑ »óÅÂÀÎÁö È®ÀÎ
+        // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         if (SceneUtility.GetBuildIndexByScenePath(nextSceneName) != -1)
         {
             SceneManager.LoadScene(nextSceneName);
@@ -156,8 +156,8 @@ public class GameManager : MonoSingleton<GameManager>
         GameObject player = GameObject.FindWithTag("Player");
         if (player == null)
         {
-            Debug.Log("GameManager.SpawnManager¿¡¼­ Player¸¦ ¸ø Ã£À½");
-            player = Instantiate(playerPrefab, position, Quaternion.identity);
+            Debug.Log("GameManager.SpawnManagerï¿½ï¿½ï¿½ï¿½ Playerï¿½ï¿½ ï¿½ï¿½ Ã£ï¿½ï¿½");
+            player = PoolManager.Instance.Pool(playerPrefab, position, Quaternion.identity);
         }
         else
         {

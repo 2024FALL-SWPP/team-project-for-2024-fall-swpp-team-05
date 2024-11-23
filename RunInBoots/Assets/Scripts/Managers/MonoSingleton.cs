@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ÀÌ ½ºÅ©¸³Æ®´Â º» ¼ö¾÷ ÀÌÀü °³ÀÎÀÌ ÁøÇàÇß´ø ÇÁ·ÎÁ§Æ®¿¡¼­ °¡Á®¿ÔÀ½À» ¾Ë¸².
+// ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¸ï¿½.
 
 public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
@@ -30,7 +30,7 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
     protected virtual void Awake()
     {
         if (Instance != this)
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         else
             DontDestroyOnLoad(gameObject);
     }

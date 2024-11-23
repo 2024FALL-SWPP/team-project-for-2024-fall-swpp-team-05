@@ -12,7 +12,7 @@ public class Catnip : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             GameManager.Instance.CollectCatnip(catnipID);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

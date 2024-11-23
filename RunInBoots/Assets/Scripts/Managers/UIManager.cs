@@ -17,12 +17,12 @@ public class UIManager : MonoSingleton<UIManager>
     protected override void Awake()
     {
         base.Awake();
-        SceneManager.sceneLoaded += OnSceneLoaded; // ¾À ·Îµå ½Ã ÀÌº¥Æ® µî·Ï
+        SceneManager.sceneLoaded += OnSceneLoaded; // ï¿½ï¿½ ï¿½Îµï¿½ ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½
     }
 
     private void OnDestroy()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded; // UIManager°¡ ÆÄ±«µÉ ¶§ ÀÌº¥Æ® µî·Ï ÇØÁ¦
+        SceneManager.sceneLoaded -= OnSceneLoaded; // UIManagerï¿½ï¿½ ï¿½Ä±ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -42,7 +42,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
         else
         {
-            Debug.LogWarning("TimerText UI ¿ä¼Ò¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogWarning("TimerText UI ï¿½ï¿½Ò¸ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
         }
     }
 
@@ -54,7 +54,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
         else
         {
-            Debug.LogWarning("TimerText UI ¿ä¼Ò°¡ ¼³Á¤µÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+            Debug.LogWarning("TimerText UI ï¿½ï¿½Ò°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½.");
         }
     }
 
@@ -69,7 +69,7 @@ public class UIManager : MonoSingleton<UIManager>
             }
             else
             {
-                Debug.LogWarning("CatnipIconContainer¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                Debug.LogWarning("CatnipIconContainerï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
             }
         }
     }
@@ -101,7 +101,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
         else
         {
-            Debug.LogWarning("Àß¸øµÈ catnipID: " + catnipID);
+            Debug.LogWarning("ï¿½ß¸ï¿½ï¿½ï¿½ catnipID: " + catnipID);
         }
     }
 
@@ -119,7 +119,7 @@ public class UIManager : MonoSingleton<UIManager>
     private void SetCatnipIconState(GameObject icon, bool isActive)
     {
         Color iconColor = icon.GetComponent<UnityEngine.UI.Image>().color;
-        iconColor.a = isActive ? 1.0f : 0.5f; // ¼±¸íµµ Á¶Á¤  
+        iconColor.a = isActive ? 1.0f : 0.5f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½  
         icon.GetComponent<UnityEngine.UI.Image>().color = iconColor;
     }
 }
