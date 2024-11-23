@@ -2,11 +2,53 @@
   "stage": "1",
   "terrainIndex": "1",
   "gridSize": {
-    "x": 20,
-    "y": 10
+    "x": 50,
+    "y": 30
   },
-  "catnipCount": 2,
+  "catnipCount": 0,
   "levelObjects": [
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 1,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 1,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 1
+      }
+    },
     {
       "objectType": "CubePrefab",
       "gridPosition": {
@@ -15,48 +57,1390 @@
       }
     },
     {
-      "$type": "StartPointData, Assembly-CSharp",
-      "objectType": "StartPoint",
-      "gridPosition": {
-        "x": 0,
-        "y": 0
-      }
-    },
-    {
-      "objectType": "CapsulePrefab",
+      "objectType": "CubePrefab",
       "gridPosition": {
         "x": 2,
         "y": 1
       }
     },
     {
-      "$type": "PipeData, Assembly-CSharp",
-      "pipeID": 1,
-      "targetPipeID": 2,
-      "targetStage": 1,
-      "targetIndex": 2,
-      "objectType": "Pipe",
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 2,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 3,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 3,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 3,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
       "gridPosition": {
         "x": 4,
         "y": 0
       }
     },
     {
-      "$type": "CatnipData, Assembly-CSharp",
-      "catnipID": 1,
-      "objectType": "Catnip",
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 4,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 4,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 5,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 5,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 5,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
       "gridPosition": {
         "x": 6,
         "y": 0
       }
     },
     {
-      "$type": "CatnipData, Assembly-CSharp",
-      "catnipID": 2,
-      "objectType": "Catnip",
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 6,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 6,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 7,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 7,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 7,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 8,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 8,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 8,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 9,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 9,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 9,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
       "gridPosition": {
         "x": 10,
         "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 10,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 10,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 11,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 11,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 11,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 12,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 12,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 12,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 13,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 13,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 13,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 14,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 14,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 14,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 15,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 15,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 15,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 16,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 16,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 16,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 17,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 17,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 17,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 18,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 18,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 18,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 19,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 19,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 19,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 9
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 22,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 21,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 21,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 21,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 20,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 20,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 20,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 22,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 22,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 23,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 23,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 23,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 24,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 24,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 24,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 25,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 25,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 25,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 26,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 26,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 26,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 27,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 27,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 27,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 28,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 28,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 28,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 29,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 29,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 29,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 30,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 30,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 30,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 31,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 31,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 31,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 32,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 32,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 32,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 33,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 33,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 33,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 34,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 34,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 34,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 35,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 35,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 35,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 36,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 36,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 36,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 37,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 37,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 37,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 38,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 38,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 38,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 39,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 39,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 39,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 40,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 40,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 40,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 41,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 41,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 41,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 42,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 42,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 42,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 43,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 43,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 43,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 44,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 44,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 44,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 45,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 45,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 45,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 46,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 46,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 46,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 47,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 47,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 47,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 48,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 48,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 48,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 9
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 10
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 11
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 12
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 13
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 14
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 15
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 16
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 17
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 18
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 19
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 20
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 21
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 22
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 23
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 24
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 28
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 49,
+        "y": 29
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 10
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 11
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 12
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 13
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 14
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 15
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 16
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 17
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 18
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 19
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 20
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 21
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 22
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 23
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 24
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 28
+      }
+    },
+    {
+      "objectType": "CubePrefab",
+      "gridPosition": {
+        "x": 0,
+        "y": 29
+      }
+    },
+    {
+      "$type": "StartPointData, Assembly-CSharp",
+      "objectType": "StartPoint",
+      "gridPosition": {
+        "x": 2,
+        "y": 4
       }
     }
   ]
