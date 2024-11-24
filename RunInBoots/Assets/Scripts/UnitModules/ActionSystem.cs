@@ -141,15 +141,10 @@ public class ActionSystem : MonoBehaviour
     bool CheckOnWall()
     {
         // Check if character is on the wall
-        Vector3 origin = transform.position;
+        Vector3 origin = transform.position + coll.size.y/2*Vector3.up;
         RaycastHit hit;
         float distance = contactDistance + coll.size.x / 2;
-        if(Physics.Raycast(origin, Vector3.right, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        {
-            return true;
-        }
-
-        if(Physics.Raycast(origin, Vector3.left, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if(Physics.Raycast(origin, animator.transform.forward, out hit, distance, 1<<LayerMask.NameToLayer("Ground")))
         {
             return true;
         }
