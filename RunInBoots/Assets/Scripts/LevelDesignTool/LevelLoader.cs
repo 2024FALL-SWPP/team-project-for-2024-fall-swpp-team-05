@@ -76,11 +76,9 @@ public class LevelLoader : MonoBehaviour
 
             if (levelObjectData is PipeData pipeData)
             {
-                Debug.Log("$$$$$$");
                 Pipe pipeComponent = instance.GetComponent<Pipe>();
                 if (pipeComponent != null)
                 {
-                    Debug.Log("#####");
                     pipeComponent.pipeID = pipeData.pipeID;
                     pipeComponent.targetPipeID = pipeData.targetPipeID;
                     pipeComponent.targetStage = pipeData.targetStage;

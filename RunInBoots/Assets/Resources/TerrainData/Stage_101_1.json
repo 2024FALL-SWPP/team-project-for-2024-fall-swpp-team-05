@@ -1,0 +1,19 @@
+{
+  "stage": "101",
+  "terrainIndex": "1",
+  "gridSize": {
+    "x": 20,
+    "y": 10
+  },
+  "catnipCount": 0,
+  "levelObjects": [
+    {
+      "$type": "StartPointData, Assembly-CSharp",
+      "objectType": "StartPoint",
+      "gridPosition": {
+        "x": 1,
+        "y": 2
+      }
+    }
+  ]
+}

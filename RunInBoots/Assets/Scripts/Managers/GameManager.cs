@@ -15,8 +15,11 @@ public class GameManager : MonoSingleton<GameManager>
 
     public int totalCatnipCount;
     public int collectedCatnipCount;
-    public List<bool> _catnipCollectedStates = new List<bool>();
-    private int lifeCount = 9;
+    public List<bool> isCatnipCollected = new List<bool>();
+    
+    private int _lifeCount = 9;
+    public Vector3 respawnPosition;
+    public bool isRespawnPositionSetted = false;
 
 
 
@@ -39,7 +42,7 @@ public class GameManager : MonoSingleton<GameManager>
         int currentStage = GetCurrentStage();
         totalCatnipCount = GameUtils.CountTotalCatnipInStage(currentStage);
 
-        if (_catnipCollectedStates.Count == 0 || _catnipCollectedStates.Count != totalCatnipCount)
+        if (isCatnipCollected.Count == 0 || isCatnipCollected.Count != totalCatnipCount)
         {
             InitializeCatnipStates(totalCatnipCount);
         }
@@ -57,20 +60,7 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    public void LifeOver()
-    {
-        // (�ӽ�) ���� ���� �ٽ� �ε�
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        // ���� ��� ���� ó��, ��� 0�̸� ���� ����, �ƴϸ� ��� UI ���� ���� �� �ٽ� �ε�
-    }
-    private void GameOver() 
-    {
-        UIManager.Instance.ClearCatnipUI();
-        if (_currentState != null)
-        {
-            _currentState.Exit();
-        }
-    }
+    
 
     public void StageClear()
     {
@@ -78,7 +68,8 @@ public class GameManager : MonoSingleton<GameManager>
         if (_currentState != null)
         {
             _currentState.Exit();
-            if(!LoadNextStage(GetCurrentStage()))
+            isRespawnPositionSetted = false;
+            if (!LoadNextStage(GetCurrentStage()))
             {
                 GameClear();
             }
@@ -107,23 +98,45 @@ public class GameManager : MonoSingleton<GameManager>
     {
         Debug.Log("Game Clear");
     }
+    private void LifeOver()
+    {
+        _lifeCount--;
+
+        string currentScene = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentScene);
+
+        SpawnPlayer(respawnPosition);
+    }
+
+    private void GameOver()
+    {
+        UIManager.Instance.ClearCatnipUI();
+        _lifeCount = 9;
+        SceneManager.LoadScene("TitleScene");
+        InitializeCatnipStates(totalCatnipCount);
+        if (_currentState != null)
+        {
+            _currentState.Exit();
+        }
+    }
 
     public void CollectCatnip(int catnipID)
     {
         collectedCatnipCount++;
         UIManager.Instance.UpdateCatnipUI(catnipID);
+        
     }
 
     public void InitializeCatnipStates(int count)
     {
-        _catnipCollectedStates = new List<bool>(new bool[count]);
+        isCatnipCollected = new List<bool>(new bool[count]);
     }
 
     public void UpdateCatnipState(int catnipID)
     {
-        if (catnipID > 0 && catnipID <= _catnipCollectedStates.Count)
+        if (catnipID > 0 && catnipID <= isCatnipCollected.Count)
         {
-            _catnipCollectedStates[catnipID - 1] = true;
+            isCatnipCollected[catnipID - 1] = true;
         }
     }
 
@@ -156,7 +169,7 @@ public class GameManager : MonoSingleton<GameManager>
         GameObject player = GameObject.FindWithTag("Player");
         if (player == null)
         {
-            Debug.Log("GameManager.SpawnManager���� Player�� �� ã��");
+            Debug.Log($"Player spawned : {position}");
             player = PoolManager.Instance.Pool(playerPrefab, position, Quaternion.identity);
         }
         else
@@ -164,6 +177,15 @@ public class GameManager : MonoSingleton<GameManager>
             player.transform.position = position;
             Debug.Log($"Player moved to position: {position}");
         }
+        
+    }
+
+    public void UpdateRespawnPosition(Vector3 position)
+    {
+        respawnPosition = position;
+        isRespawnPositionSetted = true;
+        Debug.Log($"respawnposition set to {respawnPosition}");
+
     }
 
     public void ResetPipeData()
@@ -171,4 +193,18 @@ public class GameManager : MonoSingleton<GameManager>
         enteredPipeID = -1;
         isComingFromPipe = false;
     }
+
+    public void HandlePlayerDeath(bool isTimeout)
+    {
+        if (_lifeCount > 1)
+        {
+            LifeOver();
+        }
+        else
+        {
+            GameOver();
+        }
+    }
+
+    
 }

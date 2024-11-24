@@ -88,7 +88,7 @@ public class UIManager : MonoSingleton<UIManager>
         {
             GameObject icon = Instantiate(catnipIconPrefab, catnipIconContainer);
             _catnipIcons.Add(icon);
-            SetCatnipIconState(icon, GameManager.Instance._catnipCollectedStates[i]);
+            SetCatnipIconState(icon, GameManager.Instance.isCatnipCollected[i]);
         }
     }
 
@@ -96,7 +96,7 @@ public class UIManager : MonoSingleton<UIManager>
     {
         if (catnipID > 0 && catnipID <= _catnipIcons.Count)
         {
-            GameManager.Instance._catnipCollectedStates[catnipID - 1] = true;
+            GameManager.Instance.isCatnipCollected[catnipID - 1] = true;
             SetCatnipIconState(_catnipIcons[catnipID - 1], true);
         }
         else

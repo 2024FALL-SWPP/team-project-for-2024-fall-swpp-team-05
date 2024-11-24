@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -13,19 +14,21 @@ public class Pipe : InteractableObject
 
         if (GameManager.Instance.isComingFromPipe && GameManager.Instance.enteredPipeID == pipeID)
         {
-            GameObject player = GameObject.FindWithTag("Player");
-            if (player != null)
-            {
-                Vector3 targetPosition = transform.position + Vector3.right * 1.5f;
-                player.transform.position = targetPosition;
-                GameManager.Instance.ResetPipeData(); // 상태 초기화
-            }
+            //GameObject player = GameObject.FindWithTag("Player");
+            //if (player != null)
+            //{
+            //    Vector3 targetPosition = transform.position + Vector3.right * 1.5f;
+            //    player.transform.position = targetPosition;
+            //    GameManager.Instance.ResetPipeData(); // 상태 초기화
+            //}
+            GameManager.Instance.ResetPipeData();
+
         }
     }
 
     protected override void OnInteract()
     {
-        
+
         int currentStage, currentIndex;
         currentStage = GameManager.Instance.GetCurrentStage();
         currentIndex = GameManager.Instance.GetCurrentIndex();
@@ -51,6 +54,7 @@ public class Pipe : InteractableObject
             {
                 Vector3 targetPosition = targetPipe.transform.position + Vector3.right * 1.5f;
                 GameManager.Instance.SpawnPlayer(targetPosition);
+                GameManager.Instance.UpdateRespawnPosition(targetPosition);
             }
             else
             {
@@ -66,6 +70,7 @@ public class Pipe : InteractableObject
         {
             Vector3 targetPosition = targetPipe.transform.position + Vector3.right * 1.5f;
             GameManager.Instance.SpawnPlayer(targetPosition);
+            GameManager.Instance.UpdateRespawnPosition(targetPosition);
         }
         else
         {
@@ -87,4 +92,5 @@ public class Pipe : InteractableObject
 
         return false;
     }
+
 }

@@ -6,6 +6,14 @@ public class Catnip : MonoBehaviour
 {
     public int catnipID;
 
+    private void Start()
+    {
+        if (GameManager.Instance.isCatnipCollected[catnipID - 1])
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other)
     {
