@@ -231,5 +231,56 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
+
+
+    public void AddEvent(ProducingEvent producingEvent)
+    {
+        _eventQueue.Enqueue(producingEvent);
+    }
     
+    public void StopPlayer()
+    {
+        // Stop player movement and actions
+        GameObject player = GameObject.FindWithTag("Player");
+        if(player != null)
+        {
+            // disable player collider
+            player.GetComponent<BoxCollider>().enabled = false;
+            // disable player movement
+            player.GetComponent<TransformModule>().enabled = false;
+            // disable player attack
+            player.GetComponent<BattleModule>().enabled = false;
+            // disable player action
+            player.GetComponent<ActionSystem>().enabled = false;
+            // set player velocity to zero
+            player.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
+    }
+
+    public void ResumePlayer()
+    {
+        // Resume player movement and actions
+        GameObject player = GameObject.FindWithTag("Player");
+        if(player != null)
+        {
+            // enable player collider
+            player.GetComponent<BoxCollider>().enabled = true;
+            // enable player movement
+            player.GetComponent<TransformModule>().enabled = true;
+            // enable player attack
+            player.GetComponent<BattleModule>().enabled = true;
+            // enable player action
+            player.GetComponent<ActionSystem>().enabled = true;
+        }
+    }
+
+    public void GetObject(GameObject obj, Vector3 offset)
+    {
+        // Move object position to player position (+ offset)
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            obj.transform.position = player.transform.position + offset;
+        }
+    }
 }
