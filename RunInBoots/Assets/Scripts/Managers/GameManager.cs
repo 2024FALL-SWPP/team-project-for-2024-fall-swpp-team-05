@@ -21,7 +21,8 @@ public class GameManager : MonoSingleton<GameManager>
     public Vector3 respawnPosition;
     public bool isRespawnPositionSetted = false;
 
-
+    private Queue<ProducingEvent> _eventQueue = new Queue<ProducingEvent>();
+    private ProducingEvent _currentEvent;
 
     protected override void Awake()
     {
@@ -54,8 +55,32 @@ public class GameManager : MonoSingleton<GameManager>
     // Update is called once per frame  
     void Update()
     {
-        if (_currentState != null && _currentState.IsStarted)
+        if(_currentEvent == null && _eventQueue.Count > 0)
         {
+            _currentEvent = _eventQueue.Dequeue();
+            _currentEvent.Start();
+        }
+        else if(_currentEvent != null && _currentEvent.isEnded == false)
+        {
+            _currentEvent.Update();
+        }
+        else if(_currentEvent != null && _currentEvent.isEnded)
+        {
+            _currentEvent.Exit();
+            if(_eventQueue.Count > 0)
+            {
+                _currentEvent = _eventQueue.Dequeue();
+                _currentEvent.Start();
+            }
+            else
+            {
+                _currentEvent = null;
+            }
+        }
+
+        if (_currentState != null && _currentState.IsStarted && _currentEvent == null)
+        {
+            _eventQueue.Clear();
             _currentState.Update();
         }
     }
