@@ -9,6 +9,7 @@ public class BattleModule : MonoBehaviour
     public Vector4 attackAllowed = new Vector4(0, 0, 0, 0);
     public Vector4 attackDirection = new Vector4(0, 0, 0, 0);
     public UnityEvent death;
+    public UnityEvent preAttacked;
     public enum eTeam { Player, Enemy };
     public eTeam team = eTeam.Player;
     public int invincibleTime = 10;
@@ -39,6 +40,7 @@ public class BattleModule : MonoBehaviour
     
     public void Attacked()
     {
+        preAttacked.Invoke();
         _attacked.Invoke();
     }
 
