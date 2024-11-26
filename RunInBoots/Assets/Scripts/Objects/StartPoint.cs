@@ -16,16 +16,18 @@ public class StartPoint : MonoBehaviour
 
         if (!GameManager.Instance.isRespawnPositionSetted)
         {
-            // ÃÊ±â ½ºÆù À§Ä¡¸¦ ¼³Á¤
+            // ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             Vector3 spawnPosition = transform.position + Vector3.up * 1.0f;
             GameManager.Instance.StartNewStage();
-            GameManager.Instance.SpawnPlayer(spawnPosition);
+            //GameManager.Instance.SpawnPlayer(spawnPosition);
+            GameManager.Instance.SpawnPlayerWithEvent(spawnPosition);
             GameManager.Instance.UpdateRespawnPosition(spawnPosition);
         }
         else
         {
-            // ¸®½ºÆù À§Ä¡°¡ ÀÌ¹Ì ¼³Á¤µÈ °æ¿ì Ä³¸¯ÅÍ¸¸ ½ºÆù
-            GameManager.Instance.SpawnPlayer(GameManager.Instance.respawnPosition);
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½
+            // GameManager.Instance.SpawnPlayer(GameManager.Instance.respawnPosition);
+            GameManager.Instance.SpawnPlayerWithEvent(GameManager.Instance.respawnPosition);
         }
 
     }

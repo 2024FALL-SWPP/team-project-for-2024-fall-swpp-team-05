@@ -130,7 +130,8 @@ public class GameManager : MonoSingleton<GameManager>
         string currentScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentScene);
 
-        SpawnPlayer(respawnPosition);
+        // SpawnPlayer(respawnPosition);
+        SpawnPlayerWithEvent(respawnPosition);
     }
 
     private void GameOver()
@@ -207,6 +208,21 @@ public class GameManager : MonoSingleton<GameManager>
             return index;
         }
         return -1;
+    }
+
+    public void SpawnPlayerWithEvent(Vector3 position)
+    {
+        ProducingEvent spawnEvent = new AnimatorEvent(null);
+        spawnEvent.AddStartEvent(() =>
+        {
+            SpawnPlayer(position);
+            StopPlayer();
+        });
+        spawnEvent.AddEndEvent(() =>
+        {
+            ResumePlayer();
+        });
+        AddEvent(spawnEvent);
     }
 
     public void SpawnPlayer(Vector3 position)
