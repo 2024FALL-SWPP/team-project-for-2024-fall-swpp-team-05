@@ -56,6 +56,11 @@ public class BattleModule : MonoBehaviour
         }
     }
 
+    public void BeInvinvible()
+    {
+        StartCoroutine(Invincible());
+    }
+
     IEnumerator Invincible()
     {
         float elapsedTime = 0f;

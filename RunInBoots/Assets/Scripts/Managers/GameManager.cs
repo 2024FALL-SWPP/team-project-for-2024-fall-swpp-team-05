@@ -145,11 +145,31 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
+    public void CollectCatnipWithEvent(int catnipID)
+    {
+        ProducingEvent catnipEvent = new AnimatorEvent(null);
+        GameObject player = GameObject.FindWithTag("Player");
+        GameObject catnip = GameObject.Find($"Catnip_{catnipID}");
+        catnipEvent.AddStartEvent(() =>
+        {
+            StopPlayer();
+            GetObject(catnip, new Vector3(0, 3.0f, 0));
+        });
+        catnipEvent.AddEndEvent(() =>
+        {
+            ResumePlayer();
+            player.GetComponent<BattleModule>().BeInvinvible();
+            CollectCatnip(catnipID);
+        });
+        AddEvent(catnipEvent);
+    }
+
     public void CollectCatnip(int catnipID)
     {
+        GameObject catnip = GameObject.Find($"Catnip_{catnipID}");
         collectedCatnipCount++;
         UIManager.Instance.UpdateCatnipUI(catnipID);
-        
+        catnip.SetActive(false);
     }
 
     public void InitializeCatnipStates(int count)
@@ -278,7 +298,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         // Move object position to player position (+ offset)
         GameObject player = GameObject.FindWithTag("Player");
-        if (player != null)
+        if (player != null && obj != null)
         {
             obj.transform.position = player.transform.position + offset;
         }
