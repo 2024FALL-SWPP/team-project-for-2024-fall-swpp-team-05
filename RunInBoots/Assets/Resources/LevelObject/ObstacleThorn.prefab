@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8902626823626992911}
   - component: {fileID: 8902626823626992904}
   - component: {fileID: 8902626823626992905}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ObstacleThorn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,6 +83,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   team: 1
+  invincibleTime: 10
 --- !u!1 &8902626824336890838
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +95,7 @@ GameObject:
   - component: {fileID: 8902626824336890837}
   - component: {fileID: 8902626824336890795}
   - component: {fileID: 8902626824336890836}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

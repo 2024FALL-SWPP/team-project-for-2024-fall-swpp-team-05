@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7085165369164110745}
   - component: {fileID: 7085165369164110823}
   - component: {fileID: 7085165369164110744}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 8552543163649741355}
   - component: {fileID: 4111522028138080114}
   - component: {fileID: 8424670219706446951}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ObstacleOnBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,6 +164,19 @@ MonoBehaviour:
   actions: {fileID: 11400000, guid: 4d02f5c2264e91947b3d186e35a17e0e, type: 2}
   initAction: 301
   animator: {fileID: 4111522028138080114}
+  stretchModule: {fileID: 0}
+  contactDistance: 1
+  currentAction:
+    Key: 0
+    Clip: 
+    ColliderX: 0
+    ColliderY: 0
+    TransitionDuration: 0
+    GravityScale: 0
+    MaxVelocityX: 0
+    MaxVelocityY: 0
+    NextAction: 0
+    FrameUpdates: 
 --- !u!95 &4111522028138080114
 Animator:
   serializedVersion: 5

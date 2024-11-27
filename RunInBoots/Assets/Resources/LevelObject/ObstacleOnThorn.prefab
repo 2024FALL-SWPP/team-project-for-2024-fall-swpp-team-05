@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7280383144358540022}
   - component: {fileID: 3077839621228300207}
   - component: {fileID: 7445525205580551354}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ObstacleOnThorn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,6 +86,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   team: 1
+  invincibleTime: 10
 --- !u!114 &7280383144358540022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,6 +102,19 @@ MonoBehaviour:
   actions: {fileID: 11400000, guid: 4d02f5c2264e91947b3d186e35a17e0e, type: 2}
   initAction: 201
   animator: {fileID: 3077839621228300207}
+  stretchModule: {fileID: 0}
+  contactDistance: 1
+  currentAction:
+    Key: 0
+    Clip: 
+    ColliderX: 0
+    ColliderY: 0
+    TransitionDuration: 0
+    GravityScale: 0
+    MaxVelocityX: 0
+    MaxVelocityY: 0
+    NextAction: 0
+    FrameUpdates: 
 --- !u!95 &3077839621228300207
 Animator:
   serializedVersion: 5
@@ -154,7 +168,7 @@ GameObject:
   - component: {fileID: 8208427187378830148}
   - component: {fileID: 8208427187378830138}
   - component: {fileID: 8208427187378830149}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
