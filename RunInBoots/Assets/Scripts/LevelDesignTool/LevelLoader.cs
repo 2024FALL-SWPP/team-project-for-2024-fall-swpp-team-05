@@ -165,24 +165,73 @@ public class LevelLoader : MonoBehaviour
             i++;
         }
 
-        // Step 2: Create a single parent object to hold all box colliders
+        // Step 2: Group rows by their x-range (start.x and end.x)
+        var rowsByXRange = new Dictionary<(int startX, int endX), List<int>>();
+
+        foreach (var (start, end) in mergedRows)
+        {
+            var xRange = (start.x, end.x);
+
+            if (!rowsByXRange.TryGetValue(xRange, out List<int> yPositions))
+            {
+                yPositions = new List<int>();
+                rowsByXRange[xRange] = yPositions;
+            }
+            yPositions.Add(start.y);
+        }
+
+        // Step 3: For each x-range, sort y positions and merge vertically where possible
+        List<(Vector2Int start, Vector2Int end)> mergedRectangles = new List<(Vector2Int, Vector2Int)>();
+
+        foreach (var kvp in rowsByXRange)
+        {
+            var xRange = kvp.Key;
+            var yPositions = kvp.Value;
+
+            // Sort y positions
+            yPositions.Sort();
+
+            int k = 0;
+            while (k < yPositions.Count)
+            {
+                int startY = yPositions[k];
+                int endY = startY;
+
+                // Merge vertically adjacent rows with the same x-range
+                while (k + 1 < yPositions.Count && yPositions[k + 1] == yPositions[k] + 1)
+                {
+                    k++;
+                    endY = yPositions[k];
+                }
+
+                // Add the merged rectangle
+                mergedRectangles.Add((
+                    new Vector2Int(xRange.startX, startY),
+                    new Vector2Int(xRange.endX, endY)
+                ));
+
+                k++;
+            }
+        }
+
+        // Step 4: Create a single parent object to hold all box colliders
         GameObject colliderParent = new GameObject("MergedCollidersParent");
         colliderParent.transform.SetParent(this.transform);
 
-        // Step 3: Add a BoxCollider for each merged row
-        foreach (var (start, end) in mergedRows)
+        // Step 5: Add a BoxCollider for each merged rectangle
+        foreach (var (start, end) in mergedRectangles)
         {
-            GameObject colliderObject = new GameObject($"RowCollider_{start.y}");
+            GameObject colliderObject = new GameObject($"Collider_{start.x}_{start.y}");
             colliderObject.transform.SetParent(colliderParent.transform);
             colliderObject.layer = LayerMask.NameToLayer("Ground");
 
             BoxCollider boxCollider = colliderObject.AddComponent<BoxCollider>();
 
             // Calculate the center and size of the collider
-            float width = end.x - start.x + 1; // Width is the number of blocks in the row
-            float height = 1; // Single row height
-            Vector3 center = new Vector3(start.x + width / 2f - 0.5f, start.y, 0); // Correct y alignment
-            Vector3 size = new Vector3(width, height, 1); // Size
+            float width = end.x - start.x + 1;
+            float height = end.y - start.y + 1;
+            Vector3 center = new Vector3(start.x + width / 2f - 0.5f, start.y + height / 2f - 0.5f, 0);
+            Vector3 size = new Vector3(width, height, 1);
 
             boxCollider.center = center - colliderObject.transform.position;
             boxCollider.size = size;
