@@ -42,6 +42,8 @@ public class GridManager : MonoBehaviour
 
     private float startTime;
 
+    private bool _isValidDrag = false;
+
     // 배치된 오브젝트들
     private Dictionary<SerializableVector2Int, GameObject> placedObjects = new Dictionary<SerializableVector2Int, GameObject>();
     private List<List<GameObject>> placedSpheres = new List<List<GameObject>>();
@@ -221,8 +223,10 @@ public class GridManager : MonoBehaviour
         {
             if (EventSystem.current.IsPointerOverGameObject())
             {
+                _isValidDrag = false;
                 return;
             }
+            _isValidDrag = true;
             // 드래그 시작 지점 저장
             Debug.Log("Mouse Down");
             dragStartWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -cameraPosZ));
@@ -263,7 +267,7 @@ public class GridManager : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            if (EventSystem.current.IsPointerOverGameObject())
+            if (EventSystem.current.IsPointerOverGameObject() || !_isValidDrag)
             {
                 return;
             }
