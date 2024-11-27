@@ -4,207 +4,74 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class GameManager : MonoSingleton<GameManager>
 {
-    private IGameState _currentState;
-
-    private GameObject playerPrefab;
-
-    public int enteredPipeID = -1;
-    public bool isComingFromPipe = false;
-
-    public int totalCatnipCount;
-    public int collectedCatnipCount;
-    public List<bool> isCatnipCollected = new List<bool>();
-    
-    private int _lifeCount = 9;
-    public Vector3 respawnPosition;
-    public bool isRespawnPositionSetted = false;
-
+    public IGameState currentState;
 
 
     protected override void Awake()
     {
         base.Awake();
         Application.targetFrameRate = 60;
-        playerPrefab = Resources.Load<GameObject>("PlayerController");
-        if(playerPrefab == null)
-        {
-            Debug.LogError("PlayerController prefab�� Resources/�� �������� ����");
-        }
     }
 
-    public void StartNewStage()
+    // 나중에 Title Scene 만들면 수정 요함. 지금은 Stage_.._.. 씬에서 시작한다고 가정
+    public void StartNewStage(int stage)
     {
-        _currentState = new StageState();
-        _currentState.Start();
-
-        int currentStage = GetCurrentStage();
-        totalCatnipCount = GameUtils.CountTotalCatnipInStage(currentStage);
-
-        if (isCatnipCollected.Count == 0 || isCatnipCollected.Count != totalCatnipCount)
+        if (!SceneLoader.LoadTargetStage(stage, 1))
         {
-            InitializeCatnipStates(totalCatnipCount);
+            AllStageClear();
+            return;
         }
-
-        collectedCatnipCount = 0;
-        UIManager.Instance.InitializeCatnipUI(totalCatnipCount);
+        currentState = new StageState(stage);
+        currentState.Start();
     }
 
     // Update is called once per frame  
     void Update()
     {
-        if (_currentState != null && _currentState.IsStarted)
+        if (currentState != null && currentState.IsStarted)
         {
-            _currentState.Update();
+            currentState.Update();
         }
     }
-
-    
 
     public void StageClear()
     {
         UIManager.Instance.ClearCatnipUI();
-        if (_currentState != null)
+        if (currentState != null)
         {
-            _currentState.Exit();
-            isRespawnPositionSetted = false;
-            if (!LoadNextStage(GetCurrentStage()))
-            {
-                GameClear();
-            }
+            currentState.Exit(ExitState.StageClear);
         }
-    }
-    private bool LoadNextStage(int currentStage)
-    {
-        // ���� ���������� �����ϴ� ���� ���� �ִ��� Ȯ��
-        string nextSceneName = $"Stage_{currentStage + 1}_{1}";
-
-        // �ش� ���� �ε� ������ �������� Ȯ��
-        if (SceneUtility.GetBuildIndexByScenePath(nextSceneName) != -1)
-        {
-            SceneManager.LoadScene(nextSceneName);
-            Debug.Log($"Loading next stage: {nextSceneName}");
-            return true;
-        }
-        else
-        {
-            Debug.Log("No next stage available. Ending current stage.");
-            return false;
-        }
+        StartNewStage(GetCurrentStageState().currentStage + 1);
     }
 
-    private void GameClear() 
+    // 모든 스테이지 클리어 된 후 동작 나중에 채워넣기
+    public void AllStageClear() 
     {
+        currentState = null;
+        SceneLoader.LoadTitleScene();
         Debug.Log("Game Clear");
     }
-    private void LifeOver()
+
+
+    public void GameOver()
     {
-        _lifeCount--;
-
-        string currentScene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentScene);
-
-        SpawnPlayer(respawnPosition);
-    }
-
-    private void GameOver()
-    {
-        UIManager.Instance.ClearCatnipUI();
-        _lifeCount = 9;
-        SceneManager.LoadScene("TitleScene");
-        InitializeCatnipStates(totalCatnipCount);
-        if (_currentState != null)
+        if (currentState != null)
         {
-            _currentState.Exit();
+            currentState.Exit(ExitState.GameOver);
         }
+        SceneLoader.LoadTitleScene();
     }
 
-    public void CollectCatnip(int catnipID)
+    public StageState GetCurrentStageState()
     {
-        collectedCatnipCount++;
-        UIManager.Instance.UpdateCatnipUI(catnipID);
-        
-    }
-
-    public void InitializeCatnipStates(int count)
-    {
-        isCatnipCollected = new List<bool>(new bool[count]);
-    }
-
-    public void UpdateCatnipState(int catnipID)
-    {
-        if (catnipID > 0 && catnipID <= isCatnipCollected.Count)
+        var stageState = currentState as StageState;
+        if (stageState == null)
         {
-            isCatnipCollected[catnipID - 1] = true;
+            Debug.LogWarning("currentState is null or not of type StageState.");
         }
+        return currentState as StageState;
     }
-
-
-
-    public int GetCurrentStage()
-    {
-        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        string[] parts = sceneName.Split('_');
-        if (parts.Length > 1 && int.TryParse(parts[1], out int stage))
-        {
-            return stage;
-        }
-        return -1;
-    }
-
-    public int GetCurrentIndex()
-    {
-        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        string[] parts = sceneName.Split('_');
-        if (parts.Length > 1 && int.TryParse(parts[2], out int index))
-        {
-            return index;
-        }
-        return -1;
-    }
-
-    public void SpawnPlayer(Vector3 position)
-    {
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player == null)
-        {
-            Debug.Log($"Player spawned : {position}");
-            player = PoolManager.Instance.Pool(playerPrefab, position, Quaternion.identity);
-        }
-        else
-        {
-            player.transform.position = position;
-            Debug.Log($"Player moved to position: {position}");
-        }
-        
-    }
-
-    public void UpdateRespawnPosition(Vector3 position)
-    {
-        respawnPosition = position;
-        isRespawnPositionSetted = true;
-        Debug.Log($"respawnposition set to {respawnPosition}");
-
-    }
-
-    public void ResetPipeData()
-    {
-        enteredPipeID = -1;
-        isComingFromPipe = false;
-    }
-
-    public void HandlePlayerDeath(bool isTimeout)
-    {
-        if (_lifeCount > 1)
-        {
-            LifeOver();
-        }
-        else
-        {
-            GameOver();
-        }
-    }
-
-    
 }

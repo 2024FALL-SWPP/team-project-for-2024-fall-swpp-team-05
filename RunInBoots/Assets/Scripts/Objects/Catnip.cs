@@ -8,7 +8,7 @@ public class Catnip : MonoBehaviour
 
     private void Start()
     {
-        if (GameManager.Instance.isCatnipCollected[catnipID - 1])
+        if (GameManager.Instance.GetCurrentStageState().isCatnipCollected[catnipID - 1])
         {
             gameObject.SetActive(false);
         }
@@ -19,7 +19,7 @@ public class Catnip : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameManager.Instance.CollectCatnip(catnipID);
+            GameManager.Instance.GetCurrentStageState().CollectCatnipInStageState(catnipID);
             gameObject.SetActive(false);
         }
     }

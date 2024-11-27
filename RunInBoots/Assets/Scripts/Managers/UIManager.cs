@@ -27,36 +27,36 @@ public class UIManager : MonoSingleton<UIManager>
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        FindTimerText();
+        //FindTimerText();
         FindCatnipIconContainer();
         PlaceCatnipIcons();
 
     }
 
-    private void FindTimerText()
-    {
-        GameObject timerObject = GameObject.FindGameObjectWithTag("TimerText");
-        if (timerObject != null)
-        {
-            _timerText = timerObject.GetComponent<TextMeshProUGUI>();
-        }
-        else
-        {
-            Debug.LogWarning("TimerText UI ��Ҹ� ã�� �� �����ϴ�.");
-        }
-    }
+    //private void FindTimerText()
+    //{
+    //    GameObject timerObject = GameObject.FindGameObjectWithTag("TimerText");
+    //    if (timerObject != null)
+    //    {
+    //        _timerText = timerObject.GetComponent<TextMeshProUGUI>();
+    //    }
+    //    else
+    //    {
+    //        Debug.LogWarning("TimerText UI ��Ҹ� ã�� �� �����ϴ�.");
+    //    }
+    //}
 
-    public void UpdateTimerUI(float remainingTime)
-    {
-        if (_timerText != null)
-        {
-            _timerText.text = $"{Mathf.CeilToInt(remainingTime)}";
-        }
-        else
-        {
-            Debug.LogWarning("TimerText UI ��Ұ� �������� �ʾҽ��ϴ�.");
-        }
-    }
+    //public void UpdateTimerUI(float remainingTime)
+    //{
+    //    if (_timerText != null)
+    //    {
+    //        _timerText.text = $"{Mathf.CeilToInt(remainingTime)}";
+    //    }
+    //    else
+    //    {
+    //        Debug.LogWarning("TimerText UI ��Ұ� �������� �ʾҽ��ϴ�.");
+    //    }
+    //}
 
     private void FindCatnipIconContainer()
     {
@@ -105,7 +105,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    
+
 
     public void ClearCatnipUI()
     {
