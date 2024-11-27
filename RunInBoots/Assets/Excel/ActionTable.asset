@@ -52,7 +52,7 @@ MonoBehaviour:
     MaxVelocityX: 9
     MaxVelocityY: 9
     NextAction: 105
-    FrameUpdates: '[{InputX,1,MoveInputX,0.1},{Jump,1,MoveY,3},{Jump,0,SetAction,105},{OnLand,1,SetAction,101}]'
+    FrameUpdates: '[{InputX,1,MoveInputX,0.1},{Jump,1,MoveY,3},{Jump,0,SetAction,105}]'
   - Key: 105
     Clip: cat_jump_loop
     ColliderX: 0.5
