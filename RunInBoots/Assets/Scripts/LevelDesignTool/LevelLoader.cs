@@ -129,25 +129,23 @@ public class LevelLoader : MonoBehaviour
         }
         return false;
     }
+
     private void CreateMergedColliders()
     {
-        // Step 1: Sort all positions by y (row order), then by x (column order)
+        // Sort all positions by y (row order), then by x (column order)
         collectedPositions.Sort((a, b) =>
         {
             int yCompare = a.y.CompareTo(b.y);
             return yCompare == 0 ? a.x.CompareTo(b.x) : yCompare;
         });
 
-        // List to store merged rows
         List<(Vector2Int start, Vector2Int end)> mergedRows = new List<(Vector2Int, Vector2Int)>();
-
         int i = 0;
         while (i < collectedPositions.Count)
         {
             // Get the starting position for the current row
             Vector2Int start = collectedPositions[i];
             int rowY = start.y;
-
             // Find the end of the merged row
             Vector2Int end = start;
             while (i + 1 < collectedPositions.Count &&
@@ -157,17 +155,12 @@ public class LevelLoader : MonoBehaviour
                 i++;
                 end = collectedPositions[i];
             }
-
-            // Store the merged row bounds
             mergedRows.Add((start, end));
-
-            // Move to the next position
             i++;
         }
 
-        // Step 2: Group rows by their x-range (start.x and end.x)
+        // Group rows by their x-range (start.x and end.x)
         var rowsByXRange = new Dictionary<(int startX, int endX), List<int>>();
-
         foreach (var (start, end) in mergedRows)
         {
             var xRange = (start.x, end.x);
@@ -180,65 +173,134 @@ public class LevelLoader : MonoBehaviour
             yPositions.Add(start.y);
         }
 
-        // Step 3: For each x-range, sort y positions and merge vertically where possible
+        // For each x-range, sort y positions and merge vertically where possible
         List<(Vector2Int start, Vector2Int end)> mergedRectangles = new List<(Vector2Int, Vector2Int)>();
-
         foreach (var kvp in rowsByXRange)
         {
             var xRange = kvp.Key;
             var yPositions = kvp.Value;
-
-            // Sort y positions
             yPositions.Sort();
-
             int k = 0;
             while (k < yPositions.Count)
             {
                 int startY = yPositions[k];
                 int endY = startY;
-
                 // Merge vertically adjacent rows with the same x-range
                 while (k + 1 < yPositions.Count && yPositions[k + 1] == yPositions[k] + 1)
                 {
                     k++;
                     endY = yPositions[k];
                 }
-
                 // Add the merged rectangle
                 mergedRectangles.Add((
                     new Vector2Int(xRange.startX, startY),
                     new Vector2Int(xRange.endX, endY)
                 ));
-
                 k++;
             }
         }
 
-        // Step 4: Create a single parent object to hold all box colliders
+        // HashSet for quick lookup of occupied positions
+        HashSet<Vector2Int> occupiedPositions = new HashSet<Vector2Int>(collectedPositions);
+        // Identify vertical edges (left and right) for each cube
+        List<(Vector2Int start, Vector2Int end, string side)> verticalEdges = new List<(Vector2Int, Vector2Int, string)>();
+        foreach (var position in collectedPositions)
+        {
+            int x = position.x;
+            int y = position.y;
+            // Check for left edge
+            Vector2Int leftNeighbor = new Vector2Int(x - 1, y);
+            if (!occupiedPositions.Contains(leftNeighbor))
+            {
+                verticalEdges.Add((position, position, "Left"));
+            }
+            // Check for right edge
+            Vector2Int rightNeighbor = new Vector2Int(x + 1, y);
+            if (!occupiedPositions.Contains(rightNeighbor))
+            {
+                verticalEdges.Add((position, position, "Right"));
+            }
+        }
+
+        // Merge vertical edges along the y-axis where possible
+        var edgesByXAndSide = new Dictionary<(int x, string side), List<int>>();
+        foreach (var (start, end, side) in verticalEdges)
+        {
+            var key = (start.x, side);
+            if (!edgesByXAndSide.TryGetValue(key, out List<int> yPositions))
+            {
+                yPositions = new List<int>();
+                edgesByXAndSide[key] = yPositions;
+            }
+            yPositions.Add(start.y);
+        }
+
+        List<(Vector2Int start, Vector2Int end, string side)> mergedVerticalLines = new List<(Vector2Int, Vector2Int, string)>();
+        // For each group, merge consecutive y positions
+        foreach (var kvp in edgesByXAndSide)
+        {
+            var (x, side) = kvp.Key;
+            var yPositions = kvp.Value;
+            yPositions.Sort();
+            int iEdge = 0;
+            while (iEdge < yPositions.Count)
+            {
+                int startY = yPositions[iEdge];
+                int endY = startY;
+                // Merge vertically adjacent positions
+                while (iEdge + 1 < yPositions.Count && yPositions[iEdge + 1] == yPositions[iEdge] + 1)
+                {
+                    iEdge++;
+                    endY = yPositions[iEdge];
+                }
+                mergedVerticalLines.Add((
+                    new Vector2Int(x, startY),
+                    new Vector2Int(x, endY),
+                    side
+                ));
+                iEdge++;
+            }
+        }
+
+        // Create a single parent object to hold all colliders
         GameObject colliderParent = new GameObject("MergedCollidersParent");
         colliderParent.transform.SetParent(this.transform);
 
-        // Step 5: Add a BoxCollider for each merged rectangle
+        // Add a BoxCollider for each merged rectangle
+        float edgeWidth = 0.2f; // Very thin ramping collider width for edge
         foreach (var (start, end) in mergedRectangles)
         {
             GameObject colliderObject = new GameObject($"Collider_{start.x}_{start.y}");
             colliderObject.transform.SetParent(colliderParent.transform);
             colliderObject.layer = LayerMask.NameToLayer("Ground");
-
             BoxCollider boxCollider = colliderObject.AddComponent<BoxCollider>();
-
             // Calculate the center and size of the collider
-            float width = end.x - start.x + 1;
+            float width = end.x - start.x + 1 -edgeWidth;
             float height = end.y - start.y + 1;
-            Vector3 center = new Vector3(start.x + width / 2f - 0.5f, start.y + height / 2f - 0.5f, 0);
+            Vector3 center = new Vector3(start.x + width / 2f - 0.5f+edgeWidth/2f, start.y + height / 2f - 0.5f, 0);
             Vector3 size = new Vector3(width, height, 1);
-
             boxCollider.center = center - colliderObject.transform.position;
             boxCollider.size = size;
         }
+
+        // Add vertical colliders for merged vertical lines
+        foreach (var (start, end, side) in mergedVerticalLines)
+        {
+            GameObject edgeColliderObject = new GameObject($"{side}Edge_{start.x}_{start.y}");
+            edgeColliderObject.transform.SetParent(colliderParent.transform);
+            edgeColliderObject.layer = LayerMask.NameToLayer("Ground");
+            BoxCollider boxCollider = edgeColliderObject.AddComponent<BoxCollider>();
+            // Calculate the center and size of the collider
+            float height = end.y - start.y + 0.9f;
+            float depth = 1f;
+            float centerX = start.x + (side == "Left" ? -0.5f + edgeWidth / 2f : 0.5f - edgeWidth / 2f);
+            float centerY = start.y + height / 2f - 0.5f;
+            Vector3 center = new Vector3(centerX, centerY, 0);
+            Vector3 size = new Vector3(edgeWidth, height, depth);
+            boxCollider.center = center - edgeColliderObject.transform.position;
+            boxCollider.size = size;
+        }
     }
-
-
 
 
     private Vector3 FindMinPosition()
