@@ -74,6 +74,7 @@ public class ActionSystem : MonoBehaviour
         transformModule.g_scale = currentAction.GravityScale;
         transformModule.maxSpeedX = currentAction.MaxVelocityX;
         transformModule.maxSpeedY = currentAction.MaxVelocityY;
+        transformModule.ResetAcceleration();
 
         if(pastAction == nextAction && IsLooping()) return;
         else animator.CrossFadeInFixedTime(currentAction.Clip, currentAction.TransitionDuration, 0, 0);

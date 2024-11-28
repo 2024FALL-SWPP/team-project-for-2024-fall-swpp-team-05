@@ -93,6 +93,12 @@ public class TransformModule : MonoBehaviour
         UpdateRotation();
     }
 
+    public void ResetAcceleration()
+    {
+        accelSumX = 0;
+        accelSumY = 0;
+    }
+
     private void UpdateRotation() 
     {
         // update rotation
