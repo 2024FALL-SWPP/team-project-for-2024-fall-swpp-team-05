@@ -108,19 +108,17 @@ public class ActionSystem : MonoBehaviour
     {
         // Check if there is enough space above the character
         Vector3 origin = transform.position;
-        origin.y += coll.size.y;
         RaycastHit hit;
-        float distance = coll.size.y;
+        origin += (coll.size.y/2) * Vector3.up;
+        float distance = coll.size.y * 1.5f;
         if(Physics.Raycast(origin, Vector3.up, out hit, distance))
         {
             // Check if there is enough space under the character
-            origin = transform.position;
             if(Physics.Raycast(origin, Vector3.down, out hit, distance))
             {
                 return false;
             }
         }
-        
         return true;
     }
 
