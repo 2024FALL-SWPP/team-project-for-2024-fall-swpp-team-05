@@ -1,214 +1,201 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using Cinemachine;
-using TMPro;
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using UnityEngine.SceneManagement;
+    using UnityEngine.UI;
+    using Cinemachine;
+    using TMPro;
 
 
 
-public class StageState : IGameState
-{
-    public bool IsStarted => _isStarted;
-    private bool _isStarted = false;
-
-    public int currentStage;
-    public int currentIndex;
-
-    private int _lifeCount = 9;
-    private float _gridYLowerBound = -2.0f;
-
-    private TextMeshProUGUI _timerText;
-    private float _timeLimit = 300f;
-    private float _remainingTime;
-    private float _accumulativeTime = 0f;
-
-    private GameObject _player;
-    private CinemachineVirtualCamera _virtualCamera;
-    private GameObject _levelObject;
-
-    public int totalCatnipCount;
-    public int collectedCatnipCount;
-    public List<bool> isCatnipCollected = new List<bool>();
-    private List<GameObject> _catnipIcons = new List<GameObject>();
-    private GameObject catnipIconPrefab;
-    private Transform catnipIconContainer;
-
-    public int enteredPipeID = -1;
-    public bool isComingFromPipe = false;
-    public Vector3 respawnPosition;
-    public bool isRespawnPositionSetted = false;
-    private GameObject playerPrefab;
-
-    public StageState(int stage)
+    public class StageState : IGameState
     {
-        currentStage = stage;
-        playerPrefab = Resources.Load<GameObject>("PlayerController");
-        if (playerPrefab == null)
+        public bool IsStarted => _isStarted;
+        private bool _isStarted = false;
+
+        public int currentStage;
+        public int currentIndex;
+
+        private int _lifeCount = 9;
+        private float _gridYLowerBound = -2.0f;
+
+        private TextMeshProUGUI _timerText;
+        private float _timeLimit = 300f;
+        private float _remainingTime;
+        private float _accumulativeTime = 0f;
+
+        private GameObject _player;
+        private CinemachineVirtualCamera _virtualCamera;
+        private GameObject _levelObject;
+
+        public int totalCatnipCount;
+        public int collectedCatnipCount;
+        public List<bool> isCatnipCollected = new List<bool>();
+        private List<GameObject> _catnipIcons = new List<GameObject>();
+        private GameObject catnipIconPrefab;
+        private Transform catnipIconContainer;
+
+        public int enteredPipeID = -1;
+        public bool isComingFromPipe = false;
+
+        public Vector3 respawnPosition;
+        public bool isRespawnPositionSetted = false;
+        private GameObject playerPrefab;
+
+        public StageState(int stage)
         {
-            Debug.LogError("PlayerController prefab을 찾을 수 없습니다.");
-        }
-    }
-
-    public void CollectCatnipInStageState(int catnipID)
-    {
-        collectedCatnipCount++;
-        CatnipUtils.CatnipCollectUIUpdate(catnipID);
-        CatnipUtils.UpdateCatnipToCollected(isCatnipCollected, catnipID);
-    }
-
-    public void Start()
-    {
-        _isStarted = true;
-        _remainingTime = _timeLimit;
-        _levelObject = GameObject.Find("LevelObject");
-        if (_levelObject != null)
-        {
-            _levelObject.SetActive(true);
-            Debug.Log("Level Object load");
+            currentStage = stage;
+            playerPrefab = Resources.Load<GameObject>("PlayerController");
+            catnipIconPrefab = Resources.Load<GameObject>("CatnipIcon");
+            if (playerPrefab == null)
+            {
+                Debug.LogError("PlayerController prefab을 찾을 수 없습니다.");
+            }
         }
 
-        InitializeCatnip();
-        FindCatnipIconContainer();
-        PlaceCatnipIcons();
-
-        GameObject startPoint = GameObject.FindWithTag("StartPoint");
-        startPoint.GetComponent<StartPoint>().Initialize();
-    }
-
-    public void Update()
-    {
-        if (!_isStarted)
-            return;
-
-        _remainingTime -= Time.deltaTime;
-        UpdateTimerUI(_remainingTime);
-
-        if (_player == null || _virtualCamera == null)
+        public void Start()
         {
-            _player = GameObject.FindWithTag("Player");
-            _virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
-            UpdateCameraTarget();
+            _isStarted = true;
+            _remainingTime = _timeLimit;
+            _levelObject = GameObject.Find("LevelObject");
+            if (_levelObject != null)
+            {
+                _levelObject.SetActive(true);
+                Debug.Log("Level Object load");
+            }
+
+            InitializeCatnip();
+            FindCatnipIconContainer();
+            PlaceCatnipIcons();
+
+            GameObject startPoint = GameObject.FindWithTag("StartPoint");
+            startPoint.GetComponent<StartPoint>().Initialize();
         }
 
-        if (_remainingTime <= 0f)
+        public void Update()
         {
-            KillPlayer();
-            return;
-        }
+            if (!_isStarted)
+                return;
 
-        if (_player != null)
-        {
-            if (_player.transform.position.y < _gridYLowerBound)
+            _remainingTime -= Time.deltaTime;
+            UpdateTimerUI(_remainingTime);
+
+            if (_player == null || _virtualCamera == null)
+            {
+                _player = GameObject.FindWithTag("Player");
+                _virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
+                UpdateCameraTarget();
+            }
+
+            if (_remainingTime <= 0f)
             {
                 KillPlayer();
                 return;
             }
-        }
-    }
 
-    public void Exit(ExitState exitState)
-    {
-        switch (exitState)
+            if (_player != null)
+            {
+                if (_player.transform.position.y < _gridYLowerBound)
+                {
+                    KillPlayer();
+                    return;
+                }
+            }
+        }
+
+        public void Exit(ExitState exitState)
         {
-            case ExitState.StageClear:
-                isRespawnPositionSetted = false;
-                break;
+            switch (exitState)
+            {
+                case ExitState.StageClear:
+                    isRespawnPositionSetted = false;
+                    ClearCatnipUI();
+                    break;
 
-            case ExitState.GameOver:
-                // GameOver 관련 할 것들 나중에 추가
-                break;
+                case ExitState.GameOver:
+                    // GameOver 관련 할 것들 나중에 추가
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
+            }
+            _isStarted = false;
         }
-        _isStarted = false;
-    }
 
-    private void LifeOver()
-    {
-        _lifeCount--;
-        SceneLoader.LoadCurrentScene();
-        SpawnPlayer(respawnPosition);
-    }
-
-    private void InitializeCatnip()
-    {
-        totalCatnipCount = CatnipUtils.CountTotalCatnipInStage(currentStage);
-        //if (isCatnipCollected.Count == 0 || isCatnipCollected.Count != totalCatnipCount)
-        //{
-        //    CatnipUtils.InitializeCatnipCollectionStates(isCatnipCollected, totalCatnipCount);
-        //}
-        CatnipUtils.InitializeCatnipCollectionStates(isCatnipCollected, totalCatnipCount);
-        collectedCatnipCount = 0;
-    }
-
-    private void KillPlayer() 
-    {
-        if (_remainingTime <= 0f)
+        private void LifeOver()
         {
-            _accumulativeTime += _timeLimit - _remainingTime;
-            _remainingTime = _timeLimit;
+            _lifeCount--;
+            SceneLoader.LoadCurrentScene();
+            SpawnPlayer(respawnPosition);
         }
 
-        if (_lifeCount > 1)
+        private void KillPlayer() 
         {
-            LifeOver();
-        }
-        else
-        {
-            _lifeCount = 9;
-            UIManager.Instance.ClearCatnipUI();
+            if (_remainingTime <= 0f)
+            {
+                _accumulativeTime += _timeLimit - _remainingTime;
+                _remainingTime = _timeLimit;
+            }
 
-            GameManager.Instance.GameOver();
-        }
-    }
+            if (_lifeCount > 1)
+            {
+                LifeOver();
+            }
+            else
+            {
+                _lifeCount = 9;
+                ClearCatnipUI();
 
-    private void UpdateCameraTarget()
-    {
-        if (_player != null && _virtualCamera != null)
-        {
-            _virtualCamera.Follow = _player.transform;
-            _virtualCamera.OnTargetObjectWarped(_player.transform, _player.transform.position - _virtualCamera.transform.position);
+                GameManager.Instance.GameOver();
+            }
         }
-        else
-        {
-            Debug.LogError("Player 또는 Camera를 찾을 수 없음");
-        }
-    }
 
-    public void SpawnPlayer(Vector3 position)
-    {
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player == null)
+        private void UpdateCameraTarget()
         {
-            Debug.Log($"Player spawned : {position}");
-            player = PoolManager.Instance.Pool(playerPrefab, position, Quaternion.identity);
+            if (_player != null && _virtualCamera != null)
+            {
+                _virtualCamera.Follow = _player.transform;
+                _virtualCamera.OnTargetObjectWarped(_player.transform, _player.transform.position - _virtualCamera.transform.position);
+            }
+            else
+            {
+                Debug.LogError("Player 또는 Camera를 찾을 수 없음");
+            }
         }
-        else
+
+        public void SpawnPlayer(Vector3 position)
         {
-            player.transform.position = position;
-            Debug.Log($"Player moved to position: {position}");
+            Debug.LogWarning($"Spawning player at {position}");
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player == null)
+            {
+                Debug.Log($"Player spawned : {position}");
+                player = PoolManager.Instance.Pool(playerPrefab, position, Quaternion.identity);
+            }
+            else
+            {
+                player.transform.position = position;
+                Debug.Log($"Player moved to position: {position}");
+            }
         }
-    }
 
-    public void UpdateRespawnPosition(Vector3 position)
-    {
-        respawnPosition = position;
-        isRespawnPositionSetted = true;
-        Debug.Log($"respawnposition set to {respawnPosition}");
-    }
+        public void UpdateRespawnPosition(Vector3 position)
+        {
+            respawnPosition = position;
+            isRespawnPositionSetted = true;
+            Debug.Log($"respawnposition set to {respawnPosition}");
+        }
 
-    public void GoTargetIndexByPipe(int index)
-    {
-        currentIndex = index;
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneLoader.LoadTargetStage(currentStage, currentIndex);
+        public void GoTargetIndexByPipe(int index)
+        {
+            currentIndex = index;
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneLoader.LoadTargetStage(currentStage, currentIndex);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+
         Pipe targetPipe = PipeUtils.FindPipeByID(enteredPipeID);
         if (targetPipe != null)
         {
@@ -256,6 +243,18 @@ public class StageState : IGameState
         }
     }
 
+    private void InitializeCatnip()
+    {
+        totalCatnipCount = CatnipUtils.CountTotalCatnipInStage(currentStage);
+        //if (isCatnipCollected.Count == 0 || isCatnipCollected.Count != totalCatnipCount)
+        //{
+        //    CatnipUtils.InitializeCatnipCollectionStates(isCatnipCollected, totalCatnipCount);
+        //}
+        Debug.LogWarning($"총 캣닢 개수 : {totalCatnipCount}");
+        CatnipUtils.InitializeCatnipCollectionStates(isCatnipCollected, totalCatnipCount);
+        collectedCatnipCount = 0;
+    }
+
     private void FindCatnipIconContainer()
     {
         if (catnipIconContainer == null)
@@ -274,14 +273,22 @@ public class StageState : IGameState
 
     private void PlaceCatnipIcons()
     {
-        ClearCatnipUI();
+        //ClearCatnipUI();
 
         for (int i = 0; i < totalCatnipCount; i++)
         {
-            GameObject icon = Instantiate(catnipIconPrefab, catnipIconContainer);
+            GameObject icon = PoolManager.Instance.Pool(catnipIconPrefab, Vector3.zero, Quaternion.identity, catnipIconContainer);
+            //icon.transform.localPosition = Vector3.zero;
             _catnipIcons.Add(icon);
             SetCatnipIconState(icon, isCatnipCollected[i]);
         }
+    }
+
+    public void CollectCatnipInStageState(int catnipID)
+    {
+        collectedCatnipCount++;
+        CatnipUtils.CatnipCollectUIUpdate(catnipID);
+        CatnipUtils.UpdateCatnipToCollected(isCatnipCollected, catnipID);
     }
 
     public void UpdateCatnipUI(int catnipID)
@@ -301,7 +308,7 @@ public class StageState : IGameState
     {
         foreach (GameObject icon in _catnipIcons)
         {
-            Destroy(icon);
+            icon.SetActive(false);
         }
         _catnipIcons.Clear();
     }

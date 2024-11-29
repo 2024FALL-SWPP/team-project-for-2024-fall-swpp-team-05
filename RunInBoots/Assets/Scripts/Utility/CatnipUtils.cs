@@ -25,7 +25,7 @@ public class CatnipUtils
 
     public static void CatnipCollectUIUpdate(int catnipID)
     {
-        UIManager.Instance.UpdateCatnipUI(catnipID);
+        GameManager.Instance.GetCurrentStageState().UpdateCatnipUI(catnipID);
     }
 
     public static int CountTotalCatnipInStage(int stage)

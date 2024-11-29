@@ -16,6 +16,11 @@ public class GameManager : MonoSingleton<GameManager>
         Application.targetFrameRate = 60;
     }
 
+    private void Start()
+    {
+        StartNewStage(100);
+    }
+
     // 나중에 Title Scene 만들면 수정 요함. 지금은 Stage_.._.. 씬에서 시작한다고 가정
     public void StartNewStage(int stage)
     {
@@ -39,7 +44,6 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void StageClear()
     {
-        UIManager.Instance.ClearCatnipUI();
         if (currentState != null)
         {
             currentState.Exit(ExitState.StageClear);
