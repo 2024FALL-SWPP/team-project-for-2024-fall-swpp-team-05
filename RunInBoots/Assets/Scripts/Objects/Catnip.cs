@@ -22,5 +22,6 @@ public class Catnip : MonoBehaviour
             GameManager.Instance.GetCurrentStageState().CollectCatnipInStageState(catnipID);
             gameObject.SetActive(false);
         }
+        
     }
 }

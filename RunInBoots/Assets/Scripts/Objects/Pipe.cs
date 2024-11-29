@@ -16,29 +16,24 @@ public class Pipe : InteractableObject
     public void SpawnPlayerByPipe()
     {
         StageState currentStageState = GameManager.Instance.GetCurrentStageState();
-        if (currentStageState.isComingFromPipe && currentStageState.enteredPipeID == pipeID)
-        {
-            Vector3 targetPosition = transform.position + Vector3.right * 1.5f;
-            currentStageState.SpawnPlayer(targetPosition);
-            currentStageState.UpdateRespawnPosition(targetPosition);
-            currentStageState.ResetPipeData();
-        }
+        Vector3 targetPosition = transform.position + Vector3.right * 1.5f;
+        currentStageState.SpawnPlayer(targetPosition);
+        currentStageState.UpdateRespawnPosition(targetPosition, false);
     }
     
     protected override void OnInteract()
     {
         int currentIndex = GameManager.Instance.GetCurrentStageState().currentIndex;
+        StageState currentStageState = GameManager.Instance.GetCurrentStageState();
 
         if (currentIndex != targetIndex)
         {
-            StageState currentStageState = GameManager.Instance.GetCurrentStageState();
-            currentStageState.enteredPipeID = targetPipeID;
-            currentStageState.isComingFromPipe = true;
-            currentStageState.GoTargetIndexByPipe(targetIndex);
+            currentStageState.GoTargetIndexByPipe(targetIndex, targetPipeID);
         }
         else
         {
             Pipe targetPipe = PipeUtils.FindPipeByID(targetPipeID);
+            Debug.Log($"씬 내 파이프 이동: {pipeID} -> {targetPipeID}");
             if (targetPipe != null)
             {
                 targetPipe.GetComponent<Pipe>().Initialize();

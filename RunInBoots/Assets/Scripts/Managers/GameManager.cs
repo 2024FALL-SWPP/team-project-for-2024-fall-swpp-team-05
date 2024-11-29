@@ -14,14 +14,14 @@ public class GameManager : MonoSingleton<GameManager>
     {
         base.Awake();
         Application.targetFrameRate = 60;
+        
     }
 
     private void Start()
     {
-        StartNewStage(100);
+        //StartNewStage(100);
     }
 
-    // 나중에 Title Scene 만들면 수정 요함. 지금은 Stage_.._.. 씬에서 시작한다고 가정
     public void StartNewStage(int stage)
     {
         if (!SceneLoader.LoadTargetStage(stage, 1))
@@ -30,6 +30,12 @@ public class GameManager : MonoSingleton<GameManager>
             return;
         }
         currentState = new StageState(stage);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
         currentState.Start();
     }
 
