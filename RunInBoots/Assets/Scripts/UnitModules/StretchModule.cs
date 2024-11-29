@@ -17,6 +17,7 @@ public class StretchModule : MonoBehaviour
     public Rigidbody rb;
 
     public bool isStretching = false;
+    private bool _isStretchApplied = true;
 
     void Start()
     {
@@ -53,6 +54,7 @@ public class StretchModule : MonoBehaviour
         currentStretchAmount = Mathf.Clamp(currentStretchAmount, 0, maxStretchLength);
 
         isStretching = true;
+        _isStretchApplied = false;
     }
 
     // **상태 갱신** 기능: 매 프레임마다 위치와 크기 갱신
@@ -74,6 +76,7 @@ public class StretchModule : MonoBehaviour
             targetBone.localPosition = initialBonePosition + Vector3.up * currentStretchAmount / targetBone.lossyScale.y;
         }
 
+        _isStretchApplied = true;
     }
 
     void FixedUpdate() 
@@ -91,6 +94,6 @@ public class StretchModule : MonoBehaviour
     // 예시: 특정 키로 늘리기 동작 테스트
     void Update()
     {
-        isStretching=false;
+        if(_isStretchApplied) isStretching=false;
     }
 }
