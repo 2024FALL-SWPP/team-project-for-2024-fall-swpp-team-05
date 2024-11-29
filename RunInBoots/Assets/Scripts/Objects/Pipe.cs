@@ -3,10 +3,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class Pipe : InteractableObject
+public class Pipe : Interactable
 {
+    public int targetIndex;
     public int pipeID;
     public int targetPipeID;
+
 
     public override void Initialize()
     {
@@ -21,11 +23,17 @@ public class Pipe : InteractableObject
         currentStageState.UpdateRespawnPosition(targetPosition, false);
     }
     
-    protected override void OnInteract()
+    protected override void OnInteract(GameObject interactor)
     {
-        int currentIndex = GameManager.Instance.GetCurrentStageState().currentIndex;
         StageState currentStageState = GameManager.Instance.GetCurrentStageState();
-
+        int currentIndex = GameManager.Instance.GetCurrentStageState().currentIndex;
+        
+        if (currentStageState == null)
+        {
+            Debug.LogWarning("현재 Stage State가 아님");
+            return;
+        }
+        
         if (currentIndex != targetIndex)
         {
             currentStageState.GoTargetIndexByPipe(targetIndex, targetPipeID);
@@ -33,15 +41,7 @@ public class Pipe : InteractableObject
         else
         {
             Pipe targetPipe = PipeUtils.FindPipeByID(targetPipeID);
-            Debug.Log($"씬 내 파이프 이동: {pipeID} -> {targetPipeID}");
-            if (targetPipe != null)
-            {
-                targetPipe.GetComponent<Pipe>().Initialize();
-            }
-            else
-            {
-                Debug.LogError($"ID가 {targetPipeID}인 파이프를 찾을 수 없습니다.");
-            }
+            targetPipe?.Initialize();
         }
     }
 }

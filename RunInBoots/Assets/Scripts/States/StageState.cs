@@ -69,8 +69,10 @@ public class StageState : IGameState
         InitializeCatnipInfo();
         FindCatnipIconContainer();
         PlaceCatnipIcons();
-
         SpawnPlayerAtStartPoint();
+        //InitializeAllCatnips();
+
+        
     }
 
     public void Update()
@@ -109,7 +111,7 @@ public class StageState : IGameState
         switch (exitState)
         {
             case ExitState.StageClear:
-                //StageClear 관련 할 것들 나중에 추가
+                GameManager.Instance.StartNewStage(currentStage + 1);
                 break;
 
             case ExitState.GameOver:
@@ -122,7 +124,20 @@ public class StageState : IGameState
         _isStarted = false;
     }
 
-    
+    private void UpdateCameraTarget()
+    {
+        if (_player != null && _virtualCamera != null)
+        {
+            _virtualCamera.Follow = _player.transform;
+            _virtualCamera.OnTargetObjectWarped(_player.transform, _player.transform.position - _virtualCamera.transform.position);
+        }
+        else
+        {
+            Debug.LogError("Player 또는 Camera를 찾을 수 없음");
+        }
+    }
+
+    /******************** 플레이어 죽음 관련 함수들 ********************/
 
     private void LifeOver()
     {
@@ -137,6 +152,8 @@ public class StageState : IGameState
         FindTimerText();
         FindCatnipIconContainer();
         PlaceCatnipIcons();
+        //InitializeAllCatnips();
+
         if (respawnPositionIsStartPoint)
         {
             SpawnPlayerAtStartPoint();
@@ -169,20 +186,7 @@ public class StageState : IGameState
         }
     }
 
-    private void UpdateCameraTarget()
-    {
-        if (_player != null && _virtualCamera != null)
-        {
-            _virtualCamera.Follow = _player.transform;
-            _virtualCamera.OnTargetObjectWarped(_player.transform, _player.transform.position - _virtualCamera.transform.position);
-        }
-        else
-        {
-            Debug.LogError("Player 또는 Camera를 찾을 수 없음");
-        }
-    }
-
-    //SpawnPlayer 관련 함수들
+    /******************** 플레이어 Spawn 관련 함수들 ********************/
 
     public void SpawnPlayer(Vector3 position)
     {
@@ -202,8 +206,9 @@ public class StageState : IGameState
 
     private void SpawnPlayerAtStartPoint()
     {
-        GameObject startPoint = GameObject.FindWithTag("StartPoint");
-        startPoint.GetComponent<StartPoint>().Initialize();
+        GameObject startPointObject = GameObject.FindWithTag("StartPoint");
+        StartPoint startPoint = startPointObject.GetComponent<StartPoint>();
+        startPoint?.Initialize();
     }
 
     public void UpdateRespawnPosition(Vector3 position, bool respawnPositionIsStartPoint)
@@ -213,7 +218,7 @@ public class StageState : IGameState
         Debug.Log($"respawnposition set to {respawnPosition}");
     }
 
-    //Pipe 관련 함수들
+    /******************** Pipe 관련 함수들 ********************/
 
     public void GoTargetIndexByPipe(int index, int targetPipeID)
     {
@@ -225,6 +230,11 @@ public class StageState : IGameState
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        FindTimerText();
+        FindCatnipIconContainer();
+        PlaceCatnipIcons();
+        //InitializeAllCatnips();
+
         Pipe targetPipe = PipeUtils.FindPipeByID(enteredPipeID);
         enteredPipeID = -1;
         if (targetPipe != null)
@@ -235,14 +245,11 @@ public class StageState : IGameState
         {
             Debug.LogError("다음 씬에서 target Pipe를 찾을 수 없습니다.");
         }
-
-        FindTimerText();
-        FindCatnipIconContainer();
-        PlaceCatnipIcons();
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    // 타이머 관련 함수들
+    /******************** 타이머 관련 함수들 ********************/
+
     public void FindTimerText()
     {
         GameObject timerObject = GameObject.FindGameObjectWithTag("TimerText");
@@ -268,7 +275,8 @@ public class StageState : IGameState
         }
     }
 
-    // Catnip 관련 함수들
+    /******************** Catnip 관련 함수들 ********************/
+
     private void InitializeCatnipInfo()
     {
         totalCatnipCount = CatnipUtils.CountTotalCatnipInStage(currentStage);
@@ -347,4 +355,15 @@ public class StageState : IGameState
         iconColor.a = isActive ? 1.0f : 0.5f;
         icon.GetComponent<UnityEngine.UI.Image>().color = iconColor;
     }
+
+    //private void InitializeAllCatnips()
+    //{
+    //    GameObject[] catnipObjects = GameObject.FindGameObjectsWithTag("Catnip");
+
+    //    foreach (GameObject catnipObject in catnipObjects)
+    //    {
+    //        Catnip catnip = catnipObject.GetComponent<Catnip>();
+    //        catnip?.Initialize();
+    //    }
+    //}
 }

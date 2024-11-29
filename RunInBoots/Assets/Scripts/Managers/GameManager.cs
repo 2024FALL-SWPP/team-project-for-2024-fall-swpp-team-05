@@ -48,15 +48,6 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    public void StageClear()
-    {
-        if (currentState != null)
-        {
-            currentState.Exit(ExitState.StageClear);
-        }
-        StartNewStage(GetCurrentStageState().currentStage + 1);
-    }
-
     // 모든 스테이지 클리어 된 후 동작 나중에 채워넣기
     public void AllStageClear() 
     {

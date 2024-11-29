@@ -81,7 +81,7 @@ public class LevelLoader : MonoBehaviour
                 {
                     pipeComponent.pipeID = pipeData.pipeID;
                     pipeComponent.targetPipeID = pipeData.targetPipeID;
-                    pipeComponent.targetStage = pipeData.targetStage;
+                    //pipeComponent.targetStage = pipeData.targetStage;
                     pipeComponent.targetIndex = pipeData.targetIndex;
                 }
                 else
@@ -89,15 +89,15 @@ public class LevelLoader : MonoBehaviour
                     Debug.LogError("No Pipe Script in Pipe");
                 }
             }
-            else if (levelObjectData is GoalPointData goalData)
-            {
-                GoalPoint goalComponent = instance.GetComponent<GoalPoint>();
-                if (goalComponent != null)
-                {
-                    goalComponent.targetStage = goalData.targetStage;
-                    goalComponent.targetIndex = goalData.targetIndex;
-                }
-            }
+            //else if (levelObjectData is GoalPointData goalData)
+            //{
+            //    GoalPoint goalComponent = instance.GetComponent<GoalPoint>();
+            //    if (goalComponent != null)
+            //    {
+            //        goalComponent.targetStage = goalData.targetStage;
+            //        //goalComponent.targetIndex = goalData.targetIndex;
+            //    }
+            //}
             else if (levelObjectData is CatnipData catnipData)
             {
                 Catnip catnipComponent = instance.GetComponent<Catnip>();

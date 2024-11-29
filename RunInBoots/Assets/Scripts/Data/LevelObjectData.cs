@@ -13,7 +13,7 @@ public class PipeData : LevelObjectData
 {
     public int pipeID;
     public int targetPipeID;
-    public int targetStage;
+    //public int targetStage;
     public int targetIndex;
 
     public PipeData()
@@ -34,8 +34,8 @@ public class StartPointData : LevelObjectData
 [Serializable]
 public class GoalPointData : LevelObjectData
 {
-    public int targetStage;
-    public int targetIndex;
+    //public int targetStage;
+    //public int targetIndex;
 
     public GoalPointData()
     {
