@@ -134,6 +134,23 @@ public class GameManager : MonoSingleton<GameManager>
         SpawnPlayerWithEvent(respawnPosition);
     }
 
+    private void GameOverWithEvent()
+    {
+        ProducingEvent gameOverEvent = new AnimatorEvent(null);
+        ProducingEvent blackScreenEvent = new AnimatorEvent(null);
+        gameOverEvent.AddStartEvent(() =>
+        {
+            StopPlayer();
+        });
+        blackScreenEvent.AddEndEvent(() =>
+        {
+            ResumePlayer();
+            GameOver();
+        });
+        AddEvent(gameOverEvent);
+        AddEvent(blackScreenEvent);
+    }
+
     private void GameOver()
     {
         UIManager.Instance.ClearCatnipUI();
@@ -263,7 +280,7 @@ public class GameManager : MonoSingleton<GameManager>
         }
         else
         {
-            GameOver();
+            GameOverWithEvent();
         }
     }
 
