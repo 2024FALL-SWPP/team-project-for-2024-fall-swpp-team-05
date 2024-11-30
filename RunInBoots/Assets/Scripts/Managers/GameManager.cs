@@ -86,8 +86,26 @@ public class GameManager : MonoSingleton<GameManager>
     }
 
     
+    public void StageClearWithEvent()
+    {
+        ProducingEvent gameClearEvent = new AnimatorEvent(null);
+        ProducingEvent blackScreenEvent = new AnimatorEvent(null);
+        GameObject goalPoint = GameObject.FindWithTag("GoalPoint");
+        gameClearEvent.AddStartEvent(() =>
+        {
+            StopPlayer();
+            GetObject(goalPoint, new Vector3(0, 3.0f, 0));
+        });
+        blackScreenEvent.AddEndEvent(() =>
+        {
+            ResumePlayer();
+            StageClear();
+        });
+        AddEvent(gameClearEvent);
+        AddEvent(blackScreenEvent);
+    }
 
-    public void StageClear()
+    private void StageClear()
     {
         UIManager.Instance.ClearCatnipUI();
         if (_currentState != null)

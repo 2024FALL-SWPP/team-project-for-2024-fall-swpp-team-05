@@ -4,6 +4,6 @@ public class GoalPoint : InteractableObject
 {
     protected override void OnInteract()
     {
-        GameManager.Instance.StageClear();
+        GameManager.Instance.StageClearWithEvent();
     }
 }
