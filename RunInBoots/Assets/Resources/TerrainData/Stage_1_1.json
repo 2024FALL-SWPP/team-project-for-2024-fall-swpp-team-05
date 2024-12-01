@@ -5,7 +5,7 @@
     "x": 130,
     "y": 40
   },
-  "catnipCount": 0,
+  "catnipCount": 1,
   "levelObjects": [
     {
       "objectType": "Cube_0",
@@ -6588,6 +6588,10 @@
       }
     },
     {
+      "$type": "PipeData, Assembly-CSharp",
+      "pipeID": 1,
+      "targetPipeID": 1,
+      "targetIndex": 2,
       "objectType": "APipe",
       "gridPosition": {
         "x": 113,
@@ -10753,6 +10757,8 @@
       }
     },
     {
+      "$type": "CatnipData, Assembly-CSharp",
+      "catnipID": 1,
       "objectType": "ACatnip",
       "gridPosition": {
         "x": 123,
@@ -10851,6 +10857,7 @@
       }
     },
     {
+      "$type": "StartPointData, Assembly-CSharp",
       "objectType": "AStartPoint",
       "gridPosition": {
         "x": 4,
