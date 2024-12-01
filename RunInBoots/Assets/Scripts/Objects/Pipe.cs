@@ -9,7 +9,6 @@ public class Pipe : Interactable
     public int pipeID;
     public int targetPipeID;
 
-
     public override void Initialize()
     {
         SpawnPlayerByPipe();

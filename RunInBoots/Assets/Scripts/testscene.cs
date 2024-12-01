@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class testscene : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public void OnButtonClicked()
+    public int stageToStart;
+
+    private void Start()
     {
         GameManager.Instance.StartNewStage(100);
     }

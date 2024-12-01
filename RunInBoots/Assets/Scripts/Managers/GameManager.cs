@@ -17,10 +17,6 @@ public class GameManager : MonoSingleton<GameManager>
         
     }
 
-    private void Start()
-    {
-        //StartNewStage(100);
-    }
 
     public void StartNewStage(int stage)
     {

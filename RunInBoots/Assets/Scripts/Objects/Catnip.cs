@@ -13,7 +13,7 @@ public class Catnip : Interactable
 
     public override void Initialize()
     {
-        if (GameManager.Instance.GetCurrentStageState().isCatnipCollected[catnipID - 1])
+        if (GameManager.Instance.GetCurrentStageState()?.isCatnipCollected[catnipID - 1] ?? false)
         {
             gameObject.SetActive(false);
         }

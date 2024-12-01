@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class GoalPoint : Interactable
 {
-    //public int targetStage;
-
     public override void Initialize()
     {
         throw new System.NotImplementedException();

@@ -27,7 +27,6 @@ public class StageState : IGameState
 
     private GameObject _player;
     private CinemachineVirtualCamera _virtualCamera;
-    private GameObject _levelObject;
 
     public int totalCatnipCount;
     public int collectedCatnipCount;
@@ -59,20 +58,11 @@ public class StageState : IGameState
     {
         _isStarted = true;
         _remainingTime = _timeLimit;
-        _levelObject = GameObject.Find("LevelObject");
-        if (_levelObject != null)
-        {
-            _levelObject.SetActive(true);
-            Debug.Log("Level Object load");
-        }
 
         InitializeCatnipInfo();
         FindCatnipIconContainer();
         PlaceCatnipIcons();
         SpawnPlayerAtStartPoint();
-        //InitializeAllCatnips();
-
-        
     }
 
     public void Update()
@@ -111,7 +101,7 @@ public class StageState : IGameState
         switch (exitState)
         {
             case ExitState.StageClear:
-                GameManager.Instance.StartNewStage(currentStage + 1);
+                StageClear();
                 break;
 
             case ExitState.GameOver:
@@ -122,6 +112,11 @@ public class StageState : IGameState
                 break;
         }
         _isStarted = false;
+    }
+
+    private void StageClear()
+    {
+        GameManager.Instance.StartNewStage(currentStage + 1);
     }
 
     private void UpdateCameraTarget()
@@ -152,7 +147,6 @@ public class StageState : IGameState
         FindTimerText();
         FindCatnipIconContainer();
         PlaceCatnipIcons();
-        //InitializeAllCatnips();
 
         if (respawnPositionIsStartPoint)
         {
@@ -233,7 +227,6 @@ public class StageState : IGameState
         FindTimerText();
         FindCatnipIconContainer();
         PlaceCatnipIcons();
-        //InitializeAllCatnips();
 
         Pipe targetPipe = PipeUtils.FindPipeByID(enteredPipeID);
         enteredPipeID = -1;
@@ -351,19 +344,7 @@ public class StageState : IGameState
             return;
         }
         Color iconColor = icon.GetComponent<UnityEngine.UI.Image>().color;
-        // 투명도 설정
         iconColor.a = isActive ? 1.0f : 0.5f;
         icon.GetComponent<UnityEngine.UI.Image>().color = iconColor;
     }
-
-    //private void InitializeAllCatnips()
-    //{
-    //    GameObject[] catnipObjects = GameObject.FindGameObjectsWithTag("Catnip");
-
-    //    foreach (GameObject catnipObject in catnipObjects)
-    //    {
-    //        Catnip catnip = catnipObject.GetComponent<Catnip>();
-    //        catnip?.Initialize();
-    //    }
-    //}
 }
