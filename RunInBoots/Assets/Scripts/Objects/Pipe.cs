@@ -3,94 +3,44 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class Pipe : InteractableObject
+public class Pipe : Interactable
 {
+    public int targetIndex;
     public int pipeID;
     public int targetPipeID;
 
-    protected override void Start()
+    public override void Initialize()
     {
-        base.Start();
-
-        if (GameManager.Instance.isComingFromPipe && GameManager.Instance.enteredPipeID == pipeID)
-        {
-            //GameObject player = GameObject.FindWithTag("Player");
-            //if (player != null)
-            //{
-            //    Vector3 targetPosition = transform.position + Vector3.right * 1.5f;
-            //    player.transform.position = targetPosition;
-            //    GameManager.Instance.ResetPipeData(); // 상태 초기화
-            //}
-            GameManager.Instance.ResetPipeData();
-
-        }
+        SpawnPlayerByPipe();
     }
 
-    protected override void OnInteract()
+    public void SpawnPlayerByPipe()
     {
-
-        int currentStage, currentIndex;
-        currentStage = GameManager.Instance.GetCurrentStage();
-        currentIndex = GameManager.Instance.GetCurrentIndex();
-
-        if (currentStage == -1 || currentIndex == -1)
+        StageState currentStageState = GameManager.Instance.GetCurrentStageState();
+        Vector3 targetPosition = transform.position + Vector3.right * 1.5f;
+        currentStageState.SpawnPlayer(targetPosition);
+        currentStageState.UpdateRespawnPosition(targetPosition, false);
+    }
+    
+    protected override void OnInteract(GameObject interactor)
+    {
+        StageState currentStageState = GameManager.Instance.GetCurrentStageState();
+        int currentIndex = GameManager.Instance.GetCurrentStageState().currentIndex;
+        
+        if (currentStageState == null)
         {
-            Debug.LogError($"현재 씬 이름에서 Stage와 Index를 파싱할 수 없습니다.");
+            Debug.LogWarning("현재 Stage State가 아님");
             return;
         }
-
-        if (currentStage != targetStage || currentIndex != targetIndex)
+        
+        if (currentIndex != targetIndex)
         {
-            GameManager.Instance.enteredPipeID = targetPipeID;
-            GameManager.Instance.isComingFromPipe = true;
-
-            SceneManager.sceneLoaded += OnSceneLoaded;
-            LoadScene(targetStage, targetIndex);
+            currentStageState.GoTargetIndexByPipe(targetIndex, targetPipeID);
         }
         else
         {
-            Pipe targetPipe = GameUtils.FindPipeByID(targetPipeID);
-            if (targetPipe != null)
-            {
-                Vector3 targetPosition = targetPipe.transform.position + Vector3.right * 1.5f;
-                GameManager.Instance.SpawnPlayer(targetPosition);
-                GameManager.Instance.UpdateRespawnPosition(targetPosition);
-            }
-            else
-            {
-                Debug.LogError($"ID가 {targetPipeID}인 파이프를 찾을 수 없습니다.");
-            }
+            Pipe targetPipe = PipeUtils.FindPipeByID(targetPipeID);
+            targetPipe?.Initialize();
         }
     }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        Pipe targetPipe = GameUtils.FindPipeByID(GameManager.Instance.enteredPipeID);
-        if (targetPipe != null)
-        {
-            Vector3 targetPosition = targetPipe.transform.position + Vector3.right * 1.5f;
-            GameManager.Instance.SpawnPlayer(targetPosition);
-            GameManager.Instance.UpdateRespawnPosition(targetPosition);
-        }
-        else
-        {
-            Debug.LogError("다음 씬에서 target Pipe를 찾을 수 없습니다.");
-        }
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private bool ParseSceneName(string sceneName, out int stage, out int index)
-    {
-        stage = 0;
-        index = 0;
-
-        string[] parts = sceneName.Split('_');
-        if (parts.Length == 3 && parts[0] == "Stage" && int.TryParse(parts[1], out stage) && int.TryParse(parts[2], out index))
-        {
-            return true;
-        }
-
-        return false;
-    }
-
 }

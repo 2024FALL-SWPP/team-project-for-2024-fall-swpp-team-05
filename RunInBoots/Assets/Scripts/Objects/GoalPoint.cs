@@ -1,9 +1,14 @@
 using UnityEngine;
 
-public class GoalPoint : InteractableObject
+public class GoalPoint : Interactable
 {
-    protected override void OnInteract()
+    public override void Initialize()
     {
-        GameManager.Instance.StageClear();
+        throw new System.NotImplementedException();
+    }
+
+    protected override void OnInteract(GameObject interactor)
+    {
+        GameManager.Instance.GetCurrentStageState().Exit(ExitState.StageClear);
     }
 }

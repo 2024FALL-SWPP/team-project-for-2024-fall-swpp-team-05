@@ -335,7 +335,6 @@ public class GridManager : MonoBehaviour
                 {
                     pipeID = obj.GetComponent<Pipe>().pipeID,
                     targetPipeID = obj.GetComponent<Pipe>().targetPipeID,
-                    targetStage = obj.GetComponent<Pipe>().targetStage,
                     targetIndex = obj.GetComponent<Pipe>().targetIndex
                 };
                 data = pipeData;
@@ -346,12 +345,7 @@ public class GridManager : MonoBehaviour
             }
             else if (prefabName == "GoalPoint")
             {
-                GoalPointData goalData = new GoalPointData
-                {
-                    targetStage = obj.GetComponent<GoalPoint>().targetStage,
-                    targetIndex = obj.GetComponent<GoalPoint>().targetIndex
-                };
-                data = goalData;
+                data = new GoalPointData();
             }
             else if (prefabName == "Catnip")
             {
@@ -374,27 +368,6 @@ public class GridManager : MonoBehaviour
         }
         terrainDataLoader.terrainData.catnipCount = catnipCount;
     }
-
-    //public void SavePipeData()
-    //{
-    //    // save pipe data to terrainDataLoader
-    //    Debug.Log("Save pipe data");
-    //    terrainDataLoader.terrainData.pipeConnections.pipeList.Clear();
-
-    //    foreach (var entry in placedObjects)
-    //    {
-    //        if (entry.Value.GetComponent<Pipe>() != null)
-    //        {
-    //            Pipe pipe = entry.Value.GetComponent<Pipe>();
-    //            PipeData pipeData = new PipeData();
-    //            pipeData.pipeID = pipe.pipeID;
-    //            pipeData.targetPipeID = pipe.targetPipeID;
-    //            pipeData.targetStage = pipe.targetStage;
-    //            pipeData.targetIndex = pipe.targetIndex;
-    //            terrainDataLoader.terrainData.pipeConnections.pipeList.Add(pipeData);
-    //        }
-    //    }
-    //}
 
     public void LoadGridData()
     {
@@ -423,17 +396,7 @@ public class GridManager : MonoBehaviour
                 {
                     pipeComponent.pipeID = pipeData.pipeID;
                     pipeComponent.targetPipeID = pipeData.targetPipeID;
-                    pipeComponent.targetStage = pipeData.targetStage;
                     pipeComponent.targetIndex = pipeData.targetIndex;
-                }
-            }
-            else if (levelObjectData is GoalPointData goalData)
-            {
-                GoalPoint goalComponent = obj.GetComponent<GoalPoint>();
-                if (goalComponent != null)
-                {
-                    goalComponent.targetStage = goalData.targetStage;
-                    goalComponent.targetIndex = goalData.targetIndex;
                 }
             }
             else if (levelObjectData is CatnipData catnipData)
@@ -490,7 +453,6 @@ public class GridManager : MonoBehaviour
                         PipeData pipeData = new PipeData();
                         pipeData.pipeID = obj.GetComponent<Pipe>().pipeID;
                         pipeData.targetPipeID = obj.GetComponent<Pipe>().targetPipeID;
-                        pipeData.targetStage = obj.GetComponent<Pipe>().targetStage;
                         pipeData.targetIndex = obj.GetComponent<Pipe>().targetIndex;
                         data = pipeData;
                     }
@@ -500,10 +462,7 @@ public class GridManager : MonoBehaviour
                     }
                     else if (selectedPrefabName == "GoalPoint")
                     {
-                        GoalPointData goalData = new GoalPointData();
-                        goalData.targetStage = obj.GetComponent<GoalPoint>().targetStage;
-                        goalData.targetIndex = obj.GetComponent<GoalPoint>().targetIndex;
-                        data = goalData;
+                        data = new GoalPointData();
                     }
                     else if (selectedPrefabName == "Catnip")
                     {

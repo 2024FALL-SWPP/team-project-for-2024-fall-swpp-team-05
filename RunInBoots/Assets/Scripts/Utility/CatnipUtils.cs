@@ -3,22 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class GameUtils
+public class CatnipUtils
 {
-    public static Pipe FindPipeByID(int id)
+    public static void InitializeCatnipCollectionStates(List<bool> isCatnipCollected, int count)
     {
-        Pipe[] pipes = GameObject.FindObjectsOfType<Pipe>();
-        foreach (Pipe pipe in pipes)
+        isCatnipCollected.Clear();
+        for (int i = 0; i < count; i++)
         {
-            if (pipe.pipeID == id)
-            {
-                return pipe;
-            }
+            isCatnipCollected.Add(false);
         }
-        return null;
     }
+
+    //public static void UpdateCatnipToCollected(List<bool> isCatnipCollected, int catnipID)
+    //{
+    //    if (catnipID > 0 && catnipID <= isCatnipCollected.Count)
+    //    {
+    //        isCatnipCollected[catnipID - 1] = true;
+    //    }
+    //}
+
+    //public static void CatnipCollectUIUpdate(int catnipID)
+    //{
+    //    GameManager.Instance.GetCurrentStageState().UpdateCatnipUI(catnipID);
+    //}
 
     public static int CountTotalCatnipInStage(int stage)
     {
@@ -30,7 +38,7 @@ public class GameUtils
             string path = Path.Combine("TerrainData", fileName);
             var file = Resources.Load<TextAsset>(path);
 
-            if (file==null)
+            if (file == null)
             {
                 Debug.Log($"파일 {fileName}을 찾을 수 없습니다. 종료합니다.");
                 break;
