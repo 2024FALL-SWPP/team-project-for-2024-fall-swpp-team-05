@@ -329,30 +329,30 @@ public class GridManager : MonoBehaviour
             string prefabName = obj.name.Replace("(Clone)", "");
 
             LevelObjectData data = null;
-            if (prefabName == "Pipe")
+            if (obj.TryGetComponent<Pipe>(out var pipeComponent))
             {
                 PipeData pipeData = new PipeData
                 {
-                    pipeID = obj.GetComponent<Pipe>().pipeID,
-                    targetPipeID = obj.GetComponent<Pipe>().targetPipeID,
-                    targetIndex = obj.GetComponent<Pipe>().targetIndex
+                    pipeID = pipeComponent.pipeID,
+                    targetPipeID = pipeComponent.targetPipeID,
+                    targetIndex = pipeComponent.targetIndex
                 };
                 data = pipeData;
             }
-            else if (prefabName == "StartPoint")
+            else if (obj.TryGetComponent<StartPoint>(out var startPointComponent))
             {
                 data = new StartPointData();
             }
-            else if (prefabName == "GoalPoint")
+            else if (obj.TryGetComponent<GoalPoint>(out var goalPointComponent))
             {
                 data = new GoalPointData();
             }
-            else if (prefabName == "Catnip")
+            else if (obj.TryGetComponent<Catnip>(out var catnipComponent))
             {
                 catnipCount++;
                 CatnipData catnipData = new CatnipData
                 {
-                    catnipID = obj.GetComponent<Catnip>().catnipID
+                    catnipID = catnipComponent.catnipID
                 };
                 data = catnipData;
             }
@@ -448,26 +448,26 @@ public class GridManager : MonoBehaviour
 
                     LevelObjectData data = null;
 
-                    if (selectedPrefabName == "Pipe")
+                    if (obj.TryGetComponent<Pipe>(out var pipeComponent))
                     {
                         PipeData pipeData = new PipeData();
-                        pipeData.pipeID = obj.GetComponent<Pipe>().pipeID;
-                        pipeData.targetPipeID = obj.GetComponent<Pipe>().targetPipeID;
-                        pipeData.targetIndex = obj.GetComponent<Pipe>().targetIndex;
+                        pipeData.pipeID = pipeComponent.pipeID;
+                        pipeData.targetPipeID = pipeComponent.targetPipeID;
+                        pipeData.targetIndex = pipeComponent.targetIndex;
                         data = pipeData;
                     }
-                    else if (selectedPrefabName == "StartPoint")
+                    else if (obj.TryGetComponent<StartPoint>(out var startPointComponent))
                     {
                         data = new StartPointData();
                     }
-                    else if (selectedPrefabName == "GoalPoint")
+                    else if (obj.TryGetComponent<GoalPoint>(out var goalPointComponent))
                     {
                         data = new GoalPointData();
                     }
-                    else if (selectedPrefabName == "Catnip")
+                    else if (obj.TryGetComponent<Catnip>(out var catnipComponent))
                     {
                         CatnipData catnipData = new CatnipData();
-                        catnipData.catnipID = obj.GetComponent<Catnip>().catnipID;
+                        catnipData.catnipID = catnipComponent.catnipID;
                         data = catnipData;
                     }
                     else
