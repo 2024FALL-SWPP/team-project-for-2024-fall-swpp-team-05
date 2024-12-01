@@ -2,25 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Catnip : MonoBehaviour
+public class Catnip : Interactable
 {
     public int catnipID;
 
     private void Start()
     {
-        if (GameManager.Instance.isCatnipCollected[catnipID - 1])
+        Initialize();
+    }
+
+    public override void Initialize()
+    {
+        if (GameManager.Instance.GetCurrentStageState()?.isCatnipCollected[catnipID - 1] ?? false)
         {
             gameObject.SetActive(false);
         }
     }
 
-    // Start is called before the first frame update
-    private void OnTriggerEnter(Collider other)
+    protected override void OnInteract(GameObject interactor)
     {
-        if (other.CompareTag("Player"))
-        {
-            GameManager.Instance.CollectCatnip(catnipID);
-            gameObject.SetActive(false);
-        }
+        GameManager.Instance.GetCurrentStageState().CollectCatnipInStageState(catnipID);
+        gameObject.SetActive(false);
     }
 }

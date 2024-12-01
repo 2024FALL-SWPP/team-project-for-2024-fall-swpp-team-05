@@ -7,6 +7,7 @@ TagManager:
   - Cell
   - TimerText
   - CatnipIconContainer
+  - StartPoint
   layers:
   - Default
   - TransparentFX
