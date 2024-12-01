@@ -8,6 +8,6 @@ public class testscene : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.StartNewStage(100);
+        GameManager.Instance.StartNewStage(stageToStart);
     }
 }
