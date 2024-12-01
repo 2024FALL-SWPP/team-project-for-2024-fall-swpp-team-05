@@ -66,7 +66,7 @@ public class ActionSystem : MonoBehaviour
     public void SetAction(int nextAction)
     {
         int pastAction = currentAction.Key;
-        Debug.Log("Change action: " + nextAction);
+        //Debug.Log("Change action: " + nextAction);
         currentAction = actions.Actions.Find(x => x.Key == nextAction);
         string updates = currentAction.FrameUpdates;
         ParseUpdateRules(updates);

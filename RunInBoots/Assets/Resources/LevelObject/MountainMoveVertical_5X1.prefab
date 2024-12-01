@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1144954536}
   - component: {fileID: 1144954543}
   - component: {fileID: 4565832331438411825}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MountainMoveVertical_5X1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,9 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdcca5375002c41d4a017c513f7f20cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveAmount: {x: 10, y: 0}
+  moveAmount: {x: 0, y: 10}
   moveSpeed: 2
-  waitTime: 1
+  waitTime: 2
 --- !u!65 &1144954536
 BoxCollider:
   m_ObjectHideFlags: 0

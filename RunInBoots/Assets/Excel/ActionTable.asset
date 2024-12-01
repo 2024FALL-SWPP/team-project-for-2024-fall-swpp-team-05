@@ -19,7 +19,7 @@ MonoBehaviour:
     ColliderY: 2.2
     TransitionDuration: 0.1
     GravityScale: 2
-    MaxVelocityX: 6
+    MaxVelocityX: 4
     MaxVelocityY: 6
     NextAction: 0
     FrameUpdates: '[{InputX,1,SetAction,102},{InputY,-1,SetAction,103},{InputY,1,SetAction,108},{Attack,1,SetAction,106},{OnLand,0,SetAction,105},{JumpValid,1,SetAction,104}]'
@@ -29,7 +29,7 @@ MonoBehaviour:
     ColliderY: 2.2
     TransitionDuration: 0.1
     GravityScale: 2
-    MaxVelocityX: 6
+    MaxVelocityX: 4
     MaxVelocityY: 6
     NextAction: 0
     FrameUpdates: '[{InputX,1,MoveInputX,1},{InputX,0,SetAction,101},{InputY,-1,SetAction,103},{InputY,1,SetAction,108},{Run,1,SetAction,107},{Attack,1,SetAction,106},{OnLand,0,SetAction,105},{JumpValid,1,SetAction,104}]'
@@ -39,7 +39,7 @@ MonoBehaviour:
     ColliderY: 0.8
     TransitionDuration: 0.1
     GravityScale: 2
-    MaxVelocityX: 6
+    MaxVelocityX: 4
     MaxVelocityY: 6
     NextAction: 0
     FrameUpdates: '[{Risable,1,SetAction,101},{InputX,1,SetAction,131},{Attack,1,SetAction,133},{OnLand,0,SetAction,105},{JumpValid,1,SetAction,132}]'
@@ -49,27 +49,27 @@ MonoBehaviour:
     ColliderY: 2.2
     TransitionDuration: 0
     GravityScale: 2
-    MaxVelocityX: 9
+    MaxVelocityX: 8
     MaxVelocityY: 9
     NextAction: 105
-    FrameUpdates: '[{InputX,1,MoveInputX,0.1},{Jump,1,MoveY,3},{Jump,0,SetAction,105}]'
+    FrameUpdates: '[{InputX,1,MoveInputX,1},{Jump,1,MoveY,3},{Jump,0,SetAction,105}]'
   - Key: 105
     Clip: cat_jump_loop
     ColliderX: 0.5
     ColliderY: 2.2
     TransitionDuration: 0.2
     GravityScale: 2
-    MaxVelocityX: 9
+    MaxVelocityX: 8
     MaxVelocityY: 18
     NextAction: 0
-    FrameUpdates: '[{InputX,1,MoveInputX,0.1},{InputYDown,-1,SetAction,152},{Attack,1,SetAction,151},{OnWall,1,SetAction,155},{OnLand,1,SetAction,101}]'
+    FrameUpdates: '[{InputX,1,MoveInputX,1},{InputYDown,-1,SetAction,152},{Attack,1,SetAction,151},{OnWall,1,SetAction,155},{OnLand,1,SetAction,101}]'
   - Key: 106
     Clip: cat_attack
     ColliderX: 0.5
     ColliderY: 2.2
     TransitionDuration: 0.1
     GravityScale: 2
-    MaxVelocityX: 6
+    MaxVelocityX: 4
     MaxVelocityY: 6
     NextAction: 101
     FrameUpdates: '[{Frame,5,Spawn,10100001}]'
@@ -79,7 +79,7 @@ MonoBehaviour:
     ColliderY: 2.2
     TransitionDuration: 0.1
     GravityScale: 2
-    MaxVelocityX: 9
+    MaxVelocityX: 8
     MaxVelocityY: 6
     NextAction: 0
     FrameUpdates: '[{InputX,1,MoveInputX,2},{Run,0,SetAction,102},{InputX,0,SetAction,101},{InputY,-1,SetAction,103},{InputY,1,SetAction,108},{OnLand,0,SetAction,105},{JumpValid,1,SetAction,104}]'
@@ -89,7 +89,7 @@ MonoBehaviour:
     ColliderY: 2.2
     TransitionDuration: 0.1
     GravityScale: 2
-    MaxVelocityX: 6
+    MaxVelocityX: 4
     MaxVelocityY: 6
     NextAction: 0
     FrameUpdates: '[{InputY,1,Stretch,0.2},{InputX,1,SetAction,181},{InputY,0,SetAction,184},{InputY,-1,SetAction,184},{OnLand,0,SetAction,183},{JumpValid,1,SetAction,182}]'
@@ -99,7 +99,7 @@ MonoBehaviour:
     ColliderY: 0.8
     TransitionDuration: 0.1
     GravityScale: 2
-    MaxVelocityX: 6
+    MaxVelocityX: 4
     MaxVelocityY: 6
     NextAction: 0
     FrameUpdates: '[{Jump,1,SetAction,104},{InputX,1,MoveInputX,1},{InputX,1,MoveY,0.1}]'
@@ -109,7 +109,7 @@ MonoBehaviour:
     ColliderY: 0.8
     TransitionDuration: 0.1
     GravityScale: 2
-    MaxVelocityX: 6
+    MaxVelocityX: 4
     MaxVelocityY: 6
     NextAction: 0
     FrameUpdates: '[{InputX,1,MoveInputX,1},{InputX,0,SetAction,103},{Risable,1,SetAction,101},{Attack,1,SetAction,133},{OnLand,0,SetAction,105},{JumpValid,1,SetAction,134}]'
@@ -149,7 +149,7 @@ MonoBehaviour:
     ColliderY: 2.2
     TransitionDuration: 0.1
     GravityScale: 1
-    MaxVelocityX: 6
+    MaxVelocityX: 4
     MaxVelocityY: 1
     NextAction: 105
     FrameUpdates: '[{Frame,5,Spawn,10100001},{OnLand,1,SetAction,101}]'
@@ -199,7 +199,7 @@ MonoBehaviour:
     ColliderY: 2.2
     TransitionDuration: 0.1
     GravityScale: 2
-    MaxVelocityX: 9
+    MaxVelocityX: 8
     MaxVelocityY: 9
     NextAction: 105
     FrameUpdates: '[{Frame,0,MoveLocalX,-18},{None,1,MoveY,9},{None,1,MoveLocalX,9}]'
@@ -209,7 +209,7 @@ MonoBehaviour:
     ColliderY: 2.2
     TransitionDuration: 0.1
     GravityScale: 2
-    MaxVelocityX: 6
+    MaxVelocityX: 4
     MaxVelocityY: 6
     NextAction: 0
     FrameUpdates: '[{InputY,1,Stretch,0.2},{InputX,1,MoveInputX,1},{InputX,0,SetAction,108},{InputY,0,SetAction,184},{InputY,-1,SetAction,184},{OnLand,0,SetAction,183},{JumpValid,1,SetAction,182}]'
@@ -219,7 +219,7 @@ MonoBehaviour:
     ColliderY: 2.2
     TransitionDuration: 0.1
     GravityScale: 2
-    MaxVelocityX: 6
+    MaxVelocityX: 4
     MaxVelocityY: 6
     NextAction: 183
     FrameUpdates: '[{InputY,1,Stretch,0.2},{InputX,1,MoveInputX,0.05},{Jump,1,MoveY,3},{InputY,0,SetAction,184},{InputY,-1,SetAction,184},{OnLand,1,SetAction,108}]'
@@ -229,7 +229,7 @@ MonoBehaviour:
     ColliderY: 2.2
     TransitionDuration: 0.1
     GravityScale: 2
-    MaxVelocityX: 6
+    MaxVelocityX: 4
     MaxVelocityY: 18
     NextAction: 0
     FrameUpdates: '[{InputY,1,Stretch,0.2},{InputX,1,MoveInputX,0.05},{InputY,0,SetAction,184},{InputY,-1,SetAction,184},{OnLand,1,SetAction,108}]'
@@ -239,7 +239,7 @@ MonoBehaviour:
     ColliderY: 2.2
     TransitionDuration: 0.1
     GravityScale: 0
-    MaxVelocityX: 6
+    MaxVelocityX: 4
     MaxVelocityY: 12
     NextAction: 105
     FrameUpdates: '[{InputX,1,MoveInputX,1},{Frame,12,MoveY,12}]'
