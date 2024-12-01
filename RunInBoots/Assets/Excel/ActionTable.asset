@@ -245,8 +245,8 @@ MonoBehaviour:
     FrameUpdates: '[{InputX,1,MoveInputX,1},{Frame,12,MoveY,12}]'
   - Key: 201
     Clip: on_off_thorn_active
-    ColliderX: 1
-    ColliderY: 1
+    ColliderX: 0.5
+    ColliderY: 0.8
     TransitionDuration: 0.1
     GravityScale: 0
     MaxVelocityX: 0
@@ -255,7 +255,7 @@ MonoBehaviour:
     FrameUpdates: '[{Frame,120,SetAction,202}]'
   - Key: 202
     Clip: on_off_thorn_deactive
-    ColliderX: 1
+    ColliderX: 0.5
     ColliderY: 0
     TransitionDuration: 0.1
     GravityScale: 0

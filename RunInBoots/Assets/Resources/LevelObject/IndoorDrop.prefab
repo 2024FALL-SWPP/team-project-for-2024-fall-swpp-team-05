@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38321b4c8be9b4abfab1e90afedc50cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallSpeed: 15
+  fallSpeed: 2
   fallDelay: 2
   resetTimeOutsideView: 3
 --- !u!54 &-1436212380307713193
