@@ -46,7 +46,8 @@ public class PoolManager : MonoSingleton<PoolManager>
         {
             return pool.Instantiate(position, rotation);
         }
-        else {
+        else
+        {
             // create a pool for the prefab
             if (prefab != null)
             {
@@ -60,12 +61,27 @@ public class PoolManager : MonoSingleton<PoolManager>
                     return pools[key].Instantiate(position, rotation);
                 }
             }
-            else {
+            else
+            {
                 Debug.LogError("Prefab is null!");
                 return null;
             }
         }
     }
+
+    //public GameObject Pool(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent = null)
+    //{
+    //    string key = prefab.name;
+
+    //    if (!pools.ContainsKey(key))
+    //    {
+    //        // Pool이 없으면 생성
+    //        CreatePool(key, prefab);
+    //    }
+
+    //    // Pool에서 오브젝트 가져오기
+    //    return pools[key].Instantiate(position, rotation, parent);
+    //}
 
     // Return an object to the pool.
     // public void Destroy(GameObject obj)

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// �� ��ũ��Ʈ�� �� ���� ���� ������ �����ߴ� ������Ʈ���� ���������� �˸�.
+// 이 코드는 이전에 개인이 진행하던 프로젝트에서 가져온 코드임을 알림
 
 public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {

@@ -22,12 +22,18 @@ public class ObjectPool
                 obj.transform.position = position;
                 obj.transform.rotation = rotation;
                 obj.SetActive(true);
+                obj.transform.SetParent(parent);
                 return obj;
             }
         }
+        if(prefab == null)
+        {
+            Debug.LogWarning("null을 Instantiate 할 수 없음");
+            return null;
+        }
 
         GameObject newObj;
-        if (prefab == null)
+        if (parent == null)
         {
             newObj = Object.Instantiate(prefab, position, rotation);
         }
@@ -35,6 +41,7 @@ public class ObjectPool
         {
             newObj = Object.Instantiate(prefab, position, rotation, parent);
         }
+
         pool.Add(newObj);
         return newObj;
     }
