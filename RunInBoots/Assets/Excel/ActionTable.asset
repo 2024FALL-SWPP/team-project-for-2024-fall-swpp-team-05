@@ -98,11 +98,11 @@ MonoBehaviour:
     ColliderX: 1.6
     ColliderY: 0.8
     TransitionDuration: 0.1
-    GravityScale: 2
-    MaxVelocityX: 4
-    MaxVelocityY: 6
+    GravityScale: 12
+    MaxVelocityX: 12
+    MaxVelocityY: 12
     NextAction: 0
-    FrameUpdates: '[{Jump,1,SetAction,104},{InputX,1,MoveInputX,1},{InputX,1,MoveY,0.1}]'
+    FrameUpdates: '[{Jump,1,SetAction,104},{InputX,1,MoveInputX,12},{InputX,1,MoveY,6}]'
   - Key: 131
     Clip: cat_crouch_move
     ColliderX: 1.6
@@ -272,7 +272,7 @@ MonoBehaviour:
     MaxVelocityX: 0
     MaxVelocityY: 0
     NextAction: 0
-    FrameUpdates: '[{JumpValid,1,SetAction,302}]'
+    FrameUpdates: '[{JumpDown,1,SetAction,302}]'
   - Key: 302
     Clip: on_off_block_deactive
     ColliderX: 0
@@ -282,11 +282,11 @@ MonoBehaviour:
     MaxVelocityX: 0
     MaxVelocityY: 0
     NextAction: 0
-    FrameUpdates: '[{JumpValid,1,SetAction,301}]'
+    FrameUpdates: '[{JumpDown,1,SetAction,301}]'
   - Key: 401
     Clip: rubber_ball_idle
-    ColliderX: 2
-    ColliderY: 2
+    ColliderX: 0
+    ColliderY: 0
     TransitionDuration: 0
     GravityScale: 0
     MaxVelocityX: 0
@@ -295,8 +295,8 @@ MonoBehaviour:
     FrameUpdates: '[{Frame,-1,MoveInputX,0}]'
   - Key: 402
     Clip: rubber_ball_elastic
-    ColliderX: 2
-    ColliderY: 2
+    ColliderX: 0
+    ColliderY: 0
     TransitionDuration: 0
     GravityScale: 0
     MaxVelocityX: 0
@@ -332,7 +332,7 @@ MonoBehaviour:
     MaxVelocityX: 0
     MaxVelocityY: 0
     NextAction: 0
-    FrameUpdates: '[{Frame,6,SetAction,501}]'
+    FrameUpdates: '[{Frame,120,SetAction,501}]'
   - Key: 601
     Clip: dog_move
     ColliderX: 1
@@ -372,14 +372,14 @@ MonoBehaviour:
     MaxVelocityX: 12
     MaxVelocityY: 12
     NextAction: 0
-    FrameUpdates: '[{None,1,StalkX,9},{None,1,StalkY,9},{Frame,60,SetAction,704}]'
+    FrameUpdates: '[{Frame,1,StalkX,12},{Frame,1,StalkY,12},{Frame,90,SetAction,704},{None,1,StalkX,0.01}]'
   - Key: 704
     Clip: oni_idle
     ColliderX: 2
     ColliderY: 3
     TransitionDuration: 0
     GravityScale: 0
-    MaxVelocityX: 0
-    MaxVelocityY: 0
+    MaxVelocityX: 3
+    MaxVelocityY: 3
     NextAction: 0
-    FrameUpdates: '[{Frame,180,SetAction,703}]'
+    FrameUpdates: '[{Frame,360,SetAction,703},{None,1,StalkX,0.1},{None,1,StalkY,0.1}]'

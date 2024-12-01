@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1275584232777106484}
   - component: {fileID: 1275584232777106485}
   - component: {fileID: 570385434}
+  - component: {fileID: 6525142879479155982}
   m_Layer: 0
   m_Name: ObstacleBouncyBall
   m_TagString: Untagged
@@ -69,6 +70,8 @@ MonoBehaviour:
   actions: {fileID: 11400000, guid: 4d02f5c2264e91947b3d186e35a17e0e, type: 2}
   initAction: 401
   animator: {fileID: 6653706109187249953}
+  stretchModule: {fileID: 0}
+  contactDistance: 1
   currentAction:
     Key: 0
     Clip: 
@@ -148,7 +151,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballActionKey: 402
-  repelForce: 80
+  repelForce: 20
+--- !u!65 &6525142879479155982
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507263715420380437}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5447529591821298050
 GameObject:
   m_ObjectHideFlags: 0

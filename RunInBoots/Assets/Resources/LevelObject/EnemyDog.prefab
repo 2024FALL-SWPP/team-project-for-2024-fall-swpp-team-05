@@ -68,6 +68,19 @@ MonoBehaviour:
   actions: {fileID: 11400000, guid: 4d02f5c2264e91947b3d186e35a17e0e, type: 2}
   initAction: 601
   animator: {fileID: 6746167762231266295}
+  stretchModule: {fileID: 0}
+  contactDistance: 1
+  currentAction:
+    Key: 0
+    Clip: 
+    ColliderX: 0
+    ColliderY: 0
+    TransitionDuration: 0
+    GravityScale: 0
+    MaxVelocityX: 0
+    MaxVelocityY: 0
+    NextAction: 0
+    FrameUpdates: 
 --- !u!114 &555483730651712245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,12 +128,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1
-  attackAllowed: {x: 1, y: 0, z: 0, w: 0}
+  attackAllowed: {x: 1, y: 1, z: 1, w: 1}
   attackDirection: {x: 0, y: 1, z: 1, w: 1}
   death:
     m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1228525238977188820}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  preAttacked:
+    m_PersistentCalls:
       m_Calls: []
   team: 1
+  invincibleTime: 10
 --- !u!1001 &6746167762231266297
 PrefabInstance:
   m_ObjectHideFlags: 0
