@@ -17,7 +17,9 @@ public class StageState : IGameState
     public int currentStage;
     public int currentIndex;
 
-    private int _lifeCount = 9;
+    // 목숨 초기화 값
+    const int INIT_LIFE_COUNT = 9;
+    private int _lifeCount = INIT_LIFE_COUNT;
     private float _gridYLowerBound = -2.0f;
 
     private TextMeshProUGUI _timerText;
@@ -42,6 +44,9 @@ public class StageState : IGameState
     public bool isRespawnPositionSetted = false;
     private GameObject playerPrefab;
 
+    //저장 관리 객체
+    UserData _userData;
+
     public StageState(int stage)
     {
         currentStage = stage;
@@ -52,6 +57,14 @@ public class StageState : IGameState
         {
             Debug.LogError("PlayerController prefab을 찾을 수 없습니다.");
         }
+
+        //저장 관리 객체 초기화 및 현황 로드
+        _userData = new UserData();
+        _userData.LoadGameData();
+
+        //목숨 불러오기 및 최근 스테이지 저장
+        _lifeCount = _userData.lives;
+        _userData.UpdateRecentStage(currentStage);
     }
 
     public void Start()
@@ -106,6 +119,9 @@ public class StageState : IGameState
 
             case ExitState.GameOver:
                 // GameOver 관련 할 것들 나중에 추가
+                // 목숨 복원 및 저장
+                _lifeCount = INIT_LIFE_COUNT;
+                _userData.UpdateLives(_lifeCount);
                 break;
 
             default:
@@ -117,6 +133,10 @@ public class StageState : IGameState
     private void StageClear()
     {
         GameManager.Instance.StartNewStage(currentStage + 1);
+
+        //스테이지 기록 저장
+        _accumulativeTime += _timeLimit - _remainingTime;
+        _userData.SaveStageData(currentStage, Mathf.FloorToInt(_accumulativeTime), isCatnipCollected);
     }
 
     private void UpdateCameraTarget()
@@ -137,6 +157,9 @@ public class StageState : IGameState
     private void LifeOver()
     {
         _lifeCount--;
+        
+        _userData.UpdateLives(_lifeCount);
+
         SceneManager.sceneLoaded += OnCurrentSceneLoaded;
         SceneLoader.LoadCurrentScene();
     }
@@ -196,6 +219,9 @@ public class StageState : IGameState
             player.transform.position = position;
             Debug.Log($"Player moved to position: {position}");
         }
+
+        //기본 이벤트 세팅
+        player.GetComponent<BattleModule>().death.AddListener(LifeOver);
     }
 
     private void SpawnPlayerAtStartPoint()
