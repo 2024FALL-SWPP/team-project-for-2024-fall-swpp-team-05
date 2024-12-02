@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class TigerHat : Hat
 {
-    public float detectionRadius = 5.0f;
+    public float detectionRadius = 12.0f;
     
     private List<ActionSystem> _scaredDogs = new List<ActionSystem>();
 
@@ -32,10 +32,13 @@ public class TigerHat : Hat
         foreach (var collider in nearbyColliders)
         {
             ActionSystem ActionSystem = collider.GetComponent<ActionSystem>();
-            if (ActionSystem != null && ActionSystem.currentAction.Key == 601)
+            if (ActionSystem != null)
+                currentFrameDogs.Add(ActionSystem);
+            else
+                continue;
+            if (ActionSystem.currentAction.Key == 601)
             {
                 ActionSystem.SetAction(602); // 도망 행동
-                currentFrameDogs.Add(ActionSystem);
 
                 if (!_scaredDogs.Contains(ActionSystem))
                 {

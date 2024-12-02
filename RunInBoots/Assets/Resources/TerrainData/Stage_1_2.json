@@ -2,8 +2,8 @@
   "stage": "1",
   "terrainIndex": "2",
   "gridSize": {
-    "x": 200,
-    "y": 120
+    "x": 114,
+    "y": 42
   },
   "catnipCount": 1,
   "levelObjects": [

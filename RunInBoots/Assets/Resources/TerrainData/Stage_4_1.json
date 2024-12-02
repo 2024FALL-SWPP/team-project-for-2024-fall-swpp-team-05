@@ -1,0 +1,3756 @@
+{
+  "stage": "4",
+  "terrainIndex": "1",
+  "gridSize": {
+    "x": 122,
+    "y": 64
+  },
+  "catnipCount": 1,
+  "levelObjects": [
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 0,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 1,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 2,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 3,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_3",
+      "gridPosition": {
+        "x": 4,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 4,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 4,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 4,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 0,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 0,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 1,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 1,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 2,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 2,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 2,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 3,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 3,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 3,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "TowerCube_3",
+      "gridPosition": {
+        "x": 2,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "TowerCube_2",
+      "gridPosition": {
+        "x": 2,
+        "y": 11
+      }
+    },
+    {
+      "objectType": "TowerCube_1",
+      "gridPosition": {
+        "x": 2,
+        "y": 16
+      }
+    },
+    {
+      "$type": "StartPointData, Assembly-CSharp",
+      "objectType": "AStartPoint",
+      "gridPosition": {
+        "x": 2,
+        "y": 19
+      }
+    },
+    {
+      "objectType": "ObstacleClaw",
+      "gridPosition": {
+        "x": 12,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "ObstacleClaw",
+      "gridPosition": {
+        "x": 12,
+        "y": 16
+      }
+    },
+    {
+      "objectType": "ObstacleClaw",
+      "gridPosition": {
+        "x": 12,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "TowerCube_3",
+      "gridPosition": {
+        "x": 22,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "TowerCube_2",
+      "gridPosition": {
+        "x": 22,
+        "y": 11
+      }
+    },
+    {
+      "objectType": "TowerCube_1",
+      "gridPosition": {
+        "x": 22,
+        "y": 16
+      }
+    },
+    {
+      "objectType": "ObstacleClaw",
+      "gridPosition": {
+        "x": 32,
+        "y": 20
+      }
+    },
+    {
+      "objectType": "ObstacleClaw",
+      "gridPosition": {
+        "x": 32,
+        "y": 10
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 21,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 22,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 23,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_3",
+      "gridPosition": {
+        "x": 24,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_1",
+      "gridPosition": {
+        "x": 20,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_4",
+      "gridPosition": {
+        "x": 20,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_4",
+      "gridPosition": {
+        "x": 20,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_4",
+      "gridPosition": {
+        "x": 20,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 24,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 24,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 24,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 21,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 21,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 21,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 22,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 22,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 22,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 23,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 23,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 23,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "TowerCube_1",
+      "gridPosition": {
+        "x": 40,
+        "y": 16
+      }
+    },
+    {
+      "objectType": "TowerCube_2",
+      "gridPosition": {
+        "x": 40,
+        "y": 11
+      }
+    },
+    {
+      "objectType": "TowerCube_3",
+      "gridPosition": {
+        "x": 40,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 39,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 40,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 41,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_1",
+      "gridPosition": {
+        "x": 38,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 42,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_4",
+      "gridPosition": {
+        "x": 38,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_4",
+      "gridPosition": {
+        "x": 38,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_4",
+      "gridPosition": {
+        "x": 38,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 45,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 44,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 43,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 39,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 39,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 39,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 40,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 40,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 40,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 41,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 41,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 41,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 43,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 44,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 45,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 46,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 47,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 48,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 49,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 50,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 51,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 52,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 53,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 54,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 55,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 56,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 57,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 58,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 59,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 60,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 61,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 62,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 63,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 64,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 65,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 66,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 67,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 68,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 69,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_2",
+      "gridPosition": {
+        "x": 70,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 43,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 44,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 45,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 46,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 47,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 48,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 49,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 50,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 51,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 52,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 53,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 54,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 55,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 56,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 57,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 58,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 59,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 60,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 61,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 62,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 63,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 64,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 65,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 66,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 67,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 68,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 69,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_8",
+      "gridPosition": {
+        "x": 70,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "BuildingCube_4",
+      "gridPosition": {
+        "x": 43,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "BuildingCube_4",
+      "gridPosition": {
+        "x": 43,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "BuildingCube_4",
+      "gridPosition": {
+        "x": 43,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "BuildingCube_6",
+      "gridPosition": {
+        "x": 70,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "BuildingCube_6",
+      "gridPosition": {
+        "x": 70,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "BuildingCube_6",
+      "gridPosition": {
+        "x": 70,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 46,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 47,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 48,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 49,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 50,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 51,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 52,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 53,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 54,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 55,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 56,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 57,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 58,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 59,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 60,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 61,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 62,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 63,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 64,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 65,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 66,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 67,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 68,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 69,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 70,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_4",
+      "gridPosition": {
+        "x": 71,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "MountainCube_4",
+      "gridPosition": {
+        "x": 71,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "MountainCube_4",
+      "gridPosition": {
+        "x": 71,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "MountainCube_4",
+      "gridPosition": {
+        "x": 71,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "MountainCube_1",
+      "gridPosition": {
+        "x": 71,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 72,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 73,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 74,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 75,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 76,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 77,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 78,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "MountainCube_4",
+      "gridPosition": {
+        "x": 79,
+        "y": 9
+      }
+    },
+    {
+      "objectType": "MountainCube_4",
+      "gridPosition": {
+        "x": 79,
+        "y": 10
+      }
+    },
+    {
+      "objectType": "MountainCube_4",
+      "gridPosition": {
+        "x": 79,
+        "y": 11
+      }
+    },
+    {
+      "objectType": "MountainCube_1",
+      "gridPosition": {
+        "x": 79,
+        "y": 12
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 80,
+        "y": 12
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 81,
+        "y": 12
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 82,
+        "y": 12
+      }
+    },
+    {
+      "objectType": "MountainCube_3",
+      "gridPosition": {
+        "x": 83,
+        "y": 12
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 83,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 83,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 83,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 83,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 83,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 83,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 83,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 83,
+        "y": 9
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 83,
+        "y": 10
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 83,
+        "y": 11
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 83,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_6",
+      "gridPosition": {
+        "x": 83,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 79,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 79,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 79,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 79,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 79,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 79,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 79,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 79,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 79,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 80,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 80,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 80,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 80,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 80,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 80,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 80,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 80,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 80,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 80,
+        "y": 9
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 80,
+        "y": 10
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 80,
+        "y": 11
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 81,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 81,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 81,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 81,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 81,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 81,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 81,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 81,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 81,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 81,
+        "y": 9
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 81,
+        "y": 10
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 81,
+        "y": 11
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 82,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 82,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 82,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 82,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 82,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 82,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 82,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 82,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 82,
+        "y": 8
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 82,
+        "y": 9
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 82,
+        "y": 10
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 82,
+        "y": 11
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 71,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 71,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 71,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 71,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 72,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 72,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 72,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 72,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 72,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 72,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 72,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 72,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 73,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 73,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 73,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 73,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 73,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 73,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 73,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 73,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 74,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 74,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 74,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 74,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 74,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 74,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 74,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 74,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 75,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 75,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 75,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 75,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 75,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 75,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 75,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 75,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 76,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 76,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 76,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 76,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 76,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 76,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 76,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 76,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 77,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 77,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 77,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 77,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 77,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 77,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 77,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 77,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 78,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 78,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 78,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 78,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 78,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 78,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 78,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 78,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 52,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 52,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 52,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 53,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 53,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 53,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 54,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 54,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 54,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 55,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 55,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 55,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 56,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 56,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 56,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 57,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 57,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 57,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 58,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 58,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 58,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 59,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 59,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 59,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 60,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 60,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 60,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 61,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 61,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 61,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 62,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 62,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 62,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 63,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 63,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 63,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 64,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 64,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 64,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 65,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 65,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 65,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 66,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 66,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 66,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 67,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 67,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 67,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 68,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 68,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 68,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 69,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 69,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 69,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 70,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 70,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 70,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 42,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 42,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 42,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 43,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 43,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 43,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 44,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 44,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 44,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 45,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 45,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 45,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 46,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 46,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 46,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 47,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 47,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 47,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 48,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 48,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 48,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 49,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 49,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 49,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 50,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 50,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 50,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 51,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 51,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 51,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "TowerCube_3",
+      "gridPosition": {
+        "x": 81,
+        "y": 15
+      }
+    },
+    {
+      "objectType": "TowerCube_2",
+      "gridPosition": {
+        "x": 81,
+        "y": 20
+      }
+    },
+    {
+      "objectType": "TowerCube_1",
+      "gridPosition": {
+        "x": 81,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "TowerCube_3",
+      "gridPosition": {
+        "x": 73,
+        "y": 11
+      }
+    },
+    {
+      "objectType": "TowerCube_2",
+      "gridPosition": {
+        "x": 73,
+        "y": 16
+      }
+    },
+    {
+      "objectType": "TowerCube_1",
+      "gridPosition": {
+        "x": 73,
+        "y": 21
+      }
+    },
+    {
+      "objectType": "EnemyDog",
+      "gridPosition": {
+        "x": 64,
+        "y": 9
+      }
+    },
+    {
+      "objectType": "EnemyDog",
+      "gridPosition": {
+        "x": 50,
+        "y": 9
+      }
+    },
+    {
+      "objectType": "ObstacleClaw",
+      "gridPosition": {
+        "x": 91,
+        "y": 32
+      }
+    },
+    {
+      "objectType": "ObstacleClaw",
+      "gridPosition": {
+        "x": 91,
+        "y": 22
+      }
+    },
+    {
+      "objectType": "ObstacleClaw",
+      "gridPosition": {
+        "x": 91,
+        "y": 13
+      }
+    },
+    {
+      "objectType": "MountainCube2_2",
+      "gridPosition": {
+        "x": 100,
+        "y": 28
+      }
+    },
+    {
+      "objectType": "MountainCube2_2",
+      "gridPosition": {
+        "x": 101,
+        "y": 28
+      }
+    },
+    {
+      "objectType": "MountainCube2_2",
+      "gridPosition": {
+        "x": 102,
+        "y": 28
+      }
+    },
+    {
+      "objectType": "MountainCube2_2",
+      "gridPosition": {
+        "x": 103,
+        "y": 28
+      }
+    },
+    {
+      "objectType": "MountainCube2_2",
+      "gridPosition": {
+        "x": 104,
+        "y": 28
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 109,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 102,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube2_2",
+      "gridPosition": {
+        "x": 114,
+        "y": 29
+      }
+    },
+    {
+      "objectType": "MountainCube2_5",
+      "gridPosition": {
+        "x": 104,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "MountainCube2_5",
+      "gridPosition": {
+        "x": 101,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "MountainCube2_1",
+      "gridPosition": {
+        "x": 99,
+        "y": 28
+      }
+    },
+    {
+      "objectType": "MountainCube2_8",
+      "gridPosition": {
+        "x": 103,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "MountainCube2_8",
+      "gridPosition": {
+        "x": 102,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "MountainCube2_8",
+      "gridPosition": {
+        "x": 101,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "MountainCube2_8",
+      "gridPosition": {
+        "x": 100,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "MountainCube2_7",
+      "gridPosition": {
+        "x": 99,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "MountainCube2_4",
+      "gridPosition": {
+        "x": 99,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "MountainCube2_4",
+      "gridPosition": {
+        "x": 99,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "MountainCube2_8",
+      "gridPosition": {
+        "x": 104,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 112,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 105,
+        "y": 3
+      }
+    },
+    {
+      "$type": "CatnipData, Assembly-CSharp",
+      "catnipID": 1,
+      "objectType": "ACatnip",
+      "gridPosition": {
+        "x": 115,
+        "y": 31
+      }
+    },
+    {
+      "objectType": "ObstacleBouncyBall",
+      "gridPosition": {
+        "x": 112,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 114,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 113,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 111,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 110,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 108,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 107,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 106,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 104,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 103,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 101,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_1",
+      "gridPosition": {
+        "x": 99,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 100,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube2_2",
+      "gridPosition": {
+        "x": 116,
+        "y": 29
+      }
+    },
+    {
+      "objectType": "MountainCube2_2",
+      "gridPosition": {
+        "x": 115,
+        "y": 29
+      }
+    },
+    {
+      "objectType": "ObstacleBouncyBall",
+      "gridPosition": {
+        "x": 118,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "ObstacleBouncyBall",
+      "gridPosition": {
+        "x": 112,
+        "y": 32
+      }
+    },
+    {
+      "objectType": "ObstacleBouncyBall",
+      "gridPosition": {
+        "x": 118,
+        "y": 32
+      }
+    },
+    {
+      "objectType": "MountainCube2_5",
+      "gridPosition": {
+        "x": 105,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "MountainCube2_5",
+      "gridPosition": {
+        "x": 105,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "MountainCube2_5",
+      "gridPosition": {
+        "x": 104,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "MountainCube2_5",
+      "gridPosition": {
+        "x": 103,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "MountainCube2_5",
+      "gridPosition": {
+        "x": 103,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "MountainCube2_5",
+      "gridPosition": {
+        "x": 102,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "MountainCube2_5",
+      "gridPosition": {
+        "x": 102,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "MountainCube2_5",
+      "gridPosition": {
+        "x": 101,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "MountainCube2_5",
+      "gridPosition": {
+        "x": 100,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "MountainCube2_5",
+      "gridPosition": {
+        "x": 100,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "MountainCube2_8",
+      "gridPosition": {
+        "x": 105,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "MountainCube2_2",
+      "gridPosition": {
+        "x": 105,
+        "y": 28
+      }
+    },
+    {
+      "objectType": "MountainCube2_3",
+      "gridPosition": {
+        "x": 106,
+        "y": 28
+      }
+    },
+    {
+      "objectType": "MountainCube2_6",
+      "gridPosition": {
+        "x": 106,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "MountainCube2_6",
+      "gridPosition": {
+        "x": 106,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "MountainCube2_9",
+      "gridPosition": {
+        "x": 106,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 115,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 116,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 117,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 118,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 119,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 120,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_2",
+      "gridPosition": {
+        "x": 121,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "MountainCube_4",
+      "gridPosition": {
+        "x": 99,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_4",
+      "gridPosition": {
+        "x": 99,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_4",
+      "gridPosition": {
+        "x": 99,
+        "y": 2
+      }
+    },
+    {
+      "$type": "PipeData, Assembly-CSharp",
+      "pipeID": 1,
+      "targetPipeID": 1,
+      "targetIndex": 2,
+      "objectType": "APipe",
+      "gridPosition": {
+        "x": 118,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "ObstacleBouncyBall",
+      "gridPosition": {
+        "x": 106,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "ObstacleBouncyBall",
+      "gridPosition": {
+        "x": 114,
+        "y": 6
+      }
+    },
+    {
+      "objectType": "ObstacleBouncyBall",
+      "gridPosition": {
+        "x": 110,
+        "y": 11
+      }
+    },
+    {
+      "objectType": "EnemyDog",
+      "gridPosition": {
+        "x": 110,
+        "y": 4
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 100,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 100,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 100,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 101,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 101,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 101,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 102,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 102,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 102,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 103,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 103,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 103,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 104,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 104,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 104,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 105,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 105,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 105,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 106,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 106,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 106,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 107,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 107,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 107,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 108,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 108,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 108,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 109,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 109,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 109,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 110,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 110,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 110,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 111,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 111,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 111,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 112,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 112,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 112,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 113,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 113,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 113,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 114,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 114,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 114,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 115,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 115,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 115,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 116,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 116,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 116,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 117,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 117,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 117,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 118,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 118,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 118,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 119,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 119,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 119,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 120,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 120,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 120,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 121,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 121,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "MountainCube_5",
+      "gridPosition": {
+        "x": 121,
+        "y": 2
+      }
+    }
+  ]
+}
