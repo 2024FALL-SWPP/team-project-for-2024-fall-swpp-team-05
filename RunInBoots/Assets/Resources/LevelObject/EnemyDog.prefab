@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 555483730651712245}
   - component: {fileID: 8019381479028434664}
   - component: {fileID: 555483730651712244}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyDog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   g_scale: 1
-  deceleration: 1
+  deceleration: 10
   maxSpeedX: 10
   maxSpeedY: 10
   jumpAllowed: 0
