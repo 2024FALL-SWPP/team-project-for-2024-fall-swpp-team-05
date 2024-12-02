@@ -102,7 +102,7 @@ MonoBehaviour:
     MaxVelocityX: 12
     MaxVelocityY: 12
     NextAction: 0
-    FrameUpdates: '[{Jump,1,SetAction,104},{InputX,1,MoveInputX,12},{InputX,1,MoveY,6}]'
+    FrameUpdates: '[{JumpDown,1,SetAction,104},{InputX,1,MoveInputX,12},{InputX,1,MoveY,6}]'
   - Key: 131
     Clip: cat_crouch_move
     ColliderX: 1.6

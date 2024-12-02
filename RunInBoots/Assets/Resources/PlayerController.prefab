@@ -98,7 +98,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   team: 0
-  invincibleTime: 10
+  invincibleTime: 3
 --- !u!114 &5993877854204006932
 MonoBehaviour:
   m_ObjectHideFlags: 0
