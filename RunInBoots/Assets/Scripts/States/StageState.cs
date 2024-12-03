@@ -17,7 +17,7 @@ public class StageState : IGameState
     public int currentStage;
     public int currentIndex;
 
-    // ¸ñ¼û ÃÊ±âÈ­ °ª
+    // ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½ï¿½
     const int INIT_LIFE_COUNT = 9;
     private int _lifeCount = INIT_LIFE_COUNT;
     private float _gridYLowerBound = -2.0f;
@@ -69,7 +69,7 @@ public class StageState : IGameState
     public bool isRespawnPositionSetted = false;
     private GameObject playerPrefab;
 
-    //ÀúÀå °ü¸® °´Ã¼
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼
     UserData _userData;
 
     public StageState(int stage)
@@ -80,14 +80,14 @@ public class StageState : IGameState
         catnipIconPrefab = Resources.Load<GameObject>("CatnipIcon");
         if (playerPrefab == null)
         {
-            Debug.LogError("PlayerController prefabÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogError("PlayerController prefabï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
         }
 
-        //ÀúÀå °ü¸® °´Ã¼ ÃÊ±âÈ­ ¹× ÇöÈ² ·Îµå
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½Ê±ï¿½È­ ï¿½ï¿½ ï¿½ï¿½È² ï¿½Îµï¿½
         _userData = new UserData();
         _userData.LoadGameData();
 
-        //¸ñ¼û ºÒ·¯¿À±â ¹× ÃÖ±Ù ½ºÅ×ÀÌÁö ÀúÀå
+        //ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         _lifeCount = _userData.lives;
         _userData.UpdateRecentStage(currentStage);
 
@@ -98,6 +98,14 @@ public class StageState : IGameState
     {
         _isStarted = true;
         _remainingTime = _timeLimit;
+
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½Ê±ï¿½È­ ï¿½ï¿½ ï¿½ï¿½È² ï¿½Îµï¿½
+        _userData = new UserData();
+        _userData.LoadGameData();
+
+        //ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        _lifeCount = _userData.lives;
+        _userData.UpdateRecentStage(currentStage);
 
         InitializeCatnipInfo();
         FindCatnipIconContainer();
@@ -155,8 +163,8 @@ public class StageState : IGameState
                 break;
 
             case ExitState.GameOver:
-                // GameOver °ü·Ã ÇÒ °Íµé ³ªÁß¿¡ Ãß°¡
-                // ¸ñ¼û º¹¿ø ¹× ÀúÀå
+                // GameOver ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Íµï¿½ ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ß°ï¿½
+                // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 _lifeCount = INIT_LIFE_COUNT;
                 _userData.UpdateLives(_lifeCount);
                 break;
@@ -169,9 +177,9 @@ public class StageState : IGameState
 
     private void StageClear()
     {
-        GameManager.Instance.StartNewStage(currentStage + 1);
+        GameManager.Instance.StartNewStageWithEvent(currentStage + 1);
 
-        //½ºÅ×ÀÌÁö ±â·Ï ÀúÀå
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         _accumulativeTime += _timeLimit - _remainingTime;
         _userData.SaveStageData(currentStage, Mathf.FloorToInt(_accumulativeTime), isCatnipCollected);
     }
@@ -185,7 +193,7 @@ public class StageState : IGameState
         }
         else
         {
-            Debug.LogError("Player ¶Ç´Â Camera¸¦ Ã£À» ¼ö ¾øÀ½");
+            Debug.LogError("Player ï¿½Ç´ï¿½ Cameraï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         }
     }
 
@@ -198,13 +206,20 @@ public class StageState : IGameState
         }
     }
 
-    /******************** ÇÃ·¹ÀÌ¾î Á×À½ °ü·Ã ÇÔ¼öµé ********************/
+    /******************** ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ********************/
 
     private void LifeOver()
     {
         _lifeCount--;
-        
         _userData.UpdateLives(_lifeCount);
+
+        //game over
+        if (_lifeCount <= 0)
+        {
+            ClearCatnipUI();
+            GameManager.Instance.GameOverWithEvent();
+            return;
+        }
 
         SceneManager.sceneLoaded += OnCurrentSceneLoaded;
         SceneLoader.LoadCurrentScene();
@@ -212,7 +227,7 @@ public class StageState : IGameState
 
     private void OnCurrentSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // ÃÊ±âÈ­ ÀÛ¾÷
+        // ï¿½Ê±ï¿½È­ ï¿½Û¾ï¿½
         FindTimerText();
         FindCatnipIconContainer();
         PlaceCatnipIcons();
@@ -235,21 +250,10 @@ public class StageState : IGameState
             _accumulativeTime += _timeLimit - _remainingTime;
             _remainingTime = _timeLimit;
         }
-
-        if (_lifeCount > 1)
-        {
-            LifeOver();
-        }
-        else
-        {
-            _lifeCount = 9;
-            ClearCatnipUI();
-
-            GameManager.Instance.GameOver();
-        }
+        LifeOver();
     }
 
-    /******************** ÇÃ·¹ÀÌ¾î Spawn °ü·Ã ÇÔ¼öµé ********************/
+    /******************** ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Spawn ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ********************/
 
     public void SpawnPlayer(Vector3 position)
     {
@@ -266,7 +270,7 @@ public class StageState : IGameState
             Debug.Log($"Player moved to position: {position}");
         }
 
-        //±âº» ÀÌº¥Æ® ¼¼ÆÃ
+        //ï¿½âº» ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         player.GetComponent<BattleModule>().death.AddListener(LifeOver);
     }
 
@@ -284,7 +288,7 @@ public class StageState : IGameState
         Debug.Log($"respawnposition set to {respawnPosition}");
     }
 
-    /******************** Pipe °ü·Ã ÇÔ¼öµé ********************/
+    /******************** Pipe ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ********************/
 
     public void GoTargetIndexByPipe(int index, int targetPipeID)
     {
@@ -308,14 +312,14 @@ public class StageState : IGameState
         }
         else
         {
-            Debug.LogError("´ÙÀ½ ¾À¿¡¼­ target Pipe¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogError("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ target Pipeï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
         }
         UpdateStageMapSize();
         Debug.LogError($"gridSize: {gridSizeX}, {gridSizeY}");
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    /******************** Å¸ÀÌ¸Ó °ü·Ã ÇÔ¼öµé ********************/
+    /******************** Å¸ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ********************/
 
     public void FindTimerText()
     {
@@ -326,7 +330,7 @@ public class StageState : IGameState
         }
         else
         {
-            Debug.LogWarning("TimerText UI¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogWarning("TimerText UIï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
         }
     }
 
@@ -342,12 +346,12 @@ public class StageState : IGameState
         }
     }
 
-    /******************** Catnip °ü·Ã ÇÔ¼öµé ********************/
+    /******************** Catnip ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ********************/
 
     private void InitializeCatnipInfo()
     {
         totalCatnipCount = CatnipUtils.CountTotalCatnipInStage(currentStage);
-        Debug.Log($"ÃÑ Ä¹´Ø °³¼ö : {totalCatnipCount}");
+        Debug.Log($"ï¿½ï¿½ Ä¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : {totalCatnipCount}");
         InitializeCatnipCollectionStates(totalCatnipCount);
         collectedCatnipCount = 0;
     }
@@ -368,7 +372,7 @@ public class StageState : IGameState
             }
             else
             {
-                Debug.LogWarning("CatnipIconContainer¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                Debug.LogWarning("CatnipIconContainerï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
             }
         }
     }
@@ -376,7 +380,7 @@ public class StageState : IGameState
     private void PlaceCatnipIcons()
     {
         ClearCatnipUI();
-        Debug.LogWarning($"_catnipIcon ¸®½ºÆ® ¿ø¼Ò °³¼ö: {_catnipIcons.Count}");
+        Debug.LogWarning($"_catnipIcon ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: {_catnipIcons.Count}");
         for (int i = 0; i < totalCatnipCount; i++)
         {
             GameObject icon = PoolManager.Instance.Pool(catnipIconPrefab, Vector3.zero, Quaternion.identity, catnipIconContainer);
@@ -401,7 +405,7 @@ public class StageState : IGameState
         }
         else
         {
-            Debug.LogWarning("ºÎÀûÀýÇÑ catnipID: " + catnipID);
+            Debug.LogWarning("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ catnipID: " + catnipID);
         }
     }
 
@@ -414,7 +418,7 @@ public class StageState : IGameState
     {
         if (icon == null)
         {
-            Debug.LogError("ÇØ´ç catnip IconÀ» Ã£À» ¼ö ¾øÀ½");
+            Debug.LogError("ï¿½Ø´ï¿½ catnip Iconï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
             return;
         }
         Color iconColor = icon.GetComponent<UnityEngine.UI.Image>().color;

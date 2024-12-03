@@ -129,4 +129,9 @@ public class UserData
     public int GetCount() {
         return stageData.Count;
     }
+
+    public bool IsUnlockedStage(int stageNumber)
+    {
+        return stageData.ContainsKey(stageNumber) && stageData[stageNumber].bestTime > 0;
+    }
 }

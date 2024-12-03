@@ -8,6 +8,7 @@ public class Catnip : Interactable
 
     private void Start()
     {
+        gameObject.name = "Catnip_" + catnipID;
         Initialize();
     }
 
@@ -21,7 +22,8 @@ public class Catnip : Interactable
 
     protected override void OnInteract(GameObject interactor)
     {
-        GameManager.Instance.GetCurrentStageState().CollectCatnipInStageState(catnipID);
-        gameObject.SetActive(false);
+        // GameManager.Instance.GetCurrentStageState().CollectCatnipInStageState(catnipID);
+        GameManager.Instance.CollectCatnipWithEvent(catnipID);
+        // gameObject.SetActive(false);
     }
 }

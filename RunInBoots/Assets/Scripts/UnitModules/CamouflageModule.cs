@@ -34,6 +34,9 @@ public class CamouflageModule : MonoBehaviour
         {
             UnequipCurrentHat();
         }
+        else {
+            _battleModule.health += 1; // 체력 증가
+        }
 
         // 새 모자 장착
         if (hatType == eHatType.Normal)
@@ -48,7 +51,6 @@ public class CamouflageModule : MonoBehaviour
 
         _currentHatType = hatType;
         _currentHat.OnEquip();
-        _battleModule.health += 1; // 체력 증가
         Debug.Log($"Hat {_currentHat} equipped successfully.");
     }
 
@@ -85,5 +87,20 @@ public class CamouflageModule : MonoBehaviour
             TigerHat tigerHat = (TigerHat)_currentHat;
             tigerHat.HandleTigerBehavior(transform);
         }
+    }
+
+    public eHatType GetCurrentHatType()
+    {
+        return _currentHatType;
+    }
+
+    public void SetBattleModule(BattleModule battleModule)
+    {
+        _battleModule = battleModule;
+    }
+
+    public BattleModule GetBattleModule()
+    {
+        return _battleModule;
     }
 }
