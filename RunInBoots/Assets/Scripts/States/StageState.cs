@@ -57,6 +57,12 @@ public class StageState : IGameState
         {
             Debug.LogError("PlayerController prefab을 찾을 수 없습니다.");
         }
+    }
+
+    public void Start()
+    {
+        _isStarted = true;
+        _remainingTime = _timeLimit;
 
         //저장 관리 객체 초기화 및 현황 로드
         _userData = new UserData();
@@ -65,12 +71,6 @@ public class StageState : IGameState
         //목숨 불러오기 및 최근 스테이지 저장
         _lifeCount = _userData.lives;
         _userData.UpdateRecentStage(currentStage);
-    }
-
-    public void Start()
-    {
-        _isStarted = true;
-        _remainingTime = _timeLimit;
 
         InitializeCatnipInfo();
         FindCatnipIconContainer();
