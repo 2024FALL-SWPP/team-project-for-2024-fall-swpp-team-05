@@ -157,8 +157,15 @@ public class StageState : IGameState
     private void LifeOver()
     {
         _lifeCount--;
-        
         _userData.UpdateLives(_lifeCount);
+
+        //game over
+        if (_lifeCount <= 0)
+        {
+            ClearCatnipUI();
+            GameManager.Instance.GameOverWithEvent();
+            return;
+        }
 
         SceneManager.sceneLoaded += OnCurrentSceneLoaded;
         SceneLoader.LoadCurrentScene();
@@ -189,19 +196,7 @@ public class StageState : IGameState
             _accumulativeTime += _timeLimit - _remainingTime;
             _remainingTime = _timeLimit;
         }
-
-        if (_lifeCount > 1)
-        {
-            LifeOver();
-        }
-        else
-        {
-            _lifeCount = 9;
-            ClearCatnipUI();
-
-            // GameManager.Instance.GameOver();
-            GameManager.Instance.GameOverWithEvent();
-        }
+        LifeOver();
     }
 
     /******************** �÷��̾� Spawn ���� �Լ��� ********************/
