@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader 
 {
-    // ÀÔ·ÂÇÑ stage¿Í index¿¡ ÇØ´çÇÏ´Â ¾À ·Îµå. ½ÇÆÐ ½Ã return false
+    // ï¿½Ô·ï¿½ï¿½ï¿½ stageï¿½ï¿½ indexï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½Îµï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ return false
     public static bool LoadTargetStage(int targetStage, int targetIndex)
     {
+        Debug.Log($"Loading target stage: {targetStage}, index: {targetIndex}");
         string nextSceneName = $"Stage_{targetStage}_{targetIndex}";
 
         if (SceneUtility.GetBuildIndexByScenePath(nextSceneName) != -1)
