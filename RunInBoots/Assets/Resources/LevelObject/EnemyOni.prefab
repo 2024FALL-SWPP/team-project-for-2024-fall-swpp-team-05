@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9157850517812487412}
   - component: {fileID: 1722857701081352425}
   - component: {fileID: 9157850517812487413}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyOni
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,6 +68,19 @@ MonoBehaviour:
   actions: {fileID: 11400000, guid: 4d02f5c2264e91947b3d186e35a17e0e, type: 2}
   initAction: 701
   animator: {fileID: 2683427200436970998}
+  stretchModule: {fileID: 0}
+  contactDistance: 1
+  currentAction:
+    Key: 0
+    Clip: 
+    ColliderX: 0
+    ColliderY: 0
+    TransitionDuration: 0
+    GravityScale: 0
+    MaxVelocityX: 0
+    MaxVelocityY: 0
+    NextAction: 0
+    FrameUpdates: 
 --- !u!114 &9157850517812487412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,7 +110,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7615261746948767189}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.8, y: 0.8, z: 1}
@@ -120,7 +133,11 @@ MonoBehaviour:
   death:
     m_PersistentCalls:
       m_Calls: []
+  preAttacked:
+    m_PersistentCalls:
+      m_Calls: []
   team: 1
+  invincibleTime: 10
 --- !u!1001 &2683427200436971000
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -136,17 +153,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: fb98d5ec79d6b1a4a9cff8d377e1cffd,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fb98d5ec79d6b1a4a9cff8d377e1cffd,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fb98d5ec79d6b1a4a9cff8d377e1cffd,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fb98d5ec79d6b1a4a9cff8d377e1cffd,
         type: 3}
