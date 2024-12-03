@@ -4,7 +4,8 @@ public class GoalPoint : Interactable
 {
     public override void Initialize()
     {
-        throw new System.NotImplementedException();
+        gameObject.name = "AGoalPoint";
+        // throw new System.NotImplementedException();
     }
 
     protected override void OnInteract(GameObject interactor)
