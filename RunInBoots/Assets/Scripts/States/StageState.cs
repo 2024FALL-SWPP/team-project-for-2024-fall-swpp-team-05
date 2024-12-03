@@ -157,8 +157,15 @@ public class StageState : IGameState
     private void LifeOver()
     {
         _lifeCount--;
-        
         _userData.UpdateLives(_lifeCount);
+
+        // GAME OVER IF LIFE IS 0
+        if (_lifeCount <=0)
+        {
+            ClearCatnipUI();
+            GameManager.Instance.GameOver();
+            return;
+        }
 
         SceneManager.sceneLoaded += OnCurrentSceneLoaded;
         SceneLoader.LoadCurrentScene();
@@ -189,18 +196,7 @@ public class StageState : IGameState
             _accumulativeTime += _timeLimit - _remainingTime;
             _remainingTime = _timeLimit;
         }
-
-        if (_lifeCount > 1)
-        {
-            LifeOver();
-        }
-        else
-        {
-            _lifeCount = 9;
-            ClearCatnipUI();
-
-            GameManager.Instance.GameOver();
-        }
+        LifeOver();
     }
 
     /******************** 플레이어 Spawn 관련 함수들 ********************/
