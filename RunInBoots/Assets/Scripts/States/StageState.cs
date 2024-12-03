@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using Cinemachine;
 using TMPro;
 using UnityEngine.Rendering.Universal;
+using Newtonsoft.Json;
+using System.IO;
 
 
 
@@ -29,6 +31,12 @@ public class StageState : IGameState
 
     private GameObject _player;
     private CinemachineVirtualCamera _virtualCamera;
+    private int gridSizeX;
+    private int gridSizeY;
+    Dictionary<(int stage, int index), (int gridSizeX, int gridSizeY)> stageGridSizes =
+        new Dictionary<(int, int), (int, int)>
+        {
+        };
 
     public int totalCatnipCount;
     public int collectedCatnipCount;
@@ -57,6 +65,17 @@ public class StageState : IGameState
         {
             Debug.LogError("PlayerController prefab�� ã�� �� �����ϴ�.");
         }
+
+        //load all grid sizes on stage construction
+        LoadGridSize(currentStage);
+
+        //���� ���� ��ü �ʱ�ȭ �� ��Ȳ �ε�
+        _userData = new UserData();
+        _userData.LoadGameData();
+
+        //��� �ҷ����� �� �ֱ� �������� ����
+        _lifeCount = _userData.lives;
+        _userData.UpdateRecentStage(currentStage);
     }
 
     public void Start()
@@ -76,6 +95,7 @@ public class StageState : IGameState
         FindCatnipIconContainer();
         PlaceCatnipIcons();
         SpawnPlayerAtStartPoint();
+        UpdateStageMapSize();
     }
 
     public void Update()
@@ -90,7 +110,7 @@ public class StageState : IGameState
         {
             _player = GameObject.FindWithTag("Player");
             _virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
-            UpdateCameraTarget();
+            UpdateCameraTargetToPlayer();
         }
 
         if (_remainingTime <= 0f)
@@ -101,7 +121,8 @@ public class StageState : IGameState
 
         if (_player != null)
         {
-            if (_player.transform.position.y < _gridYLowerBound)
+            Vector3 playerPosition = _player.transform.position;
+            if (playerPosition.y < _gridYLowerBound)
             {
                 KillPlayer();
                 return;
@@ -139,7 +160,7 @@ public class StageState : IGameState
         _userData.SaveStageData(currentStage, Mathf.FloorToInt(_accumulativeTime), isCatnipCollected);
     }
 
-    private void UpdateCameraTarget()
+    private void UpdateCameraTargetToPlayer()
     {
         if (_player != null && _virtualCamera != null)
         {
@@ -149,6 +170,55 @@ public class StageState : IGameState
         else
         {
             Debug.LogError("Player �Ǵ� Camera�� ã�� �� ����");
+        }
+    }
+
+    // load all grid sizes on stage construction
+    private void LoadGridSize(int stage) 
+    {
+        for (int index = 1; ; index++)
+        {
+            string fileName = $"Stage_{stage}_{index}";
+            string path = Path.Combine("TerrainData", fileName);
+            var file = Resources.Load<TextAsset>(path);
+
+            if (file == null)
+                break;
+
+            string json = file.text;
+            TerrainData terrainData = JsonConvert.DeserializeObject<TerrainData>(json);
+
+            stageGridSizes[(stage, index)] = (terrainData.gridSize.x, terrainData.gridSize.y);
+        }
+    }
+    private void UpdateStageMapSize()
+    {
+        if (stageGridSizes.TryGetValue((currentStage, currentIndex), out var gridSize))
+        {
+            gridSizeX = gridSize.gridSizeX;
+            gridSizeY = gridSize.gridSizeY;
+        }
+        _virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
+        var confiner = _virtualCamera.GetComponent<CinemachineConfiner>();
+        if (confiner != null)
+        {
+            var colliderObject = new GameObject("Confiner");
+            colliderObject.transform.position = Vector3.zero;
+            colliderObject.layer= LayerMask.NameToLayer("Invincible");
+
+            // Add a PolygonCollider2D to define the bounding shape
+            var boxCollider = colliderObject.AddComponent<BoxCollider>();
+
+            // Calculate the confiner bounds based on the virtual camera's orthographic size
+            var gridOffsetX = _virtualCamera.m_Lens.OrthographicSize * Screen.width / Screen.height;
+            var gridOffsetY = _virtualCamera.m_Lens.OrthographicSize;
+
+            boxCollider.size = new Vector3(gridSizeX, gridSizeY, 100);
+            boxCollider.center = new Vector3(gridSizeX / 2-0.5f, gridSizeY / 2-0.5f, 0);
+
+            confiner.m_BoundingVolume = boxCollider;
+
+            Debug.Log("Confiner setup complete.");
         }
     }
 
@@ -186,6 +256,7 @@ public class StageState : IGameState
         {
             SpawnPlayer(respawnPosition);
         }
+        UpdateStageMapSize();
         SceneManager.sceneLoaded -= OnCurrentSceneLoaded;
     }
 
@@ -260,6 +331,8 @@ public class StageState : IGameState
         {
             Debug.LogError("���� ������ target Pipe�� ã�� �� �����ϴ�.");
         }
+        UpdateStageMapSize();
+        Debug.LogError($"gridSize: {gridSizeX}, {gridSizeY}");
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 

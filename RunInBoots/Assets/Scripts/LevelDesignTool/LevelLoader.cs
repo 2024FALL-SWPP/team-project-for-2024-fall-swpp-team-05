@@ -15,11 +15,6 @@ public class LevelLoader : MonoBehaviour
     private string path;
     public TerrainData terrainData;
 
-    private void Start()
-    {
-
-    }
-
     public void LoadLevel()
     {
         fileName = $"Stage_{stage}_{index}";
@@ -81,7 +76,6 @@ public class LevelLoader : MonoBehaviour
                 {
                     pipeComponent.pipeID = pipeData.pipeID;
                     pipeComponent.targetPipeID = pipeData.targetPipeID;
-                    //pipeComponent.targetStage = pipeData.targetStage;
                     pipeComponent.targetIndex = pipeData.targetIndex;
                 }
                 else
