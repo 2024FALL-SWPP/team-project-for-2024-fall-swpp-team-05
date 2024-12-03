@@ -88,4 +88,19 @@ public class CamouflageModule : MonoBehaviour
             tigerHat.HandleTigerBehavior(transform);
         }
     }
+
+    public eHatType GetCurrentHatType()
+    {
+        return _currentHatType;
+    }
+
+    public void SetBattleModule(BattleModule battleModule)
+    {
+        _battleModule = battleModule;
+    }
+
+    public BattleModule GetBattleModule()
+    {
+        return _battleModule;
+    }
 }
