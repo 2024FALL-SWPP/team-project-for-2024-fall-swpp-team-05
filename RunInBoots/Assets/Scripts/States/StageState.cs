@@ -29,6 +29,31 @@ public class StageState : IGameState
 
     private GameObject _player;
     private CinemachineVirtualCamera _virtualCamera;
+    private int gridSizeX;
+    private int gridSizeY;
+    Dictionary<(int stage, int index), (int gridSizeX, int gridSizeY)> stageGridSizes =
+        new Dictionary<(int, int), (int, int)>
+        {
+            { (1, 1), (130, 40) },
+            { (1, 2), (200, 120) },
+            { (1, 3), (80, 80) },
+
+            { (2, 1), (200, 120) },
+            { (2, 2), (200, 120) },
+            { (2, 3), (200, 120) },
+
+            { (3, 1), (200, 120) },
+            { (3, 2), (200, 120) },
+            { (3, 3), (200, 120) },
+
+            { (4, 1), (200, 120) },
+            { (4, 2), (200, 120) },
+            { (4, 3), (200, 120) },
+
+            { (5, 1), (200, 120) },
+            { (5, 2), (200, 120) },
+            { (5, 3), (200, 120) }
+        };
 
     public int totalCatnipCount;
     public int collectedCatnipCount;
@@ -65,6 +90,8 @@ public class StageState : IGameState
         //목숨 불러오기 및 최근 스테이지 저장
         _lifeCount = _userData.lives;
         _userData.UpdateRecentStage(currentStage);
+
+        UpdateStageMapSize();
     }
 
     public void Start()
@@ -90,7 +117,7 @@ public class StageState : IGameState
         {
             _player = GameObject.FindWithTag("Player");
             _virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
-            UpdateCameraTarget();
+            UpdateCameraTargetToPlayer();
         }
 
         if (_remainingTime <= 0f)
@@ -101,10 +128,20 @@ public class StageState : IGameState
 
         if (_player != null)
         {
-            if (_player.transform.position.y < _gridYLowerBound)
+            Vector3 playerPosition = _player.transform.position;
+            if (playerPosition.y < _gridYLowerBound)
             {
                 KillPlayer();
                 return;
+            }
+            if (playerPosition.x < 0 || playerPosition.x > gridSizeX
+                || playerPosition.y < 0 || playerPosition.y > gridSizeY)
+            {
+                _virtualCamera.Follow = null;
+            }
+            else
+            {
+                _virtualCamera.Follow = _player.transform;
             }
         }
     }
@@ -139,7 +176,7 @@ public class StageState : IGameState
         _userData.SaveStageData(currentStage, Mathf.FloorToInt(_accumulativeTime), isCatnipCollected);
     }
 
-    private void UpdateCameraTarget()
+    private void UpdateCameraTargetToPlayer()
     {
         if (_player != null && _virtualCamera != null)
         {
@@ -149,6 +186,15 @@ public class StageState : IGameState
         else
         {
             Debug.LogError("Player 또는 Camera를 찾을 수 없음");
+        }
+    }
+
+    private void UpdateStageMapSize()
+    {
+        if (stageGridSizes.TryGetValue((currentStage, currentIndex), out var gridSize))
+        {
+            gridSizeX = gridSize.gridSizeX;
+            gridSizeY = gridSize.gridSizeY;
         }
     }
 
@@ -264,6 +310,8 @@ public class StageState : IGameState
         {
             Debug.LogError("다음 씬에서 target Pipe를 찾을 수 없습니다.");
         }
+        UpdateStageMapSize();
+        Debug.LogError($"gridSize: {gridSizeX}, {gridSizeY}");
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
