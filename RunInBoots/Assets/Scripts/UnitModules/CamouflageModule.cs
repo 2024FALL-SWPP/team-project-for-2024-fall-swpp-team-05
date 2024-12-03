@@ -34,6 +34,9 @@ public class CamouflageModule : MonoBehaviour
         {
             UnequipCurrentHat();
         }
+        else {
+            _battleModule.health += 1; // 체력 증가
+        }
 
         // 새 모자 장착
         if (hatType == eHatType.Normal)
@@ -48,7 +51,6 @@ public class CamouflageModule : MonoBehaviour
 
         _currentHatType = hatType;
         _currentHat.OnEquip();
-        _battleModule.health += 1; // 체력 증가
         Debug.Log($"Hat {_currentHat} equipped successfully.");
     }
 
