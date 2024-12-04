@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.UIElements;
 using Newtonsoft.Json;
+using UnityEditor;
 using System.Linq;
 
 public class LevelLoader : MonoBehaviour
@@ -56,9 +57,10 @@ public class LevelLoader : MonoBehaviour
             }
 
             Vector3 adjustedPosition = GridToWorldPosition(levelObjectData.gridPosition) - minPosition;
-            GameObject instance = PoolManager.Instance.Pool(prefab, adjustedPosition, parentTransform);
-            instance.transform.SetParent(transform);
-            //Debug.Log($"Placing object '{prefabName}' at {adjustedPosition}");
+
+            GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab, parentTransform);
+            instance.transform.position = adjustedPosition;
+            
             if (IsCollectingTarget(instance))
             {
                 Vector2Int gridPos = new Vector2Int(Mathf.RoundToInt(levelObjectData.gridPosition.x), Mathf.RoundToInt(levelObjectData.gridPosition.y));
@@ -77,10 +79,6 @@ public class LevelLoader : MonoBehaviour
                     pipeComponent.pipeID = pipeData.pipeID;
                     pipeComponent.targetPipeID = pipeData.targetPipeID;
                     pipeComponent.targetIndex = pipeData.targetIndex;
-                }
-                else
-                {
-                    Debug.LogError("No Pipe Script in Pipe");
                 }
             }
             else if (levelObjectData is CatnipData catnipData)
