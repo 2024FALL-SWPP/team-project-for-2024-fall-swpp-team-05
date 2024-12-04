@@ -332,7 +332,6 @@ public class StageState : IGameState
             Debug.LogError("���� ������ target Pipe�� ã�� �� �����ϴ�.");
         }
         UpdateStageMapSize();
-        Debug.LogError($"gridSize: {gridSizeX}, {gridSizeY}");
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
