@@ -208,12 +208,7 @@ public class StageState : IGameState
 
             // Add a PolygonCollider2D to define the bounding shape
             var boxCollider = colliderObject.AddComponent<BoxCollider>();
-
-            // Calculate the confiner bounds based on the virtual camera's orthographic size
-            var gridOffsetX = _virtualCamera.m_Lens.OrthographicSize * Screen.width / Screen.height;
-            var gridOffsetY = _virtualCamera.m_Lens.OrthographicSize;
-
-            boxCollider.size = new Vector3(gridSizeX, gridSizeY, 100);
+            boxCollider.size = new Vector3(gridSizeX-27.5f*16/9, gridSizeY-27.5f, 100);
             boxCollider.center = new Vector3(gridSizeX / 2-0.5f, gridSizeY / 2-0.5f, 0);
 
             confiner.m_BoundingVolume = boxCollider;
