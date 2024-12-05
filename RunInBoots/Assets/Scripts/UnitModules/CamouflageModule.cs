@@ -16,9 +16,40 @@ public class CamouflageModule : MonoBehaviour
         normalHatRenderer.enabled = false;
         tigerHatRenderer.enabled = false;
 
-        // initialize battle module
+    }
+
+    public void Initialize(eHatType type)
+    {
+        // initialize hat renderers
+        InitializeHatRenderers(type);
+    }
+
+    public void InitializeBattleModule()
+    {
         _battleModule = GetComponent<BattleModule>();
         _battleModule.preAttacked.AddListener(UnequipHat);
+    }
+
+    public void InitializeHatRenderers(eHatType type)
+    {
+        normalHatRenderer = GameObject.Find("NormalHat").GetComponent<SkinnedMeshRenderer>();
+        tigerHatRenderer = GameObject.Find("TigerHat").GetComponent<SkinnedMeshRenderer>();
+
+        if (type == eHatType.Normal)
+        {
+            normalHatRenderer.enabled = true;
+            tigerHatRenderer.enabled = false;
+        }
+        else if (type == eHatType.Tiger)
+        {
+            normalHatRenderer.enabled = false;
+            tigerHatRenderer.enabled = true;
+        }
+        else {
+            normalHatRenderer.enabled = false;
+            tigerHatRenderer.enabled = false;
+        }
+        Debug.Log("Hat renderers initialized.");
     }
 
     public void EquipHat(eHatType hatType)

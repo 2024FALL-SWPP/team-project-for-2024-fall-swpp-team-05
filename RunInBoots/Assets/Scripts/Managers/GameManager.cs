@@ -16,7 +16,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         base.Awake();
         Application.targetFrameRate = 60;
-        TestCamouflageModule.Test();
+        // TestCamouflageModule.Test();
     }
 
     public void StartNewStageWithEvent(int stage)
@@ -217,6 +217,8 @@ public class GameManager : MonoSingleton<GameManager>
             player.GetComponent<ActionSystem>().enabled = false;
             // set player velocity to zero
             player.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            // disable player camouflage
+            player.GetComponent<CamouflageModule>().enabled = false;
         }
     }
 
@@ -234,6 +236,8 @@ public class GameManager : MonoSingleton<GameManager>
             player.GetComponent<BattleModule>().enabled = true;
             // enable player action
             player.GetComponent<ActionSystem>().enabled = true;
+            // enable player camouflage
+            player.GetComponent<CamouflageModule>().enabled = true;
         }
     }
 
