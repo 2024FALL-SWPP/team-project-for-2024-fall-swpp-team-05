@@ -287,6 +287,9 @@ public class StageState : IGameState
         //�⺻ �̺�Ʈ ����
         player.GetComponent<BattleModule>().death.AddListener(LifeOver);
         player.GetComponent<CamouflageModule>().InitializeBattleModule();
+        player.GetComponent<CamouflageModule>().onChangeHat.AddListener(() => { 
+                currentHatType = player.GetComponent<CamouflageModule>().GetCurrentHatType(); 
+            });
         player.GetComponent<CamouflageModule>().Initialize(currentHatType);
     }
 
