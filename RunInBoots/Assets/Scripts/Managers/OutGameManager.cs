@@ -97,9 +97,10 @@ public class OutGameManager : MonoBehaviour
             // assert(stageButton != null, "Child object of stageButtonList is not a Button");
             if (stage == 1) {
                 stageButtonList[stage-1].interactable = true;
-                continue;
             }
-            stageButtonList[stage-1].interactable = userData.IsUnlockedStage(stage);
+            else {
+                stageButtonList[stage-1].interactable = userData.IsUnlockedStage(stage);
+            }
             StageData stageData = userData.GetStageData(stage);
             if (stageData == null) {
                 Debug.Log($"Stage {stage} is not unlocked");
@@ -110,7 +111,7 @@ public class OutGameManager : MonoBehaviour
 
             // set position of stageRecordTextList[stage-1] right below the button
             // stageRecordTextList[stage-1].transform.position = new Vector3(stageButtonList[stage-1].transform.position.x, stageButtonList[stage-1].transform.position.y - 50, stageButtonList[stage-1].transform.position.z);
-            if (stageRecord > -1) {
+            if (stageRecord > 0) {
                 stageRecordTextList[stage-1].text = $"Record: {stageRecord}s";
             }
             else {
