@@ -226,6 +226,9 @@ public class StageState : IGameState
         _lifeCount--;
         _userData.UpdateLives(_lifeCount);
 
+        //unequip hat if exists
+        currentHatType = eHatType.None;
+
         //game over
         if (_lifeCount <= 0)
         {

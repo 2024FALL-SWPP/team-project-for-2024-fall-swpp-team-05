@@ -95,6 +95,7 @@ public class CamouflageModule : MonoBehaviour
         _currentHat = null;
 
         Debug.Log("Hat unequipped.");
+        onChangeHat.Invoke();
     }
 
     private void UnequipCurrentHat()
