@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CamouflageModule : MonoBehaviour
 {
@@ -9,19 +10,13 @@ public class CamouflageModule : MonoBehaviour
     private eHatType _currentHatType = eHatType.None;
     private Hat _currentHat; // 현재 장착된 모자 객체
     private BattleModule _battleModule; // 체력 증감을 위한 BattleModule 참조
-
-    public void Start()
-    {
-        // 모든 모자 비활성화
-        normalHatRenderer.enabled = false;
-        tigerHatRenderer.enabled = false;
-
-    }
+    public UnityEvent onChangeHat; // 모자 추적 이벤트
 
     public void Initialize(eHatType type)
     {
         // initialize hat renderers
         InitializeHatRenderers(type);
+        EquipHat(type);
     }
 
     public void InitializeBattleModule()
@@ -83,6 +78,7 @@ public class CamouflageModule : MonoBehaviour
         _currentHatType = hatType;
         _currentHat.OnEquip();
         Debug.Log($"Hat {_currentHat} equipped successfully.");
+        onChangeHat.Invoke();
     }
 
     public void UnequipHat()
