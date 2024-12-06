@@ -132,6 +132,6 @@ public class UserData
 
     public bool IsUnlockedStage(int stageNumber)
     {
-        return stageData.ContainsKey(stageNumber) && stageData[stageNumber].bestTime > 0;
+        return stageData.ContainsKey(stageNumber - 1) && stageData[stageNumber - 1].bestTime > 0;
     }
 }
