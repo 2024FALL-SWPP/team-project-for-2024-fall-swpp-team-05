@@ -103,6 +103,7 @@ public class OutGameManager : MonoBehaviour
             }
             StageData stageData = userData.GetStageData(stage);
             if (stageData == null) {
+                stageRecordTextList[stage-1].text = "";
                 Debug.Log($"Stage {stage} is not unlocked");
                 continue;
             }
