@@ -95,6 +95,10 @@ public class OutGameManager : MonoBehaviour
         for (int stage = 1; stage <= 5; stage++)
         {
             // assert(stageButton != null, "Child object of stageButtonList is not a Button");
+            if (stage == 1) {
+                stageButtonList[stage-1].interactable = true;
+                continue;
+            }
             stageButtonList[stage-1].interactable = userData.IsUnlockedStage(stage);
             StageData stageData = userData.GetStageData(stage);
             if (stageData == null) {
