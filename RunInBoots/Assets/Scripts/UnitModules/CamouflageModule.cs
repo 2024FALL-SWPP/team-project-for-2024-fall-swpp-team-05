@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CamouflageModule : MonoBehaviour
 {
@@ -9,16 +10,41 @@ public class CamouflageModule : MonoBehaviour
     private eHatType _currentHatType = eHatType.None;
     private Hat _currentHat; // 현재 장착된 모자 객체
     private BattleModule _battleModule; // 체력 증감을 위한 BattleModule 참조
+    public UnityEvent onChangeHat; // 모자 추적 이벤트
 
-    public void Start()
+    public void Initialize(eHatType type)
     {
-        // 모든 모자 비활성화
-        normalHatRenderer.enabled = false;
-        tigerHatRenderer.enabled = false;
+        // initialize hat renderers
+        InitializeHatRenderers(type);
+        EquipHat(type);
+    }
 
-        // initialize battle module
+    public void InitializeBattleModule()
+    {
         _battleModule = GetComponent<BattleModule>();
         _battleModule.preAttacked.AddListener(UnequipHat);
+    }
+
+    public void InitializeHatRenderers(eHatType type)
+    {
+        normalHatRenderer = GameObject.Find("NormalHat").GetComponent<SkinnedMeshRenderer>();
+        tigerHatRenderer = GameObject.Find("TigerHat").GetComponent<SkinnedMeshRenderer>();
+
+        if (type == eHatType.Normal)
+        {
+            normalHatRenderer.enabled = true;
+            tigerHatRenderer.enabled = false;
+        }
+        else if (type == eHatType.Tiger)
+        {
+            normalHatRenderer.enabled = false;
+            tigerHatRenderer.enabled = true;
+        }
+        else {
+            normalHatRenderer.enabled = false;
+            tigerHatRenderer.enabled = false;
+        }
+        Debug.Log("Hat renderers initialized.");
     }
 
     public void EquipHat(eHatType hatType)
@@ -52,6 +78,7 @@ public class CamouflageModule : MonoBehaviour
         _currentHatType = hatType;
         _currentHat.OnEquip();
         Debug.Log($"Hat {_currentHat} equipped successfully.");
+        onChangeHat.Invoke();
     }
 
     public void UnequipHat()
@@ -68,6 +95,7 @@ public class CamouflageModule : MonoBehaviour
         _currentHat = null;
 
         Debug.Log("Hat unequipped.");
+        onChangeHat.Invoke();
     }
 
     private void UnequipCurrentHat()

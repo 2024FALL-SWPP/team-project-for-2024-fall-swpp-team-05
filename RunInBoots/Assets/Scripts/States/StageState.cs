@@ -18,6 +18,7 @@ public class StageState : IGameState
 
     public int currentStage;
     public int currentIndex;
+    public eHatType currentHatType;
 
     // ��� �ʱ�ȭ ��
     const int INIT_LIFE_COUNT = 9;
@@ -59,6 +60,7 @@ public class StageState : IGameState
     {
         currentStage = stage;
         currentIndex = 1;
+        currentHatType = eHatType.None;
         playerPrefab = Resources.Load<GameObject>("PlayerController");
         catnipIconPrefab = Resources.Load<GameObject>("CatnipIcon");
         if (playerPrefab == null)
@@ -224,6 +226,9 @@ public class StageState : IGameState
         _lifeCount--;
         _userData.UpdateLives(_lifeCount);
 
+        //unequip hat if exists
+        currentHatType = eHatType.None;
+
         //game over
         if (_lifeCount <= 0)
         {
@@ -284,6 +289,11 @@ public class StageState : IGameState
 
         //�⺻ �̺�Ʈ ����
         player.GetComponent<BattleModule>().death.AddListener(LifeOver);
+        player.GetComponent<CamouflageModule>().InitializeBattleModule();
+        player.GetComponent<CamouflageModule>().onChangeHat.AddListener(() => { 
+                currentHatType = player.GetComponent<CamouflageModule>().GetCurrentHatType(); 
+            });
+        player.GetComponent<CamouflageModule>().Initialize(currentHatType);
     }
 
     private void SpawnPlayerAtStartPoint()
@@ -304,6 +314,9 @@ public class StageState : IGameState
 
     public void GoTargetIndexByPipe(int index, int targetPipeID)
     {
+        GameObject player = GameObject.FindWithTag("Player");
+        currentHatType = player.GetComponent<CamouflageModule>().GetCurrentHatType();
+        Debug.Log($"{player.name}이(가) {currentHatType} 상태로 {index}번째 파이프로 이동합니다.");
         currentIndex = index;
         enteredPipeID = targetPipeID;
         SceneManager.sceneLoaded += OnSceneLoaded;

@@ -16,7 +16,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         base.Awake();
         Application.targetFrameRate = 60;
-        TestCamouflageModule.Test();
+        // TestCamouflageModule.Test();
     }
 
     public void StartNewStageWithEvent(int stage)
