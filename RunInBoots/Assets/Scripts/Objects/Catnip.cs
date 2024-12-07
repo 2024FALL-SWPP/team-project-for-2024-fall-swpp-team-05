@@ -22,8 +22,29 @@ public class Catnip : Interactable
 
     protected override void OnInteract(GameObject interactor)
     {
-        // GameManager.Instance.GetCurrentStageState().CollectCatnipInStageState(catnipID);
-        GameManager.Instance.CollectCatnipWithEvent(catnipID);
-        // gameObject.SetActive(false);
+        ProducingEvent catnipEvent = new AnimatorEvent(null);
+        GameObject player = GameObject.FindWithTag("Player");
+        ActionSystem actionSystem = player.GetComponent<ActionSystem>();
+        BattleModule battleModule = player.GetComponent<BattleModule>();
+        catnipEvent.AddStartEvent(() =>
+        {
+            // Debug.Log("Catnip Event Start");
+            actionSystem.ResumeSelf(false);
+            transform.position = player.transform.position + Vector3.up * 3.0f;
+        });
+        catnipEvent.AddEndEvent(() =>
+        {
+            actionSystem.ResumeSelf(true);
+            battleModule.BeInvinvible();
+            OnCatnipCollected();
+            // Debug.Log("Catnip Event End");
+        });
+        GameManager.Instance.AddEvent(catnipEvent);
+    }
+
+    private void OnCatnipCollected()
+    {
+        GameManager.Instance.GetCurrentStageState().CollectCatnipInStageState(catnipID);
+        gameObject.SetActive(false);
     }
 }

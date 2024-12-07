@@ -417,4 +417,21 @@ public class ActionSystem : MonoBehaviour
         }
         actionFrames++;
     }
+
+    public void ResumeSelf(bool isResume)
+    {
+        if(coll == null) coll = GetComponent<BoxCollider>();
+        if(transformModule == null) transformModule = GetComponent<TransformModule>();
+        if(battleModule == null) battleModule = GetComponent<BattleModule>();
+        // disable player collider
+        coll.enabled = isResume;
+        // disable player movement
+        transformModule.enabled = isResume;
+        // disable player attack
+        battleModule.enabled = isResume;
+        // disable player action
+        enabled = isResume;
+        // set player velocity to zero
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+    }
 }

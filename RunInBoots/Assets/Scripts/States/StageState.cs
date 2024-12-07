@@ -153,7 +153,7 @@ public class StageState : IGameState
 
     private void StageClear()
     {
-        GameManager.Instance.StartNewStageWithEvent(currentStage + 1);
+        GameManager.Instance.StartNewStage(currentStage + 1);
 
         //�������� ��� ����
         _accumulativeTime += _timeLimit - _remainingTime;
@@ -289,6 +289,47 @@ public class StageState : IGameState
 
         //�⺻ �̺�Ʈ ����
         player.GetComponent<BattleModule>().death.AddListener(LifeOver);
+    }
+
+    public void SpawnPlayerWithEvent(Vector3 spawnPosition)
+    {
+        GameObject player = GameObject.FindWithTag("Player");
+        ActionSystem actionSystem = player?.GetComponent<ActionSystem>();
+
+        GameObject spawnUI = Resources.Load<GameObject>("SpawnUI");
+        GameObject canvas = GameObject.FindObjectOfType<Canvas>().gameObject;
+        SpawnUI text = PoolManager.Instance.Pool(spawnUI, Vector3.zero, Quaternion.identity, canvas.transform).GetComponent<SpawnUI>();
+        text.transform.SetParent(canvas.transform, false);
+        text.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        text.UpdateStageText(currentStage);
+        text.UpdateLifeText(_lifeCount);
+
+        Animator spawnAnimator = text.GetComponent<Animator>();
+        ProducingEvent spawnEvent = new AnimatorEvent(null);
+
+        spawnEvent.AddStartEvent(() =>
+        {
+            Debug.Log("SpawnPlayerWithEvent Start");
+            SpawnPlayer(spawnPosition);
+            if(player == null || actionSystem == null)
+            {
+                player = GameObject.FindWithTag("Player");
+                actionSystem = player.GetComponent<ActionSystem>();
+            }
+            actionSystem.ResumeSelf(false);
+        });
+        spawnEvent.AddEndEvent(() =>
+        {
+            if(player == null || actionSystem == null)
+            {
+                player = GameObject.FindWithTag("Player");
+                actionSystem = player.GetComponent<ActionSystem>();
+            }
+            actionSystem.ResumeSelf(true);
+            //text.gameObject.SetActive(false);
+            Debug.Log("SpawnPlayerWithEvent End");
+        });
+        GameManager.Instance.AddEvent(spawnEvent);
     }
 
     private void SpawnPlayerAtStartPoint()
