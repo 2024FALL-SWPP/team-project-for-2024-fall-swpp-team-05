@@ -18,6 +18,7 @@ public class StageState : IGameState
 
     public int currentStage;
     public int currentIndex;
+    public eHatType currentHatType;
 
     // ��� �ʱ�ȭ ��
     const int INIT_LIFE_COUNT = 9;
@@ -59,6 +60,7 @@ public class StageState : IGameState
     {
         currentStage = stage;
         currentIndex = 1;
+        currentHatType = eHatType.None;
         playerPrefab = Resources.Load<GameObject>("PlayerController");
         catnipIconPrefab = Resources.Load<GameObject>("CatnipIcon");
         if (playerPrefab == null)
@@ -209,12 +211,7 @@ public class StageState : IGameState
 
             // Add a PolygonCollider2D to define the bounding shape
             var boxCollider = colliderObject.AddComponent<BoxCollider>();
-
-            // Calculate the confiner bounds based on the virtual camera's orthographic size
-            var gridOffsetX = _virtualCamera.m_Lens.OrthographicSize * Screen.width / Screen.height;
-            var gridOffsetY = _virtualCamera.m_Lens.OrthographicSize;
-
-            boxCollider.size = new Vector3(gridSizeX, gridSizeY, 100);
+            boxCollider.size = new Vector3(gridSizeX-27.5f*16/9, gridSizeY-27.5f, 100);
             boxCollider.center = new Vector3(gridSizeX / 2-0.5f, gridSizeY / 2-0.5f, 0);
 
             confiner.m_BoundingVolume = boxCollider;
@@ -229,6 +226,9 @@ public class StageState : IGameState
     {
         _lifeCount--;
         _userData.UpdateLives(_lifeCount);
+
+        //unequip hat if exists
+        currentHatType = eHatType.None;
 
         //game over
         if (_lifeCount <= 0)
@@ -326,6 +326,11 @@ public class StageState : IGameState
 
         //�⺻ �̺�Ʈ ����
         player.GetComponent<BattleModule>().death.AddListener(LifeOverWithEvent);
+        player.GetComponent<CamouflageModule>().InitializeBattleModule();
+        player.GetComponent<CamouflageModule>().onChangeHat.AddListener(() => { 
+                currentHatType = player.GetComponent<CamouflageModule>().GetCurrentHatType(); 
+            });
+        player.GetComponent<CamouflageModule>().Initialize(currentHatType);
     }
 
     public void SpawnPlayerWithEvent(Vector3 spawnPosition)
@@ -386,6 +391,9 @@ public class StageState : IGameState
 
     public void GoTargetIndexByPipe(int index, int targetPipeID)
     {
+        GameObject player = GameObject.FindWithTag("Player");
+        currentHatType = player.GetComponent<CamouflageModule>().GetCurrentHatType();
+        Debug.Log($"{player.name}이(가) {currentHatType} 상태로 {index}번째 파이프로 이동합니다.");
         currentIndex = index;
         enteredPipeID = targetPipeID;
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -409,7 +417,6 @@ public class StageState : IGameState
             Debug.LogError("���� ������ target Pipe�� ã�� �� �����ϴ�.");
         }
         UpdateStageMapSize();
-        Debug.LogError($"gridSize: {gridSizeX}, {gridSizeY}");
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 

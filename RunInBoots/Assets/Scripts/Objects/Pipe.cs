@@ -2,12 +2,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Pipe : Interactable
 {
     public int targetIndex;
     public int pipeID;
     public int targetPipeID;
+
+    private Collider pipeCollider;
+
 
     public override void Initialize()
     {
@@ -16,15 +20,28 @@ public class Pipe : Interactable
 
     public void SpawnPlayerByPipe()
     {
+        pipeCollider = GetComponent<Collider>();
+        StartCoroutine(DisableCollisionTemporarily());
+
         StageState currentStageState = GameManager.Instance.GetCurrentStageState();
-        Vector3 targetPosition = transform.position + Vector3.right * 1.5f;
+        Vector3 targetPosition = transform.position;
         currentStageState.SpawnPlayer(targetPosition);
         currentStageState.UpdateRespawnPosition(targetPosition, false);
 
         Animator pipeAnimator = GetComponent<Animator>();
         pipeAnimator.CrossFadeInFixedTime(UIConst.ANIM_PIPE_OPENING, 0.0f);
     }
-    
+
+    private IEnumerator DisableCollisionTemporarily()
+    {
+        if (pipeCollider != null)
+        {
+            pipeCollider.enabled = false; // Collider 비활성화
+            yield return new WaitForSeconds(1f); // 1초 대기
+            pipeCollider.enabled = true; // Collider 다시 활성화
+        }
+    }
+
     protected override void OnInteract(GameObject interactor)
     {
         GameObject player = GameObject.FindWithTag("Player");
