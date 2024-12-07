@@ -20,8 +20,6 @@ public class Pipe : Interactable
 
     public void SpawnPlayerByPipe()
     {
-        StartCoroutine(DisableCollisionTemporarily());
-
         StageState currentStageState = GameManager.Instance.GetCurrentStageState();
         Vector3 targetPosition = transform.position;
         currentStageState.SpawnPlayer(targetPosition);
