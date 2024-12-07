@@ -114,8 +114,8 @@ public class GameManager : MonoSingleton<GameManager>
     // 모든 스테이지 클리어 된 후 동작 나중에 채워넣기
     private void AllStageClear() 
     {
-        currentState = null;
-        SceneLoader.LoadTitleScene();
+        currentState = new GameClearState();
+        currentState.Start();
         Debug.Log("Game Clear");
     }
 
