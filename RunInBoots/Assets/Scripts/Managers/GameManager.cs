@@ -76,27 +76,7 @@ public class GameManager : MonoSingleton<GameManager>
         Debug.Log("Game Clear");
     }
 
-    public void GameOverWithEvent()
-    {
-        GameObject player = GameObject.FindWithTag("Player");
-        ActionSystem actionSystem = player.GetComponent<ActionSystem>();
-        ProducingEvent gameOverEvent = new AnimatorEvent(null);
-        ProducingEvent blackScreenEvent = new AnimatorEvent(null);
-        gameOverEvent.AddStartEvent(() =>
-        {
-            // Debug.Log("GameOver Event Start");
-            actionSystem.ResumeSelf(false);
-        });
-        blackScreenEvent.AddEndEvent(() =>
-        {
-            // Debug.Log("GameOver Event End");
-            GameOver();
-        });
-        AddEvent(gameOverEvent);
-        AddEvent(blackScreenEvent);
-    }
-
-    private void GameOver()
+    public void GameOver()
     {
         if (currentState != null)
         {

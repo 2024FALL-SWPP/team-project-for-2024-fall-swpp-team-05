@@ -22,10 +22,13 @@ public class Catnip : Interactable
 
     protected override void OnInteract(GameObject interactor)
     {
-        ProducingEvent catnipEvent = new AnimatorEvent(null);
         GameObject player = GameObject.FindWithTag("Player");
         ActionSystem actionSystem = player.GetComponent<ActionSystem>();
         BattleModule battleModule = player.GetComponent<BattleModule>();
+
+        Animator playerAnimator = player.GetComponent<AnimatableUI>().animator;
+        player.GetComponent<AnimatableUI>().PlayAnimation(UIConst.ANIM_PLAYER_CATNIP);
+        ProducingEvent catnipEvent = new AnimatorEvent(playerAnimator);
         catnipEvent.AddStartEvent(() =>
         {
             // Debug.Log("Catnip Event Start");

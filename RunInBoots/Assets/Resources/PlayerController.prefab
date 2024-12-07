@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2697353251092631095}
   - component: {fileID: 7860932896189898387}
   - component: {fileID: 5567486231173214841}
+  - component: {fileID: 1128209314104534430}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Player
@@ -172,6 +173,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalHatRenderer: {fileID: 3701063945229465507}
   tigerHatRenderer: {fileID: 3701063945229465507}
+--- !u!114 &1128209314104534430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5287369822939886713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e189404a164ece5418c705dd4bfa377d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1550151427339422317}
 --- !u!1001 &5672245530577891954
 PrefabInstance:
   m_ObjectHideFlags: 0

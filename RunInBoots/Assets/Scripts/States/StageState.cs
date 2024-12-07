@@ -124,6 +124,7 @@ public class StageState : IGameState
             Vector3 playerPosition = _player.transform.position;
             if (playerPosition.y < _gridYLowerBound)
             {
+                Debug.Log("Player fell off the map.");
                 KillPlayer();
                 return;
             }
@@ -233,12 +234,48 @@ public class StageState : IGameState
         if (_lifeCount <= 0)
         {
             ClearCatnipUI();
-            GameManager.Instance.GameOverWithEvent();
+            GameManager.Instance.GameOver();
             return;
         }
 
         SceneManager.sceneLoaded += OnCurrentSceneLoaded;
         SceneLoader.LoadCurrentScene();
+    }
+
+    private void LifeOverWithEvent()
+    {
+        Debug.Log("LifeOverWithEvent");
+        GameObject player = GameObject.FindWithTag("Player");
+        ActionSystem actionSystem = player.GetComponent<ActionSystem>();
+        Animator playerAnimator = player.GetComponent<AnimatableUI>().animator;
+        player.GetComponent<AnimatableUI>().PlayAnimation(UIConst.ANIM_PLAYER_DEATH);
+        ProducingEvent gameOverEvent = new AnimatorEvent(playerAnimator);
+
+        gameOverEvent.AddStartEvent(() =>
+        {
+            Debug.Log("GameOver Event Start");
+            if(actionSystem != null) actionSystem.ResumeSelf(false);
+        });
+        gameOverEvent.AddEndEvent(() =>
+        {
+            GameObject canvas = GameObject.FindObjectOfType<Canvas>().gameObject;
+            GameObject blackScreen = Resources.Load<GameObject>("BlackScreenUI");
+            GameObject blackScreenObj = PoolManager.Instance.Pool(blackScreen, Vector3.zero, Quaternion.identity, canvas.transform);
+            blackScreenObj.transform.SetParent(canvas.transform, false);
+            blackScreenObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+
+            Animator screenAnimator = blackScreenObj.GetComponent<Animator>();
+            blackScreenObj.GetComponent<AnimatableUI>().PlayAnimation(UIConst.ANIM_BLACK_START);
+            ProducingEvent blackScreenEvent = new AnimatorEvent(screenAnimator);
+            blackScreenEvent.AddEndEvent(() =>
+            {
+                Debug.Log("GameOver Event End");
+                if(player != null) player.SetActive(false);
+                LifeOver();
+            });
+            GameManager.Instance.AddEvent(blackScreenEvent);
+        });
+        GameManager.Instance.AddEvent(gameOverEvent);
     }
 
     private void OnCurrentSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -254,7 +291,7 @@ public class StageState : IGameState
         }
         else
         {
-            SpawnPlayer(respawnPosition);
+            SpawnPlayerWithEvent(respawnPosition);
         }
         UpdateStageMapSize();
         SceneManager.sceneLoaded -= OnCurrentSceneLoaded;
@@ -267,7 +304,7 @@ public class StageState : IGameState
             _accumulativeTime += _timeLimit - _remainingTime;
             _remainingTime = _timeLimit;
         }
-        LifeOver();
+        LifeOverWithEvent();
     }
 
     /******************** �÷��̾� Spawn ���� �Լ��� ********************/
@@ -288,7 +325,7 @@ public class StageState : IGameState
         }
 
         //�⺻ �̺�Ʈ ����
-        player.GetComponent<BattleModule>().death.AddListener(LifeOver);
+        player.GetComponent<BattleModule>().death.AddListener(LifeOverWithEvent);
     }
 
     public void SpawnPlayerWithEvent(Vector3 spawnPosition)
@@ -305,18 +342,18 @@ public class StageState : IGameState
         text.UpdateLifeText(_lifeCount);
 
         Animator spawnAnimator = text.GetComponent<Animator>();
-        ProducingEvent spawnEvent = new AnimatorEvent(null);
+        ProducingEvent spawnEvent = new AnimatorEvent(spawnAnimator);
 
         spawnEvent.AddStartEvent(() =>
         {
-            Debug.Log("SpawnPlayerWithEvent Start");
             SpawnPlayer(spawnPosition);
             if(player == null || actionSystem == null)
             {
                 player = GameObject.FindWithTag("Player");
                 actionSystem = player.GetComponent<ActionSystem>();
+                actionSystem.ResumeSelf(false);
             }
-            actionSystem.ResumeSelf(false);
+            else actionSystem.ResumeSelf(false);
         });
         spawnEvent.AddEndEvent(() =>
         {
@@ -324,10 +361,9 @@ public class StageState : IGameState
             {
                 player = GameObject.FindWithTag("Player");
                 actionSystem = player.GetComponent<ActionSystem>();
+                actionSystem.ResumeSelf(true);
             }
-            actionSystem.ResumeSelf(true);
-            //text.gameObject.SetActive(false);
-            Debug.Log("SpawnPlayerWithEvent End");
+            else actionSystem.ResumeSelf(true);
         });
         GameManager.Instance.AddEvent(spawnEvent);
     }

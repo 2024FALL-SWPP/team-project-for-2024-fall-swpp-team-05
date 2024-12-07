@@ -71,18 +71,18 @@ public class Pipe : Interactable
         ProducingEvent pipeOpeningEvent = new AnimatorEvent(screenAnimator);
 
         GameObject player = GameObject.FindWithTag("Player");
-        ActionSystem actionSystem = player.GetComponent<ActionSystem>();
-        BattleModule battleModule = player.GetComponent<BattleModule>();
+        ActionSystem actionSystem = player?.GetComponent<ActionSystem>();
+        BattleModule battleModule = player?.GetComponent<BattleModule>();
 
         pipeOpeningEvent.AddEndEvent(() =>
         {
             if(player == null)
             {
                 player = GameObject.FindWithTag("Player");
-                actionSystem = player.GetComponent<ActionSystem>();
-                battleModule = player.GetComponent<BattleModule>();
+                actionSystem = player?.GetComponent<ActionSystem>();
+                battleModule = player?.GetComponent<BattleModule>();
             }
-            battleModule.BeInvinvible();
+            battleModule?.BeInvinvible();
         });
         GameManager.Instance.AddEvent(pipeOpeningEvent);
         SceneManager.sceneLoaded -= OnPipeEnter;
