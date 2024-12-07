@@ -65,6 +65,8 @@ public class ActionSystem : MonoBehaviour
 
     public void SetAction(int nextAction)
     {
+        if(gameObject.activeSelf == false) return;
+
         int pastAction = currentAction.Key;
         Debug.Log("Change action: " + nextAction);
         currentAction = actions.Actions.Find(x => x.Key == nextAction);
@@ -130,7 +132,7 @@ public class ActionSystem : MonoBehaviour
         origin = new Vector3(origin.x, origin.y + coll.size.y / 2, origin.z);
         RaycastHit hit;
         float distance = contactDistance + coll.size.y/2;
-        if (Physics.Raycast(origin, Vector3.down, out hit, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if(Physics.BoxCast(origin, transform.lossyScale / 2.0f, Vector3.down, out hit, transform.rotation, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             return true;
         }
@@ -237,7 +239,7 @@ public class ActionSystem : MonoBehaviour
                 else cond_val = 0;
                 break;
             case eActionCondition.JumpValid: 
-                if(transformModule.jumpAllowed && Input.GetKey(KeyCode.X)) cond_val = 1;
+                if(transformModule.jumpAllowed && Input.GetKeyDown(KeyCode.X)) cond_val = 1;
                 else cond_val = 0;
                 break;
             case eActionCondition.JumpDown:

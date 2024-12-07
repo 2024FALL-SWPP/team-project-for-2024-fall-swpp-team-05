@@ -8,6 +8,9 @@ TagManager:
   - TimerText
   - CatnipIconContainer
   - StartPoint
+  - TigerHat
+  - NormalHat
+  - AttackEffect
   layers:
   - Default
   - TransparentFX
