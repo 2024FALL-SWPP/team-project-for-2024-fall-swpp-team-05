@@ -133,8 +133,7 @@ public class ActionSystem : MonoBehaviour
         origin = new Vector3(origin.x, origin.y + coll.size.y, origin.z);
         RaycastHit hit;
         float distance = contactDistance + coll.size.y/2;
-        Vector3 boxSize = new Vector3(currentAction.ColliderX / 2, currentAction.ColliderY / 2, coll.size.z / 2);
-        if(Physics.BoxCast(origin, boxSize, Vector3.down, out hit, transform.rotation, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if(Physics.BoxCast(origin, coll.size / 2, Vector3.down, out hit, transform.rotation, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             return true;
         }
