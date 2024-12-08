@@ -38,7 +38,7 @@ public class BattleModule : MonoBehaviour
         _defaultLayer = gameObject.layer;
     }
 
-    public void BeInvinvible()
+    public void BeInvincible()
     {
         StartCoroutine(Invincible());
     }

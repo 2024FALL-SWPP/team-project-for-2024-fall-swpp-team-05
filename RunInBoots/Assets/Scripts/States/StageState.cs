@@ -8,7 +8,7 @@ using TMPro;
 using UnityEngine.Rendering.Universal;
 using Newtonsoft.Json;
 using System.IO;
-
+using System.Collections;
 
 
 public class StageState : IGameState
@@ -21,8 +21,8 @@ public class StageState : IGameState
     public eHatType currentHatType;
 
     // ��� �ʱ�ȭ ��
-    const int INIT_LIFE_COUNT = 9;
-    private int _lifeCount = INIT_LIFE_COUNT;
+    const int InitLifeCount = 9;
+    private int _lifeCount = InitLifeCount;
     private float _gridYLowerBound = -2.0f;
 
     private TextMeshProUGUI _timerText;
@@ -46,6 +46,10 @@ public class StageState : IGameState
     private GameObject catnipIconPrefab;
     private Transform catnipIconContainer;
 
+    private Transform heartIconContainer;
+    private GameObject liveHeartIconPrefab;
+    private GameObject deadHeartIconPrefab;
+
     private int enteredPipeID = -1;
 
     public bool respawnPositionIsStartPoint = false;
@@ -62,7 +66,9 @@ public class StageState : IGameState
         currentIndex = 1;
         currentHatType = eHatType.None;
         playerPrefab = Resources.Load<GameObject>("PlayerController");
-        catnipIconPrefab = Resources.Load<GameObject>("CatnipIcon");
+        catnipIconPrefab = Resources.Load<GameObject>("StageUIObject/CatnipIcon");
+        liveHeartIconPrefab = Resources.Load<GameObject>("StageUIObject/LiveHeartIcon");
+        deadHeartIconPrefab = Resources.Load<GameObject>("StageUIObject/DeadHeartIcon");
         if (playerPrefab == null)
         {
             Debug.LogError("PlayerController prefab�� ã�� �� �����ϴ�.");
@@ -94,8 +100,9 @@ public class StageState : IGameState
         _userData.UpdateRecentStage(currentStage);
 
         InitializeCatnipInfo();
-        FindCatnipIconContainer();
+        FindIconContainers();
         PlaceCatnipIcons();
+        PlaceHeartIcons();
         SpawnPlayerAtStartPoint();
         UpdateStageMapSize();
     }
@@ -108,13 +115,6 @@ public class StageState : IGameState
         _remainingTime -= Time.deltaTime;
         UpdateTimerUI(_remainingTime);
 
-        if (_player == null || _virtualCamera == null)
-        {
-            _player = GameObject.FindWithTag("Player");
-            _virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
-            UpdateCameraTargetToPlayer();
-        }
-
         if (_remainingTime <= 0f)
         {
             KillPlayer();
@@ -126,6 +126,7 @@ public class StageState : IGameState
             Vector3 playerPosition = _player.transform.position;
             if (playerPosition.y < _gridYLowerBound)
             {
+                Debug.Log("Player fell off the map.");
                 KillPlayer();
                 return;
             }
@@ -143,7 +144,7 @@ public class StageState : IGameState
             case ExitState.GameOver:
                 // GameOver ���� �� �͵� ���߿� �߰�
                 // ��� ���� �� ����
-                _lifeCount = INIT_LIFE_COUNT;
+                _lifeCount = InitLifeCount;
                 _userData.UpdateLives(_lifeCount);
                 break;
 
@@ -155,7 +156,7 @@ public class StageState : IGameState
 
     private void StageClear()
     {
-        GameManager.Instance.StartNewStageWithEvent(currentStage + 1);
+        GameManager.Instance.StartNewStage(currentStage + 1);
 
         //�������� ��� ����
         _accumulativeTime += _timeLimit - _remainingTime;
@@ -164,14 +165,19 @@ public class StageState : IGameState
 
     private void UpdateCameraTargetToPlayer()
     {
-        if (_player != null && _virtualCamera != null)
+        if (_player == null || _virtualCamera == null)
         {
-            _virtualCamera.Follow = _player.transform;
-            _virtualCamera.OnTargetObjectWarped(_player.transform, _player.transform.position - _virtualCamera.transform.position);
-        }
-        else
-        {
-            Debug.LogError("Player �Ǵ� Camera�� ã�� �� ����");
+            _player = GameObject.FindWithTag("Player");
+            _virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
+            if (_player != null && _virtualCamera != null)
+            {
+                _virtualCamera.Follow = _player.transform;
+                _virtualCamera.OnTargetObjectWarped(_player.transform, _player.transform.position - _virtualCamera.transform.position);
+            }
+            else
+            {
+                Debug.LogError("Player �Ǵ� Camera�� ã�� �� ����");
+            }
         }
     }
 
@@ -233,7 +239,7 @@ public class StageState : IGameState
         if (_lifeCount <= 0)
         {
             ClearCatnipUI();
-            GameManager.Instance.GameOverWithEvent();
+            GameManager.Instance.GameOver();
             return;
         }
 
@@ -241,12 +247,50 @@ public class StageState : IGameState
         SceneLoader.LoadCurrentScene();
     }
 
+    private void LifeOverWithEvent()
+    {
+        Debug.Log("LifeOverWithEvent");
+        GameObject player = _player;
+        _player = null;
+        ActionSystem actionSystem = player.GetComponent<ActionSystem>();
+        Animator playerAnimator = player.GetComponent<AnimatableUI>().animator;
+        player.GetComponent<AnimatableUI>().PlayAnimation(UIConst.ANIM_PLAYER_DEATH);
+        ProducingEvent gameOverEvent = new AnimatorEvent(playerAnimator);
+
+        gameOverEvent.AddStartEvent(() =>
+        {
+            Debug.Log("LifeOver Event Start");
+            if(actionSystem != null) actionSystem.ResumeSelf(false);
+        });
+        gameOverEvent.AddEndEvent(() =>
+        {
+            GameObject canvas = GameObject.FindObjectOfType<Canvas>().gameObject;
+            GameObject blackScreen = Resources.Load<GameObject>("BlackScreenUI");
+            GameObject blackScreenObj = PoolManager.Instance.Pool(blackScreen, Vector3.zero, Quaternion.identity, canvas.transform);
+            blackScreenObj.transform.SetParent(canvas.transform, false);
+            blackScreenObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+
+            Animator screenAnimator = blackScreenObj.GetComponent<Animator>();
+            blackScreenObj.GetComponent<AnimatableUI>().PlayAnimation(UIConst.ANIM_BLACK_START);
+            ProducingEvent blackScreenEvent = new AnimatorEvent(screenAnimator);
+            blackScreenEvent.AddEndEvent(() =>
+            {
+                Debug.Log("LifeOver Event End");
+                if(player != null) player.SetActive(false);
+                LifeOver();
+            });
+            GameManager.Instance.AddEvent(blackScreenEvent);
+        });
+        GameManager.Instance.AddEvent(gameOverEvent);
+    }
+
     private void OnCurrentSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // �ʱ�ȭ �۾�
         FindTimerText();
-        FindCatnipIconContainer();
+        FindIconContainers();
         PlaceCatnipIcons();
+        PlaceHeartIcons();
 
         if (respawnPositionIsStartPoint)
         {
@@ -254,7 +298,7 @@ public class StageState : IGameState
         }
         else
         {
-            SpawnPlayer(respawnPosition);
+            SpawnPlayerWithEvent(respawnPosition);
         }
         UpdateStageMapSize();
         SceneManager.sceneLoaded -= OnCurrentSceneLoaded;
@@ -267,7 +311,7 @@ public class StageState : IGameState
             _accumulativeTime += _timeLimit - _remainingTime;
             _remainingTime = _timeLimit;
         }
-        LifeOver();
+        LifeOverWithEvent();
     }
 
     /******************** �÷��̾� Spawn ���� �Լ��� ********************/
@@ -275,25 +319,92 @@ public class StageState : IGameState
     public void SpawnPlayer(Vector3 position)
     {
         Debug.LogWarning($"Spawning player at {position}");
-        GameObject player = GameObject.FindWithTag("Player");
+        GameObject player = _player;
+
+        DisablePipeColliderTemporarilyIfExists(position);
+
         if (player == null)
         {
             Debug.Log($"Player spawned : {position}");
-            player = PoolManager.Instance.Pool(playerPrefab, position, Quaternion.identity);
+            // raycast ground beneath the spawn position
+            player = PoolManager.Instance.Pool(playerPrefab, position + 0.5f*Vector3.up, Quaternion.identity);
+            //�⺻ �̺�Ʈ ����
+            player.GetComponent<BattleModule>().death.AddListener(LifeOverWithEvent);
+            player.GetComponent<CamouflageModule>().InitializeBattleModule();
+            player.GetComponent<CamouflageModule>().onChangeHat.AddListener(() => {
+                currentHatType = player.GetComponent<CamouflageModule>().GetCurrentHatType();
+            });
+            player.GetComponent<CamouflageModule>().Initialize(currentHatType);
+            UpdateCameraTargetToPlayer();
         }
         else
         {
-            player.transform.position = position;
+            player.transform.position = position - 0.5f*Vector3.up;
             Debug.Log($"Player moved to position: {position}");
         }
+    }
 
-        //�⺻ �̺�Ʈ ����
-        player.GetComponent<BattleModule>().death.AddListener(LifeOver);
-        player.GetComponent<CamouflageModule>().InitializeBattleModule();
-        player.GetComponent<CamouflageModule>().onChangeHat.AddListener(() => { 
-                currentHatType = player.GetComponent<CamouflageModule>().GetCurrentHatType(); 
-            });
-        player.GetComponent<CamouflageModule>().Initialize(currentHatType);
+    public void SpawnPlayerWithEvent(Vector3 spawnPosition)
+    {
+        GameObject player = GameObject.FindWithTag("Player");
+        ActionSystem actionSystem = player?.GetComponent<ActionSystem>();
+
+        GameObject spawnUI = Resources.Load<GameObject>("SpawnUI");
+        GameObject canvas = GameObject.FindObjectOfType<Canvas>().gameObject;
+        SpawnUI text = PoolManager.Instance.Pool(spawnUI, Vector3.zero, Quaternion.identity, canvas.transform).GetComponent<SpawnUI>();
+        text.transform.SetParent(canvas.transform, false);
+        text.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        text.UpdateStageText(currentStage);
+        text.UpdateLifeText(_lifeCount);
+
+        Animator spawnAnimator = text.GetComponent<Animator>();
+        ProducingEvent spawnEvent = new AnimatorEvent(spawnAnimator);
+
+        spawnEvent.AddStartEvent(() =>
+        {
+            SpawnPlayer(spawnPosition);
+            if(player == null || actionSystem == null)
+            {
+                player = GameObject.FindWithTag("Player");
+                actionSystem = player.GetComponent<ActionSystem>();
+                actionSystem.ResumeSelf(false);
+            }
+            else actionSystem.ResumeSelf(false);
+            //set idle and grounded
+            actionSystem.SetAction(actionSystem.initAction);
+            //ray cast ground beneath the spawn position
+            if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hit, 100f, LayerMask.GetMask("Ground")))
+            {
+                player.transform.position = hit.point;
+            }
+        });
+        spawnEvent.AddEndEvent(() =>
+        {
+            if(player == null || actionSystem == null)
+            {
+                player = GameObject.FindWithTag("Player");
+                actionSystem = player.GetComponent<ActionSystem>();
+                actionSystem.ResumeSelf(true);
+            }
+            else actionSystem.ResumeSelf(true);
+        });
+        GameManager.Instance.AddEvent(spawnEvent);
+    }
+    
+    private void DisablePipeColliderTemporarilyIfExists(Vector3 position)
+    {
+        // 리스폰 위치 근처에 Pipe가 있는지 확인
+        Collider[] colliders = Physics.OverlapSphere(position, 1.0f); // 반경 1.0f 탐색
+        foreach (var collider in colliders)
+        {
+            Pipe pipe = collider.GetComponent<Pipe>();
+            if (pipe != null)
+            {
+                Debug.LogWarning($"{pipe.pipeID} pipe 리스폰 떄 비활성화");
+                GameManager.Instance.StartGameManagerCoroutine(pipe.DisableCollisionTemporarily()); return;
+                return;
+            }
+        }
     }
 
     private void SpawnPlayerAtStartPoint()
@@ -314,9 +425,8 @@ public class StageState : IGameState
 
     public void GoTargetIndexByPipe(int index, int targetPipeID)
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        currentHatType = player.GetComponent<CamouflageModule>().GetCurrentHatType();
-        Debug.Log($"{player.name}이(가) {currentHatType} 상태로 {index}번째 파이프로 이동합니다.");
+        currentHatType = _player.GetComponent<CamouflageModule>().GetCurrentHatType();
+        Debug.Log($"{_player.name}이(가) {currentHatType} 상태로 {index}번째 파이프로 이동합니다.");
         currentIndex = index;
         enteredPipeID = targetPipeID;
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -326,8 +436,9 @@ public class StageState : IGameState
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         FindTimerText();
-        FindCatnipIconContainer();
+        FindIconContainers();
         PlaceCatnipIcons();
+        PlaceHeartIcons();
 
         Pipe targetPipe = PipeUtils.FindPipeByID(enteredPipeID);
         enteredPipeID = -1;
@@ -385,18 +496,22 @@ public class StageState : IGameState
         isCatnipCollected = new List<bool>(new bool[count]);
     }
 
-    private void FindCatnipIconContainer()
+    private void FindIconContainers()
     {
         if (catnipIconContainer == null)
         {
-            GameObject containerObject = GameObject.FindGameObjectWithTag("CatnipIconContainer");
-            if (containerObject != null)
+            GameObject catnipContainerObject = GameObject.FindGameObjectWithTag("CatnipIconContainer");
+            if (catnipContainerObject != null)
             {
-                catnipIconContainer = containerObject.transform;
+                catnipIconContainer = catnipContainerObject.transform;
             }
-            else
+        }
+        if (heartIconContainer == null)
+        {
+            GameObject heartContainerObject = GameObject.FindGameObjectWithTag("HeartIconContainer");
+            if (heartContainerObject != null)
             {
-                Debug.LogWarning("CatnipIconContainer�� ã�� �� �����ϴ�.");
+                heartIconContainer = heartContainerObject.transform;
             }
         }
     }
@@ -411,6 +526,21 @@ public class StageState : IGameState
             icon.transform.SetParent(catnipIconContainer, false);
             _catnipIcons.Add(icon);
             SetCatnipIconState(icon, isCatnipCollected[i]);
+        }
+    }
+
+    private void PlaceHeartIcons()
+    {
+        for (int i = 0; i < _lifeCount; i++)
+        {
+            GameObject liveHeart = PoolManager.Instance.Pool(liveHeartIconPrefab, Vector3.zero, Quaternion.identity, heartIconContainer);
+            liveHeart.transform.SetParent(heartIconContainer, false);
+        }
+
+        for (int i = _lifeCount; i < InitLifeCount; i++)
+        {
+            GameObject deadHeart = PoolManager.Instance.Pool(deadHeartIconPrefab, Vector3.zero, Quaternion.identity, heartIconContainer);
+            deadHeart.transform.SetParent(heartIconContainer, false);
         }
     }
 

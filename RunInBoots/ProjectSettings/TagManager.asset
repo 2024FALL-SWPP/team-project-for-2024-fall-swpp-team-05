@@ -11,6 +11,8 @@ TagManager:
   - TigerHat
   - NormalHat
   - AttackEffect
+  - HeartIconContainer
+
   layers:
   - Default
   - TransparentFX

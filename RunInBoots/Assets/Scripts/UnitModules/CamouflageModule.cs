@@ -27,9 +27,6 @@ public class CamouflageModule : MonoBehaviour
 
     public void InitializeHatRenderers(eHatType type)
     {
-        normalHatRenderer = GameObject.Find("NormalHat").GetComponent<SkinnedMeshRenderer>();
-        tigerHatRenderer = GameObject.Find("TigerHat").GetComponent<SkinnedMeshRenderer>();
-
         if (type == eHatType.Normal)
         {
             normalHatRenderer.enabled = true;
