@@ -66,7 +66,7 @@ public class ActionSystem : MonoBehaviour
     public void SetAction(int nextAction)
     {
         int pastAction = currentAction.Key;
-        Debug.Log("Change action: " + nextAction);
+        //Debug.Log("Change action: " + nextAction);
         currentAction = actions.Actions.Find(x => x.Key == nextAction);
         string updates = currentAction.FrameUpdates;
         ParseUpdateRules(updates);
@@ -420,9 +420,10 @@ public class ActionSystem : MonoBehaviour
 
     public void ResumeSelf(bool isResume)
     {
-        if(coll == null) coll = GetComponent<BoxCollider>();
+        Debug.Log("Resume action system"+isResume);
+        if (coll == null) coll = GetComponent<BoxCollider>();
         if(transformModule == null) transformModule = GetComponent<TransformModule>();
-        if(battleModule == null) battleModule = GetComponent<BattleModule>();
+        if(battleModule == null) battleModule = GetComponentInChildren<BattleModule>();
         // disable player collider
         coll.enabled = isResume;
         // disable player movement

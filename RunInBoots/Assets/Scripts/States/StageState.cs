@@ -108,13 +108,6 @@ public class StageState : IGameState
         _remainingTime -= Time.deltaTime;
         UpdateTimerUI(_remainingTime);
 
-        if (_player == null || _virtualCamera == null)
-        {
-            _player = GameObject.FindWithTag("Player");
-            _virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
-            UpdateCameraTargetToPlayer();
-        }
-
         if (_remainingTime <= 0f)
         {
             KillPlayer();
@@ -165,14 +158,19 @@ public class StageState : IGameState
 
     private void UpdateCameraTargetToPlayer()
     {
-        if (_player != null && _virtualCamera != null)
+        if (_player == null || _virtualCamera == null)
         {
-            _virtualCamera.Follow = _player.transform;
-            _virtualCamera.OnTargetObjectWarped(_player.transform, _player.transform.position - _virtualCamera.transform.position);
-        }
-        else
-        {
-            Debug.LogError("Player �Ǵ� Camera�� ã�� �� ����");
+            _player = GameObject.FindWithTag("Player");
+            _virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
+            if (_player != null && _virtualCamera != null)
+            {
+                _virtualCamera.Follow = _player.transform;
+                _virtualCamera.OnTargetObjectWarped(_player.transform, _player.transform.position - _virtualCamera.transform.position);
+            }
+            else
+            {
+                Debug.LogError("Player �Ǵ� Camera�� ã�� �� ����");
+            }
         }
     }
 
@@ -245,7 +243,8 @@ public class StageState : IGameState
     private void LifeOverWithEvent()
     {
         Debug.Log("LifeOverWithEvent");
-        GameObject player = GameObject.FindWithTag("Player");
+        GameObject player = _player;
+        _player = null;
         ActionSystem actionSystem = player.GetComponent<ActionSystem>();
         Animator playerAnimator = player.GetComponent<AnimatableUI>().animator;
         player.GetComponent<AnimatableUI>().PlayAnimation(UIConst.ANIM_PLAYER_DEATH);
@@ -253,7 +252,7 @@ public class StageState : IGameState
 
         gameOverEvent.AddStartEvent(() =>
         {
-            Debug.Log("GameOver Event Start");
+            Debug.Log("LifeOver Event Start");
             if(actionSystem != null) actionSystem.ResumeSelf(false);
         });
         gameOverEvent.AddEndEvent(() =>
@@ -269,7 +268,7 @@ public class StageState : IGameState
             ProducingEvent blackScreenEvent = new AnimatorEvent(screenAnimator);
             blackScreenEvent.AddEndEvent(() =>
             {
-                Debug.Log("GameOver Event End");
+                Debug.Log("LifeOver Event End");
                 if(player != null) player.SetActive(false);
                 LifeOver();
             });
@@ -312,28 +311,29 @@ public class StageState : IGameState
     public void SpawnPlayer(Vector3 position)
     {
         Debug.LogWarning($"Spawning player at {position}");
-        GameObject player = GameObject.FindWithTag("Player");
+        GameObject player = _player;
 
         DisablePipeColliderTemporarilyIfExists(position);
 
         if (player == null)
         {
             Debug.Log($"Player spawned : {position}");
-            player = PoolManager.Instance.Pool(playerPrefab, position, Quaternion.identity);
+            // raycast ground beneath the spawn position
+            player = PoolManager.Instance.Pool(playerPrefab, position + 0.5f*Vector3.up, Quaternion.identity);
+            //�⺻ �̺�Ʈ ����
+            player.GetComponent<BattleModule>().death.AddListener(LifeOverWithEvent);
+            player.GetComponent<CamouflageModule>().InitializeBattleModule();
+            player.GetComponent<CamouflageModule>().onChangeHat.AddListener(() => {
+                currentHatType = player.GetComponent<CamouflageModule>().GetCurrentHatType();
+            });
+            player.GetComponent<CamouflageModule>().Initialize(currentHatType);
+            UpdateCameraTargetToPlayer();
         }
         else
         {
-            player.transform.position = position;
+            player.transform.position = position - 0.5f*Vector3.up;
             Debug.Log($"Player moved to position: {position}");
         }
-
-        //�⺻ �̺�Ʈ ����
-        player.GetComponent<BattleModule>().death.AddListener(LifeOverWithEvent);
-        player.GetComponent<CamouflageModule>().InitializeBattleModule();
-        player.GetComponent<CamouflageModule>().onChangeHat.AddListener(() => { 
-                currentHatType = player.GetComponent<CamouflageModule>().GetCurrentHatType(); 
-            });
-        player.GetComponent<CamouflageModule>().Initialize(currentHatType);
     }
 
     public void SpawnPlayerWithEvent(Vector3 spawnPosition)
@@ -362,6 +362,13 @@ public class StageState : IGameState
                 actionSystem.ResumeSelf(false);
             }
             else actionSystem.ResumeSelf(false);
+            //set idle and grounded
+            actionSystem.SetAction(actionSystem.initAction);
+            //ray cast ground beneath the spawn position
+            if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hit, 100f, LayerMask.GetMask("Ground")))
+            {
+                player.transform.position = hit.point;
+            }
         });
         spawnEvent.AddEndEvent(() =>
         {
@@ -410,9 +417,8 @@ public class StageState : IGameState
 
     public void GoTargetIndexByPipe(int index, int targetPipeID)
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        currentHatType = player.GetComponent<CamouflageModule>().GetCurrentHatType();
-        Debug.Log($"{player.name}이(가) {currentHatType} 상태로 {index}번째 파이프로 이동합니다.");
+        currentHatType = _player.GetComponent<CamouflageModule>().GetCurrentHatType();
+        Debug.Log($"{_player.name}이(가) {currentHatType} 상태로 {index}번째 파이프로 이동합니다.");
         currentIndex = index;
         enteredPipeID = targetPipeID;
         SceneManager.sceneLoaded += OnSceneLoaded;
