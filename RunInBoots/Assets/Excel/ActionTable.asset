@@ -272,7 +272,7 @@ MonoBehaviour:
     MaxVelocityX: 0
     MaxVelocityY: 0
     NextAction: 0
-    FrameUpdates: '[{JumpDown,1,SetAction,302}]'
+    FrameUpdates: '[{JumpValid,1,SetAction,302}]'
   - Key: 302
     Clip: on_off_block_deactive
     ColliderX: 0
@@ -282,7 +282,7 @@ MonoBehaviour:
     MaxVelocityX: 0
     MaxVelocityY: 0
     NextAction: 0
-    FrameUpdates: '[{JumpDown,1,SetAction,301}]'
+    FrameUpdates: '[{JumpValid,1,SetAction,301}]'
   - Key: 401
     Clip: rubber_ball_idle
     ColliderX: 0

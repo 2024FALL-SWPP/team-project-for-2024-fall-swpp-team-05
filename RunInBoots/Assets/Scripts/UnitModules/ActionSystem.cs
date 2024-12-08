@@ -130,10 +130,10 @@ public class ActionSystem : MonoBehaviour
     {
         // Check if character is on the ground
         Vector3 origin = transform.position;
-        origin = new Vector3(origin.x, origin.y + coll.size.y, origin.z);
+        origin = new Vector3(origin.x, origin.y + coll.size.y/2, origin.z);
         RaycastHit hit;
         float distance = contactDistance + coll.size.y/2;
-        if(Physics.BoxCast(origin, coll.size / 2, Vector3.down, out hit, transform.rotation, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if(Physics.BoxCast(origin, new Vector3(coll.size.x/2,contactDistance/2f,coll.size.z/2), Vector3.down, out hit, transform.rotation, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             return true;
         }
