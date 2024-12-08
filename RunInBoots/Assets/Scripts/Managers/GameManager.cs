@@ -195,6 +195,11 @@ public class GameManager : MonoSingleton<GameManager>
         AddEvent(catnipEvent);
     }
 
+    public void StartGameManagerCoroutine(IEnumerator coroutine)
+    {
+        StartCoroutine(coroutine);
+    }
+
     // Event Queue
     public void AddEvent(ProducingEvent producingEvent)
     {
