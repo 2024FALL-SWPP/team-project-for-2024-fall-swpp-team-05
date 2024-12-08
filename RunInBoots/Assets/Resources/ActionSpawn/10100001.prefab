@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1082903156}
   m_Layer: 0
   m_Name: 10100001
-  m_TagString: Untagged
+  m_TagString: AttackEffect
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4903,4 +4903,8 @@ MonoBehaviour:
   death:
     m_PersistentCalls:
       m_Calls: []
+  preAttacked:
+    m_PersistentCalls:
+      m_Calls: []
   team: 0
+  invincibleTime: 10

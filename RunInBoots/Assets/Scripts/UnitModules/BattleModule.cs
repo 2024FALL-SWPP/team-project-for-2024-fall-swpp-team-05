@@ -45,6 +45,7 @@ public class BattleModule : MonoBehaviour
     
     public void Attacked()
     {
+        if(gameObject.layer == LayerMask.NameToLayer("Invincible")) return;
         preAttacked.Invoke();
         _attacked.Invoke();
     }
@@ -107,19 +108,25 @@ public class BattleModule : MonoBehaviour
         BattleModule other = collision.gameObject.GetComponent<BattleModule>();
         // if collision object has battle module, attack
         Vector3 contactNormal = collision.GetContact(0).normal;
-        Attack(other, contactNormal);
+        if(gameObject.CompareTag("AttackEffect")) Attack(other, contactNormal, true);
+        else Attack(other, contactNormal);
     }
     private void OnTriggerEnter(Collider otherCollider)
     {
         BattleModule other = otherCollider.gameObject.GetComponent<BattleModule>();
         Vector3 contactNormal = (otherCollider.transform.position - transform.position).normalized;
-        Attack(other, contactNormal);
+        if(gameObject.CompareTag("AttackEffect")) Attack(other, contactNormal, true);
+        else Attack(other, contactNormal);
     }
 
-    void Attack(BattleModule other, Vector3 contactNormal) 
+    void Attack(BattleModule other, Vector3 contactNormal, bool isVFX = false) 
     {
         if (other != null && other.team != team)
         {
+            // if attack is from VFX, attack in all directions
+            if(isVFX && other.attackAllowed != Vector4.zero) other.Attacked();
+            
+            // if attack is from player, attack in the direction of the player
             if (Mathf.Abs(contactNormal.x) > Mathf.Abs(contactNormal.y))
             {
                 if (contactNormal.x > 0)

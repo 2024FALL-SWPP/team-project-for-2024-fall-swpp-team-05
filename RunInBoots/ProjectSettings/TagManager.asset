@@ -10,7 +10,9 @@ TagManager:
   - StartPoint
   - TigerHat
   - NormalHat
+  - AttackEffect
   - HeartIconContainer
+
   layers:
   - Default
   - TransparentFX
