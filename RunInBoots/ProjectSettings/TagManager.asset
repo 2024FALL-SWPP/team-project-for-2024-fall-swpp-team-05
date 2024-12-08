@@ -12,7 +12,6 @@ TagManager:
   - NormalHat
   - AttackEffect
   - HeartIconContainer
-
   layers:
   - Default
   - TransparentFX
