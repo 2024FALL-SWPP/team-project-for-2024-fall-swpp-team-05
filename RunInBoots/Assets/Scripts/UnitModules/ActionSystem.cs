@@ -26,6 +26,7 @@ public class ActionSystem : MonoBehaviour
     private Coroutine currentCouroutine = null;
 
     private TransformModule transformModule;
+    private TransformModule playerTransformModule;
     private BattleModule battleModule;
     private BoxCollider coll;
 
@@ -129,10 +130,11 @@ public class ActionSystem : MonoBehaviour
     {
         // Check if character is on the ground
         Vector3 origin = transform.position;
-        origin = new Vector3(origin.x, origin.y + coll.size.y / 2, origin.z);
+        origin = new Vector3(origin.x, origin.y + coll.size.y, origin.z);
         RaycastHit hit;
         float distance = contactDistance + coll.size.y/2;
-        if(Physics.BoxCast(origin, transform.lossyScale / 2.0f, Vector3.down, out hit, transform.rotation, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        Vector3 boxSize = new Vector3(currentAction.ColliderX / 2, currentAction.ColliderY / 2, coll.size.z / 2);
+        if(Physics.BoxCast(origin, boxSize, Vector3.down, out hit, transform.rotation, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             return true;
         }
@@ -239,7 +241,8 @@ public class ActionSystem : MonoBehaviour
                 else cond_val = 0;
                 break;
             case eActionCondition.JumpValid: 
-                if(transformModule.jumpAllowed && Input.GetKeyDown(KeyCode.X)) cond_val = 1;
+                if(playerTransformModule == null) playerTransformModule = GameObject.FindGameObjectWithTag("Player").GetComponent<TransformModule>();
+                if(playerTransformModule.jumpAllowed && Input.GetKeyDown(KeyCode.X)) cond_val = 1;
                 else cond_val = 0;
                 break;
             case eActionCondition.JumpDown:
