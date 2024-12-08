@@ -108,13 +108,6 @@ public class StageState : IGameState
         _remainingTime -= Time.deltaTime;
         UpdateTimerUI(_remainingTime);
 
-        if (_player == null || _virtualCamera == null)
-        {
-            _player = GameObject.FindWithTag("Player");
-            _virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
-            UpdateCameraTargetToPlayer();
-        }
-
         if (_remainingTime <= 0f)
         {
             KillPlayer();
@@ -126,6 +119,7 @@ public class StageState : IGameState
             Vector3 playerPosition = _player.transform.position;
             if (playerPosition.y < _gridYLowerBound)
             {
+                Debug.Log("Player fell off the map.");
                 KillPlayer();
                 return;
             }
@@ -155,7 +149,7 @@ public class StageState : IGameState
 
     private void StageClear()
     {
-        GameManager.Instance.StartNewStageWithEvent(currentStage + 1);
+        GameManager.Instance.StartNewStage(currentStage + 1);
 
         //�������� ��� ����
         _accumulativeTime += _timeLimit - _remainingTime;
@@ -164,14 +158,19 @@ public class StageState : IGameState
 
     private void UpdateCameraTargetToPlayer()
     {
-        if (_player != null && _virtualCamera != null)
+        if (_player == null || _virtualCamera == null)
         {
-            _virtualCamera.Follow = _player.transform;
-            _virtualCamera.OnTargetObjectWarped(_player.transform, _player.transform.position - _virtualCamera.transform.position);
-        }
-        else
-        {
-            Debug.LogError("Player �Ǵ� Camera�� ã�� �� ����");
+            _player = GameObject.FindWithTag("Player");
+            _virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
+            if (_player != null && _virtualCamera != null)
+            {
+                _virtualCamera.Follow = _player.transform;
+                _virtualCamera.OnTargetObjectWarped(_player.transform, _player.transform.position - _virtualCamera.transform.position);
+            }
+            else
+            {
+                Debug.LogError("Player �Ǵ� Camera�� ã�� �� ����");
+            }
         }
     }
 
@@ -233,12 +232,49 @@ public class StageState : IGameState
         if (_lifeCount <= 0)
         {
             ClearCatnipUI();
-            GameManager.Instance.GameOverWithEvent();
+            GameManager.Instance.GameOver();
             return;
         }
 
         SceneManager.sceneLoaded += OnCurrentSceneLoaded;
         SceneLoader.LoadCurrentScene();
+    }
+
+    private void LifeOverWithEvent()
+    {
+        Debug.Log("LifeOverWithEvent");
+        GameObject player = _player;
+        _player = null;
+        ActionSystem actionSystem = player.GetComponent<ActionSystem>();
+        Animator playerAnimator = player.GetComponent<AnimatableUI>().animator;
+        player.GetComponent<AnimatableUI>().PlayAnimation(UIConst.ANIM_PLAYER_DEATH);
+        ProducingEvent gameOverEvent = new AnimatorEvent(playerAnimator);
+
+        gameOverEvent.AddStartEvent(() =>
+        {
+            Debug.Log("LifeOver Event Start");
+            if(actionSystem != null) actionSystem.ResumeSelf(false);
+        });
+        gameOverEvent.AddEndEvent(() =>
+        {
+            GameObject canvas = GameObject.FindObjectOfType<Canvas>().gameObject;
+            GameObject blackScreen = Resources.Load<GameObject>("BlackScreenUI");
+            GameObject blackScreenObj = PoolManager.Instance.Pool(blackScreen, Vector3.zero, Quaternion.identity, canvas.transform);
+            blackScreenObj.transform.SetParent(canvas.transform, false);
+            blackScreenObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+
+            Animator screenAnimator = blackScreenObj.GetComponent<Animator>();
+            blackScreenObj.GetComponent<AnimatableUI>().PlayAnimation(UIConst.ANIM_BLACK_START);
+            ProducingEvent blackScreenEvent = new AnimatorEvent(screenAnimator);
+            blackScreenEvent.AddEndEvent(() =>
+            {
+                Debug.Log("LifeOver Event End");
+                if(player != null) player.SetActive(false);
+                LifeOver();
+            });
+            GameManager.Instance.AddEvent(blackScreenEvent);
+        });
+        GameManager.Instance.AddEvent(gameOverEvent);
     }
 
     private void OnCurrentSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -254,7 +290,7 @@ public class StageState : IGameState
         }
         else
         {
-            SpawnPlayer(respawnPosition);
+            SpawnPlayerWithEvent(respawnPosition);
         }
         UpdateStageMapSize();
         SceneManager.sceneLoaded -= OnCurrentSceneLoaded;
@@ -267,7 +303,7 @@ public class StageState : IGameState
             _accumulativeTime += _timeLimit - _remainingTime;
             _remainingTime = _timeLimit;
         }
-        LifeOver();
+        LifeOverWithEvent();
     }
 
     /******************** �÷��̾� Spawn ���� �Լ��� ********************/
@@ -275,30 +311,78 @@ public class StageState : IGameState
     public void SpawnPlayer(Vector3 position)
     {
         Debug.LogWarning($"Spawning player at {position}");
-        GameObject player = GameObject.FindWithTag("Player");
+        GameObject player = _player;
 
         DisablePipeColliderTemporarilyIfExists(position);
 
         if (player == null)
         {
             Debug.Log($"Player spawned : {position}");
-            player = PoolManager.Instance.Pool(playerPrefab, position, Quaternion.identity);
+            // raycast ground beneath the spawn position
+            player = PoolManager.Instance.Pool(playerPrefab, position + 0.5f*Vector3.up, Quaternion.identity);
+            //�⺻ �̺�Ʈ ����
+            player.GetComponent<BattleModule>().death.AddListener(LifeOverWithEvent);
+            player.GetComponent<CamouflageModule>().InitializeBattleModule();
+            player.GetComponent<CamouflageModule>().onChangeHat.AddListener(() => {
+                currentHatType = player.GetComponent<CamouflageModule>().GetCurrentHatType();
+            });
+            player.GetComponent<CamouflageModule>().Initialize(currentHatType);
+            UpdateCameraTargetToPlayer();
         }
         else
         {
-            player.transform.position = position;
+            player.transform.position = position - 0.5f*Vector3.up;
             Debug.Log($"Player moved to position: {position}");
         }
-
-        //�⺻ �̺�Ʈ ����
-        player.GetComponent<BattleModule>().death.AddListener(LifeOver);
-        player.GetComponent<CamouflageModule>().InitializeBattleModule();
-        player.GetComponent<CamouflageModule>().onChangeHat.AddListener(() => { 
-                currentHatType = player.GetComponent<CamouflageModule>().GetCurrentHatType(); 
-            });
-        player.GetComponent<CamouflageModule>().Initialize(currentHatType);
     }
 
+    public void SpawnPlayerWithEvent(Vector3 spawnPosition)
+    {
+        GameObject player = GameObject.FindWithTag("Player");
+        ActionSystem actionSystem = player?.GetComponent<ActionSystem>();
+
+        GameObject spawnUI = Resources.Load<GameObject>("SpawnUI");
+        GameObject canvas = GameObject.FindObjectOfType<Canvas>().gameObject;
+        SpawnUI text = PoolManager.Instance.Pool(spawnUI, Vector3.zero, Quaternion.identity, canvas.transform).GetComponent<SpawnUI>();
+        text.transform.SetParent(canvas.transform, false);
+        text.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        text.UpdateStageText(currentStage);
+        text.UpdateLifeText(_lifeCount);
+
+        Animator spawnAnimator = text.GetComponent<Animator>();
+        ProducingEvent spawnEvent = new AnimatorEvent(spawnAnimator);
+
+        spawnEvent.AddStartEvent(() =>
+        {
+            SpawnPlayer(spawnPosition);
+            if(player == null || actionSystem == null)
+            {
+                player = GameObject.FindWithTag("Player");
+                actionSystem = player.GetComponent<ActionSystem>();
+                actionSystem.ResumeSelf(false);
+            }
+            else actionSystem.ResumeSelf(false);
+            //set idle and grounded
+            actionSystem.SetAction(actionSystem.initAction);
+            //ray cast ground beneath the spawn position
+            if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hit, 100f, LayerMask.GetMask("Ground")))
+            {
+                player.transform.position = hit.point;
+            }
+        });
+        spawnEvent.AddEndEvent(() =>
+        {
+            if(player == null || actionSystem == null)
+            {
+                player = GameObject.FindWithTag("Player");
+                actionSystem = player.GetComponent<ActionSystem>();
+                actionSystem.ResumeSelf(true);
+            }
+            else actionSystem.ResumeSelf(true);
+        });
+        GameManager.Instance.AddEvent(spawnEvent);
+    }
+    
     private void DisablePipeColliderTemporarilyIfExists(Vector3 position)
     {
         // 리스폰 위치 근처에 Pipe가 있는지 확인
@@ -333,9 +417,8 @@ public class StageState : IGameState
 
     public void GoTargetIndexByPipe(int index, int targetPipeID)
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        currentHatType = player.GetComponent<CamouflageModule>().GetCurrentHatType();
-        Debug.Log($"{player.name}이(가) {currentHatType} 상태로 {index}번째 파이프로 이동합니다.");
+        currentHatType = _player.GetComponent<CamouflageModule>().GetCurrentHatType();
+        Debug.Log($"{_player.name}이(가) {currentHatType} 상태로 {index}번째 파이프로 이동합니다.");
         currentIndex = index;
         enteredPipeID = targetPipeID;
         SceneManager.sceneLoaded += OnSceneLoaded;

@@ -11,6 +11,7 @@ public class Pipe : Interactable
     public int targetPipeID;
 
     private Collider pipeCollider;
+    private GameObject player;
 
 
     public override void Initialize()
@@ -24,6 +25,9 @@ public class Pipe : Interactable
         Vector3 targetPosition = transform.position;
         currentStageState.SpawnPlayer(targetPosition);
         currentStageState.UpdateRespawnPosition(targetPosition, false);
+
+        Animator pipeAnimator = GetComponent<Animator>();
+        pipeAnimator.CrossFadeInFixedTime(UIConst.ANIM_PIPE_OPENING, 0.0f);
     }
 
     public IEnumerator DisableCollisionTemporarily()
@@ -41,24 +45,73 @@ public class Pipe : Interactable
 
     protected override void OnInteract(GameObject interactor)
     {
-        ProducingEvent pipeInteractionEvent = new AnimatorEvent(null);
-        ProducingEvent blackScreenEvent = new AnimatorEvent(null);
-        ProducingEvent pipeOpeningEvent = new AnimatorEvent(null);
+        player = interactor;
+        ActionSystem actionSystem = player.GetComponent<ActionSystem>();
+        BattleModule battleModule = player.GetComponent<BattleModule>();
+
+        GameObject canvas = GameObject.FindObjectOfType<Canvas>().gameObject;
+        GameObject blackScreen = Resources.Load<GameObject>("BlackScreenUI");
+        Animator pipeAnimator = GetComponent<Animator>();
+
+        ProducingEvent pipeInteractionEvent = new AnimatorEvent(pipeAnimator);
+        pipeAnimator.CrossFadeInFixedTime(UIConst.ANIM_PIPE_INTERACTION, 0.0f);
         pipeInteractionEvent.AddStartEvent(() =>
         {
-            GameManager.Instance.StopPlayer();
+            actionSystem.ResumeSelf(false);
+            player.SetActive(false);
         });
-        blackScreenEvent.AddEndEvent(() => {
-            OnPipeInteraction(interactor);
-        });
-        pipeOpeningEvent.AddEndEvent(() =>
+        pipeInteractionEvent.AddEndEvent(() =>
         {
-            GameManager.Instance.ResumePlayer();
-            GameManager.Instance.MakePlayerInvincible();
+            GameObject pipeUI = PoolManager.Instance.Pool(blackScreen, Vector3.zero, Quaternion.identity, canvas.transform);
+            pipeUI.transform.SetParent(canvas.transform, false);
+            pipeUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+            pipeUI.GetComponent<AnimatableUI>().PlayAnimation(UIConst.ANIM_BLACK_START);
+            
+            Animator screenAnimator = pipeUI.GetComponent<Animator>();
+            ProducingEvent blackScreenEvent = new AnimatorEvent(screenAnimator);
+            blackScreenEvent.AddEndEvent(() => {
+                OnPipeInteraction(interactor);
+                //for scene change
+                if (GameManager.Instance.GetCurrentStageState().currentIndex != targetIndex)
+                    SceneManager.sceneLoaded += (Scene scene, LoadSceneMode mode) => OnPipeEnter(scene, mode);
+                //for same scene
+                else
+                {
+                    OnPipeEnter(SceneManager.GetActiveScene(), LoadSceneMode.Single);
+                    screenAnimator.gameObject.SetActive(false);
+                }
+                    
+            });
+            GameManager.Instance.AddEvent(blackScreenEvent);
         });
         GameManager.Instance.AddEvent(pipeInteractionEvent);
-        GameManager.Instance.AddEvent(blackScreenEvent);
+    }
+
+    private void OnPipeEnter(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("Pipe Enter Event");
+        GameObject canvas = GameObject.FindObjectOfType<Canvas>().gameObject;
+        GameObject blackScreen = Resources.Load<GameObject>("BlackScreenUI");
+        GameObject pipeUI = PoolManager.Instance.Pool(blackScreen, Vector3.zero, Quaternion.identity, canvas.transform);
+        pipeUI.transform.SetParent(canvas.transform, false);
+        pipeUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        Animator screenAnimator = pipeUI.GetComponent<Animator>();
+        pipeUI.GetComponent<AnimatableUI>().PlayAnimation(UIConst.ANIM_BLACK_END);
+        ProducingEvent pipeOpeningEvent = new AnimatorEvent(screenAnimator);
+
+        pipeOpeningEvent.AddEndEvent(() =>
+        {
+            if(player == null)
+                player = GameObject.FindWithTag("Player");
+            var battleModule = player?.GetComponent<BattleModule>();
+            var actionModule = player?.GetComponent<ActionSystem>();
+            //resume player
+            player?.SetActive(true);
+            actionModule?.ResumeSelf(true);
+            battleModule?.BeInvincible();
+        });
         GameManager.Instance.AddEvent(pipeOpeningEvent);
+        SceneManager.sceneLoaded -= OnPipeEnter;
     }
 
     private void OnPipeInteraction(GameObject interactor)
