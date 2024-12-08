@@ -71,8 +71,8 @@ public class GameManager : MonoSingleton<GameManager>
     // 모든 스테이지 클리어 된 후 동작 나중에 채워넣기
     private void AllStageClear() 
     {
-        currentState = null;
-        SceneLoader.LoadTitleScene();
+        currentState = new GameClearState();
+        currentState.Start();
         Debug.Log("Game Clear");
     }
 
@@ -93,6 +93,50 @@ public class GameManager : MonoSingleton<GameManager>
             Debug.LogWarning("currentState is null or not of type StageState.");
         }
         return currentState as StageState;
+    }
+
+    public void SpawnPlayerWithEvent(Vector3 spawnPosition)
+    {
+        ProducingEvent spawnEvent = new AnimatorEvent(null);
+        spawnEvent.AddStartEvent(() =>
+        {
+            // Debug.Log("SpawnPlayerWithEvent Start");
+            GetCurrentStageState().SpawnPlayer(spawnPosition);
+            StopPlayer();
+        });
+        spawnEvent.AddEndEvent(() =>
+        {
+            ResumePlayer();
+            // Debug.Log("SpawnPlayerWithEvent End");
+        });
+        AddEvent(spawnEvent);
+    }
+
+    public void CollectCatnipWithEvent(int catnipID)
+    {
+        ProducingEvent catnipEvent = new AnimatorEvent(null);
+        GameObject player = GameObject.FindWithTag("Player");
+        GameObject catnip = GameObject.Find($"Catnip_{catnipID}");
+        catnipEvent.AddStartEvent(() =>
+        {
+            // Debug.Log("Catnip Event Start");
+            StopPlayer();
+            GetObject(catnip, new Vector3(0, 3.0f, 0));
+        });
+        catnipEvent.AddEndEvent(() =>
+        {
+            ResumePlayer();
+            MakePlayerInvincible();
+            GetCurrentStageState().CollectCatnipInStageState(catnipID);
+            catnip.SetActive(false);
+            // Debug.Log("Catnip Event End");
+        });
+        AddEvent(catnipEvent);
+    }
+
+    public void StartGameManagerCoroutine(IEnumerator coroutine)
+    {
+        StartCoroutine(coroutine);
     }
 
     // Event Queue

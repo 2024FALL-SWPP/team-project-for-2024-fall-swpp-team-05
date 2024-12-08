@@ -8,7 +8,7 @@ using TMPro;
 using UnityEngine.Rendering.Universal;
 using Newtonsoft.Json;
 using System.IO;
-
+using System.Collections;
 
 
 public class StageState : IGameState
@@ -313,6 +313,9 @@ public class StageState : IGameState
     {
         Debug.LogWarning($"Spawning player at {position}");
         GameObject player = GameObject.FindWithTag("Player");
+
+        DisablePipeColliderTemporarilyIfExists(position);
+
         if (player == null)
         {
             Debug.Log($"Player spawned : {position}");
@@ -371,6 +374,22 @@ public class StageState : IGameState
             else actionSystem.ResumeSelf(true);
         });
         GameManager.Instance.AddEvent(spawnEvent);
+    }
+    
+    private void DisablePipeColliderTemporarilyIfExists(Vector3 position)
+    {
+        // 리스폰 위치 근처에 Pipe가 있는지 확인
+        Collider[] colliders = Physics.OverlapSphere(position, 1.0f); // 반경 1.0f 탐색
+        foreach (var collider in colliders)
+        {
+            Pipe pipe = collider.GetComponent<Pipe>();
+            if (pipe != null)
+            {
+                Debug.LogWarning($"{pipe.pipeID} pipe 리스폰 떄 비활성화");
+                GameManager.Instance.StartGameManagerCoroutine(pipe.DisableCollisionTemporarily()); return;
+                return;
+            }
+        }
     }
 
     private void SpawnPlayerAtStartPoint()

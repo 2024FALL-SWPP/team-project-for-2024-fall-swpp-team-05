@@ -14,7 +14,7 @@ public class SceneLoader
         if (SceneUtility.GetBuildIndexByScenePath(nextSceneName) != -1)
         {
             SceneManager.LoadScene(nextSceneName);
-            Debug.LogWarning($"Loading next stage: {nextSceneName}");
+            Debug.Log($"Loading next stage: {nextSceneName}");
             return true;
         }
         else
@@ -26,14 +26,20 @@ public class SceneLoader
 
     public static void LoadCurrentScene()
     {
-        Debug.LogWarning($"Loading current scene");
+        Debug.Log($"Loading current scene");
         string currentScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentScene);
     }
 
     public static void LoadTitleScene()
     {
-        Debug.LogWarning($"Loading title scene");
+        Debug.Log($"Loading title scene");
         SceneManager.LoadScene("TitleScene");
+    }
+
+    public static void LoadGameClearScene()
+    {
+        Debug.Log("Loading gameclear scene");
+        SceneManager.LoadScene("GameClearScene");
     }
 }

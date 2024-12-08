@@ -20,9 +20,6 @@ public class Pipe : Interactable
 
     public void SpawnPlayerByPipe()
     {
-        pipeCollider = GetComponent<Collider>();
-        StartCoroutine(DisableCollisionTemporarily());
-
         StageState currentStageState = GameManager.Instance.GetCurrentStageState();
         Vector3 targetPosition = transform.position;
         currentStageState.SpawnPlayer(targetPosition);
@@ -32,13 +29,16 @@ public class Pipe : Interactable
         pipeAnimator.CrossFadeInFixedTime(UIConst.ANIM_PIPE_OPENING, 0.0f);
     }
 
-    private IEnumerator DisableCollisionTemporarily()
+    public IEnumerator DisableCollisionTemporarily()
     {
+        pipeCollider = GetComponent<Collider>();
         if (pipeCollider != null)
         {
+            Debug.LogWarning($"Disabling Pipe {pipeID} Collider...");
             pipeCollider.enabled = false; // Collider 비활성화
             yield return new WaitForSeconds(1f); // 1초 대기
             pipeCollider.enabled = true; // Collider 다시 활성화
+            Debug.LogWarning($"Pipe {pipeID} Collider reenabled.");
         }
     }
 
