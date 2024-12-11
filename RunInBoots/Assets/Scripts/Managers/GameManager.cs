@@ -26,7 +26,7 @@ public class GameManager : MonoSingleton<GameManager>
             AllStageClear();
             return;
         }
-        if (stage < 4) {
+        if (stage <= 4) {
             AudioManager.Instance.PlayAudio(1);
             
         } else {
