@@ -43,12 +43,6 @@ public class StageState : IGameState
     public int collectedCatnipCount;
     public List<bool> isCatnipCollected = new List<bool>();
     private List<GameObject> _catnipIcons = new List<GameObject>();
-    private GameObject catnipIconPrefab;
-    private Transform catnipIconContainer;
-
-    private Transform heartIconContainer;
-    private GameObject liveHeartIconPrefab;
-    private GameObject deadHeartIconPrefab;
 
     private int enteredPipeID = -1;
 
@@ -66,9 +60,6 @@ public class StageState : IGameState
         currentIndex = 1;
         currentHatType = eHatType.None;
         playerPrefab = Resources.Load<GameObject>("PlayerController");
-        catnipIconPrefab = Resources.Load<GameObject>("StageUIObject/CatnipIcon");
-        liveHeartIconPrefab = Resources.Load<GameObject>("StageUIObject/LiveHeartIcon");
-        deadHeartIconPrefab = Resources.Load<GameObject>("StageUIObject/DeadHeartIcon");
         if (playerPrefab == null)
         {
             Debug.LogError("PlayerController prefab�� ã�� �� �����ϴ�.");
@@ -100,9 +91,8 @@ public class StageState : IGameState
         _userData.UpdateRecentStage(currentStage);
 
         InitializeCatnipInfo();
-        FindIconContainers();
-        PlaceCatnipIcons();
-        PlaceHeartIcons();
+        StageUIUtils.PlaceCatnipIcons(totalCatnipCount, isCatnipCollected, ref _catnipIcons);
+        StageUIUtils.PlaceHeartIcons(_lifeCount);
         SpawnPlayerAtStartPoint();
         UpdateStageMapSize();
     }
@@ -238,7 +228,7 @@ public class StageState : IGameState
         //game over
         if (_lifeCount <= 0)
         {
-            ClearCatnipUI();
+            _catnipIcons.Clear();
             GameManager.Instance.GameOver();
             return;
         }
@@ -288,9 +278,8 @@ public class StageState : IGameState
     {
         // �ʱ�ȭ �۾�
         FindTimerText();
-        FindIconContainers();
-        PlaceCatnipIcons();
-        PlaceHeartIcons();
+        StageUIUtils.PlaceCatnipIcons(totalCatnipCount, isCatnipCollected, ref _catnipIcons);
+        StageUIUtils.PlaceHeartIcons(_lifeCount);
 
         if (respawnPositionIsStartPoint)
         {
@@ -436,9 +425,8 @@ public class StageState : IGameState
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         FindTimerText();
-        FindIconContainers();
-        PlaceCatnipIcons();
-        PlaceHeartIcons();
+        StageUIUtils.PlaceCatnipIcons(totalCatnipCount, isCatnipCollected, ref _catnipIcons);
+        StageUIUtils.PlaceHeartIcons(_lifeCount);
 
         Pipe targetPipe = PipeUtils.FindPipeByID(enteredPipeID);
         enteredPipeID = -1;
@@ -496,54 +484,6 @@ public class StageState : IGameState
         isCatnipCollected = new List<bool>(new bool[count]);
     }
 
-    private void FindIconContainers()
-    {
-        if (catnipIconContainer == null)
-        {
-            GameObject catnipContainerObject = GameObject.FindGameObjectWithTag("CatnipIconContainer");
-            if (catnipContainerObject != null)
-            {
-                catnipIconContainer = catnipContainerObject.transform;
-            }
-        }
-        if (heartIconContainer == null)
-        {
-            GameObject heartContainerObject = GameObject.FindGameObjectWithTag("HeartIconContainer");
-            if (heartContainerObject != null)
-            {
-                heartIconContainer = heartContainerObject.transform;
-            }
-        }
-    }
-
-    private void PlaceCatnipIcons()
-    {
-        ClearCatnipUI();
-        Debug.LogWarning($"_catnipIcon ����Ʈ ���� ����: {_catnipIcons.Count}");
-        for (int i = 0; i < totalCatnipCount; i++)
-        {
-            GameObject icon = PoolManager.Instance.Pool(catnipIconPrefab, Vector3.zero, Quaternion.identity, catnipIconContainer);
-            icon.transform.SetParent(catnipIconContainer, false);
-            _catnipIcons.Add(icon);
-            SetCatnipIconState(icon, isCatnipCollected[i]);
-        }
-    }
-
-    private void PlaceHeartIcons()
-    {
-        for (int i = 0; i < _lifeCount; i++)
-        {
-            GameObject liveHeart = PoolManager.Instance.Pool(liveHeartIconPrefab, Vector3.zero, Quaternion.identity, heartIconContainer);
-            liveHeart.transform.SetParent(heartIconContainer, false);
-        }
-
-        for (int i = _lifeCount; i < InitLifeCount; i++)
-        {
-            GameObject deadHeart = PoolManager.Instance.Pool(deadHeartIconPrefab, Vector3.zero, Quaternion.identity, heartIconContainer);
-            deadHeart.transform.SetParent(heartIconContainer, false);
-        }
-    }
-
     public void CollectCatnipInStageState(int catnipID)
     {
         collectedCatnipCount++;
@@ -555,28 +495,11 @@ public class StageState : IGameState
         if (catnipID > 0 && catnipID <= _catnipIcons.Count)
         {
             isCatnipCollected[catnipID - 1] = true;
-            SetCatnipIconState(_catnipIcons[catnipID - 1], true);
+            StageUIUtils.SetCatnipIconState(_catnipIcons[catnipID - 1], true);
         }
         else
         {
             Debug.LogWarning("�������� catnipID: " + catnipID);
         }
-    }
-
-    public void ClearCatnipUI()
-    {
-        _catnipIcons.Clear();
-    }
-
-    private void SetCatnipIconState(GameObject icon, bool isActive)
-    {
-        if (icon == null)
-        {
-            Debug.LogError("�ش� catnip Icon�� ã�� �� ����");
-            return;
-        }
-        Color iconColor = icon.GetComponent<UnityEngine.UI.Image>().color;
-        iconColor.a = isActive ? 1.0f : 0.5f;
-        icon.GetComponent<UnityEngine.UI.Image>().color = iconColor;
     }
 }

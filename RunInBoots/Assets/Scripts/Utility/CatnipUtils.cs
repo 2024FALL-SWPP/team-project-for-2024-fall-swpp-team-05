@@ -15,19 +15,6 @@ public class CatnipUtils
         }
     }
 
-    //public static void UpdateCatnipToCollected(List<bool> isCatnipCollected, int catnipID)
-    //{
-    //    if (catnipID > 0 && catnipID <= isCatnipCollected.Count)
-    //    {
-    //        isCatnipCollected[catnipID - 1] = true;
-    //    }
-    //}
-
-    //public static void CatnipCollectUIUpdate(int catnipID)
-    //{
-    //    GameManager.Instance.GetCurrentStageState().UpdateCatnipUI(catnipID);
-    //}
-
     public static int CountTotalCatnipInStage(int stage)
     {
         int totalCatnip = 0;
