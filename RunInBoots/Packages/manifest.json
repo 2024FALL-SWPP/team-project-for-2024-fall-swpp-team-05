@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.unity.2d.animation": "7.1.2",
     "com.unity.cinemachine": "2.10.2",
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.ide.rider": "3.0.27",
@@ -11,6 +12,7 @@
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.7.6",
     "com.unity.ugui": "1.0.0",
+    "com.unity.visualeffectgraph": "12.1.15",
     "com.unity.visualscripting": "1.9.1",
     "net.mikinya.unity-excel-importer": "https://github.com/mikito/unity-excel-importer.git?path=Assets/ExcelImporter#v0.1.1/upm",
     "com.unity.modules.ai": "1.0.0",
