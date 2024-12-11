@@ -317,12 +317,13 @@ public class ActionSystem : MonoBehaviour
     void SpawnObject(string resourcePath)
     {
         GameObject loadedObject = Resources.Load<GameObject>(resourcePath);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (loadedObject != null)
         {
             var animTransform = animator.transform;
             var instance = PoolManager.Instance.Pool(loadedObject, transform.position, Quaternion.identity);
             instance.transform.SetParent(animTransform);
-            instance.transform.localRotation = Quaternion.identity;
+            instance.transform.localRotation = player.transform.rotation;
             instance.transform.localPosition += loadedObject.transform.position;
         }
         else
