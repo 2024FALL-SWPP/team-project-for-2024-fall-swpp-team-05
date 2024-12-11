@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballActionKey: 402
-  repelForce: 20
+  repelForce: 40
 --- !u!65 &6525142879479155982
 BoxCollider:
   m_ObjectHideFlags: 0

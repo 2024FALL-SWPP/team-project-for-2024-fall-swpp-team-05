@@ -22,7 +22,7 @@ MonoBehaviour:
     MaxVelocityX: 4
     MaxVelocityY: 6
     NextAction: 0
-    FrameUpdates: '[{InputX,1,SetAction,102},{InputY,-1,SetAction,103},{InputY,1,SetAction,108},{Attack,1,SetAction,106},{OnLand,0,SetAction,105},{JumpValid,1,SetAction,104}]'
+    FrameUpdates: '[{InputX,1,SetAction,107},{InputY,-1,SetAction,103},{InputY,1,SetAction,108},{Attack,1,SetAction,106},{OnLand,0,SetAction,105},{JumpValid,1,SetAction,104}]'
   - Key: 102
     Clip: cat_move
     ColliderX: 0.5
@@ -72,7 +72,7 @@ MonoBehaviour:
     MaxVelocityX: 4
     MaxVelocityY: 6
     NextAction: 101
-    FrameUpdates: '[{Frame,5,Spawn,10100001}]'
+    FrameUpdates: '[{Frame,4,MoveLocalX,3},{Frame,5,Spawn,10100001}]'
   - Key: 107
     Clip: cat_run
     ColliderX: 0.5
@@ -82,7 +82,7 @@ MonoBehaviour:
     MaxVelocityX: 8
     MaxVelocityY: 6
     NextAction: 0
-    FrameUpdates: '[{InputX,1,MoveInputX,2},{Run,0,SetAction,102},{InputX,0,SetAction,101},{InputY,-1,SetAction,103},{InputY,1,SetAction,108},{OnLand,0,SetAction,105},{JumpValid,1,SetAction,104}]'
+    FrameUpdates: '[{InputX,1,MoveInputX,2},{Attack,1,SetAction,106},{InputX,0,SetAction,101},{InputY,-1,SetAction,103},{InputY,1,SetAction,108},{OnLand,0,SetAction,105},{JumpValid,1,SetAction,104}]'
   - Key: 108
     Clip: cat_stretch
     ColliderX: 0.5
@@ -152,7 +152,7 @@ MonoBehaviour:
     MaxVelocityX: 4
     MaxVelocityY: 1
     NextAction: 105
-    FrameUpdates: '[{Frame,5,Spawn,10100001},{OnLand,1,SetAction,101}]'
+    FrameUpdates: '[{Frame,4,MoveLocalX,3},{Frame,5,Spawn,10100001},{OnLand,1,SetAction,101}]'
   - Key: 152
     Clip: cat_jump_take_down_ready
     ColliderX: 0.5
@@ -242,7 +242,7 @@ MonoBehaviour:
     MaxVelocityX: 4
     MaxVelocityY: 12
     NextAction: 105
-    FrameUpdates: '[{InputX,1,MoveInputX,1},{Frame,12,MoveY,12}]'
+    FrameUpdates: '[{InputX,1,MoveInputX,1},{Frame,1,MoveY,12}]'
   - Key: 201
     Clip: on_off_thorn_active
     ColliderX: 0.5

@@ -30,6 +30,8 @@ public class ActionSystem : MonoBehaviour
     private BattleModule battleModule;
     private BoxCollider coll;
 
+    private int lastEventFrame = -1;
+
     #region Functions for setting new action
     void ParseUpdateRules(string updates)
     {
@@ -74,16 +76,18 @@ public class ActionSystem : MonoBehaviour
         string updates = currentAction.FrameUpdates;
         ParseUpdateRules(updates);
         actionFrames = 0;
+        lastEventFrame = frameUpdates.Where(update => update.cond_name == eActionCondition.Frame).LastOrDefault()?.cond_value ?? -1;
         transformModule.g_scale = currentAction.GravityScale;
         transformModule.maxSpeedX = currentAction.MaxVelocityX;
         transformModule.maxSpeedY = currentAction.MaxVelocityY;
         transformModule.ResetAcceleration();
 
         if(pastAction == nextAction && IsLooping()) return;
-        else animator.CrossFadeInFixedTime(currentAction.Clip, currentAction.TransitionDuration, 0, 0);
-        
+        else if (currentAction.TransitionDuration>0) animator.CrossFadeInFixedTime(currentAction.Clip, currentAction.TransitionDuration, 0, 0);
+        else animator.Play(currentAction.Clip, 0, 0);
+
         // Change collider size
-        if(currentCouroutine != null) StopCoroutine(currentCouroutine);
+        if (currentCouroutine != null) StopCoroutine(currentCouroutine);
         Vector3 targetSize = new Vector3(currentAction.ColliderX, currentAction.ColliderY, coll.size.z);
         currentCouroutine = StartCoroutine(ChangeColliderSize(targetSize, currentAction.TransitionDuration));
     }
@@ -389,7 +393,7 @@ public class ActionSystem : MonoBehaviour
         var nextAction = 0;
         // if current clip is not looping and animation is finished, set next action
         var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        if(stateInfo.IsName(currentAction.Clip) && stateInfo.normalizedTime > 1 && !IsLooping() && animator.GetCurrentAnimatorClipInfo(0).Length > 0)
+        if(stateInfo.IsName(currentAction.Clip) && stateInfo.normalizedTime > 1 && !IsLooping() && animator.GetCurrentAnimatorClipInfo(0).Length > 0 && (lastEventFrame<0 || actionFrames>lastEventFrame))
         {
             //Debug.Log("Animation finished"+ currentAction.Clip);
             nextAction = currentAction.NextAction != 0 ? currentAction.NextAction : initAction;

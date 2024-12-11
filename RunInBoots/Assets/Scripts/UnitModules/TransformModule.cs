@@ -88,8 +88,8 @@ public class TransformModule : MonoBehaviour
     #region Physics Related Methods
     public void Accelerate(float Xinput, float YInput)
     {
-        accelSumX += speedXCoef * Xinput;
-        accelSumY += speedYCoef * YInput;
+        accelSumX += speedXCoef * Xinput * Time.deltaTime * 60f;
+        accelSumY += speedYCoef * YInput * Time.deltaTime * 60f;
         UpdateRotation();
     }
 
