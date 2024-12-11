@@ -88,7 +88,7 @@ public class GameManager : MonoSingleton<GameManager>
         AudioManager.Instance.StopAllAudio();
         if (currentState != null)
         {
-            currentState.Exit(ExitState.GameOver);
+            currentState.Exit(eExitState.GameOver);
         }
         SceneLoader.LoadTitleScene();
     }

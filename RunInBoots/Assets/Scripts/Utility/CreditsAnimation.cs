@@ -6,6 +6,6 @@ public class CreditsAnimation : MonoBehaviour
 {
     public void OnCreditsComplete()
     {
-        GameManager.Instance.currentState.Exit(ExitState.GameClear);
+        GameManager.Instance.currentState.Exit(eExitState.GameClear);
     }
 }

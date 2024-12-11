@@ -19,9 +19,9 @@ public class GameClearState : IGameState
 
     }
 
-    public void Exit(ExitState exitState)
+    public void Exit(eExitState exitState)
     {
-        if (exitState == ExitState.GameClear)
+        if (exitState == eExitState.GameClear)
         {
             SceneLoader.LoadTitleScene(); // TitleScene ·Îµå
         }

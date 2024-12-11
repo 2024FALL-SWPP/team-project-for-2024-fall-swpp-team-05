@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ExitState
+public enum eExitState
 {
     StageClear,
     GameClear,
@@ -14,5 +14,5 @@ public interface IGameState
     public bool IsStarted { get; }
     void Start();
     void Update();
-    void Exit(ExitState exitState);
+    void Exit(eExitState exitState);
 }
