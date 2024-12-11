@@ -323,7 +323,7 @@ public class ActionSystem : MonoBehaviour
             var animTransform = animator.transform;
             var instance = PoolManager.Instance.Pool(loadedObject, transform.position, Quaternion.identity);
             instance.transform.SetParent(animTransform);
-            instance.transform.rotation = player.transform.rotation;
+            instance.transform.localRotation *= player.transform.rotation;
             instance.transform.localPosition += loadedObject.transform.position;
         }
         else

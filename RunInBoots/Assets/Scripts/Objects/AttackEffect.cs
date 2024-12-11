@@ -21,8 +21,8 @@ public class AttackEffect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // set active false after 0.8f
-        if(_time > 0.8f)
+        // set active false after 0.5f
+        if(_time > 0.5f)
         {
             gameObject.SetActive(false);
             return;
