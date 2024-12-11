@@ -34,6 +34,8 @@ public abstract class ProducingEvent
     {
         isEnded = true;
     }
+
+    public void InsertStartEvent(Action action) => startEvent = action + startEvent;
     
     public void AddStartEvent(Action action)
     {

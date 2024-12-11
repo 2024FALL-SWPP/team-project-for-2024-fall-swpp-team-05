@@ -179,34 +179,16 @@ public class StageState : IGameState
 
     private void LifeOverWithEvent()
     {
-        Debug.Log("LifeOverWithEvent");
         GameObject player = _player;
         _player = null;
-        ActionSystem actionSystem = player.GetComponent<ActionSystem>();
-        Animator playerAnimator = player.GetComponent<AnimatableUI>().animator;
-        player.GetComponent<AnimatableUI>().PlayAnimation(UIConst.ANIM_PLAYER_DEATH);
-        ProducingEvent gameOverEvent = new AnimatorEvent(playerAnimator);
-
-        gameOverEvent.AddStartEvent(() =>
-        {
-            Debug.Log("LifeOver Event Start");
-            if(actionSystem != null) actionSystem.ResumeSelf(false);
-        });
+        ProducingEvent gameOverEvent = EventUtils.DeathEvent();
         gameOverEvent.AddEndEvent(() =>
         {
-            GameObject canvas = GameObject.FindObjectOfType<Canvas>().gameObject;
-            GameObject blackScreen = Resources.Load<GameObject>("BlackScreenUI");
-            GameObject blackScreenObj = PoolManager.Instance.Pool(blackScreen, Vector3.zero, Quaternion.identity, canvas.transform);
-            blackScreenObj.transform.SetParent(canvas.transform, false);
-            blackScreenObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
-
-            Animator screenAnimator = blackScreenObj.GetComponent<Animator>();
-            blackScreenObj.GetComponent<AnimatableUI>().PlayAnimation(UIConst.ANIM_BLACK_START);
-            ProducingEvent blackScreenEvent = new AnimatorEvent(screenAnimator);
+            ProducingEvent blackScreenEvent = EventUtils.BlackScreenEvent();
             blackScreenEvent.AddEndEvent(() =>
             {
                 Debug.Log("LifeOver Event End");
-                if(player != null) player.SetActive(false);
+                if (player != null) player.SetActive(false);
                 LifeOver();
             });
             GameManager.Instance.AddEvent(blackScreenEvent);
@@ -266,51 +248,14 @@ public class StageState : IGameState
 
     public void SpawnPlayerWithEvent(Vector3 spawnPosition)
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        ActionSystem actionSystem = player?.GetComponent<ActionSystem>();
-
-        GameObject spawnUI = Resources.Load<GameObject>("SpawnUI");
-        GameObject canvas = GameObject.FindObjectOfType<Canvas>().gameObject;
-        SpawnUI text = PoolManager.Instance.Pool(spawnUI, Vector3.zero, Quaternion.identity, canvas.transform).GetComponent<SpawnUI>();
-        text.transform.SetParent(canvas.transform, false);
-        text.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
-        text.UpdateStageText(currentStage);
-        text.UpdateLifeText(_lifeCount);
-
-        Animator spawnAnimator = text.GetComponent<Animator>();
-        ProducingEvent spawnEvent = new AnimatorEvent(spawnAnimator);
-
-        spawnEvent.AddStartEvent(() =>
+        ProducingEvent spawnEvent = EventUtils.SpawnEvent(currentStage, _lifeCount, spawnPosition);
+        spawnEvent.InsertStartEvent(() =>
         {
             SpawnPlayer(spawnPosition);
-            if(player == null || actionSystem == null)
-            {
-                player = GameObject.FindWithTag("Player");
-                actionSystem = player.GetComponent<ActionSystem>();
-                actionSystem.ResumeSelf(false);
-            }
-            else actionSystem.ResumeSelf(false);
-            //set idle and grounded
-            actionSystem.SetAction(actionSystem.initAction);
-            //ray cast ground beneath the spawn position
-            if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hit, 100f, LayerMask.GetMask("Ground")))
-            {
-                player.transform.position = hit.point;
-            }
-        });
-        spawnEvent.AddEndEvent(() =>
-        {
-            if(player == null || actionSystem == null)
-            {
-                player = GameObject.FindWithTag("Player");
-                actionSystem = player.GetComponent<ActionSystem>();
-                actionSystem.ResumeSelf(true);
-            }
-            else actionSystem.ResumeSelf(true);
         });
         GameManager.Instance.AddEvent(spawnEvent);
     }
-    
+
     private void DisablePipeColliderTemporarilyIfExists(Vector3 position)
     {
         // 리스폰 위치 근처에 Pipe가 있는지 확인
