@@ -24,6 +24,7 @@ public class OutGameManager : MonoBehaviour
 
     void Start()
     {
+        AudioManager.Instance.PlayAudio(0);
         stageSelectUI.SetActive(false);
         
         goBackButton.onClick.RemoveAllListeners(); // Remove any old listeners
