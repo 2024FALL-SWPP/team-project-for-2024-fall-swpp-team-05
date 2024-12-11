@@ -53,6 +53,9 @@ public class StretchModule : MonoBehaviour
         // 최대 길이 제한
         currentStretchAmount = Mathf.Clamp(currentStretchAmount, 0, maxStretchLength);
 
+        if (!isStretching) {
+            AudioManager.Instance.PlaySoundEffect(0);
+        }
         isStretching = true;
         _isStretchApplied = false;
     }

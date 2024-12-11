@@ -3,7 +3,9 @@ using UnityEngine;
 public class AudioManager : MonoSingleton<AudioManager>
 {
     public AudioSource[] audioSources; // Array to hold AudioSources
+    public AudioSource[] soundEffectSources; // Array to hold sound effect AudioSources
 
+    // public UnityEvent onAudioChange;
     public void Start()
     {
         // Get all AudioSources in the scene
@@ -24,6 +26,18 @@ public class AudioManager : MonoSingleton<AudioManager>
 
             // Play the selected AudioSource
             audioSources[index].enabled = true;
+        }
+        else
+        {
+            Debug.LogWarning("Audio index out of range!");
+        }
+    }
+
+    public void PlaySoundEffect(int index)
+    {
+        if (index >= 0 && index < soundEffectSources.Length)
+        {
+            soundEffectSources[index].Play();
         }
         else
         {
