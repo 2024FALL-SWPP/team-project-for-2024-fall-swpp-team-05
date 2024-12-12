@@ -74,8 +74,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -1752294980725328889, guid: b03263af09cff4540b8f9283bda272a5,
-    type: 3}
+  m_Motion: {fileID: 7400000, guid: 1e824fc418e9f4c3992921e0afc3bc43, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -106,9 +105,6 @@ AnimatorStateMachine:
     m_State: {fileID: -6278971768855126643}
     m_Position: {x: 430, y: 420, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -2470022457818692145}
-    m_Position: {x: 640, y: 420, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: 1811511149093211461}
     m_Position: {x: 200, y: 220, z: 0}
   m_ChildStateMachines: []
@@ -121,33 +117,6 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 1811511149093211461}
---- !u!1102 &-2470022457818692145
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Cloud Rig|Rush
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: -4129358915099487327, guid: b03263af09cff4540b8f9283bda272a5,
-    type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
