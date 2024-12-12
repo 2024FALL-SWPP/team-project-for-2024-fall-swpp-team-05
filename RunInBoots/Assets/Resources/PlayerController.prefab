@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   g_scale: 1
-  deceleration: 5
+  deceleration: 10
   maxSpeedX: 10
   maxSpeedY: 10
   jumpAllowed: 0
