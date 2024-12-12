@@ -250,7 +250,7 @@ public class LevelLoader : MonoBehaviour
         colliderParent.transform.SetParent(this.transform);
 
         // Add a BoxCollider for each merged rectangle
-        float edgeWidth = 0.2f; // Very thin ramping collider width for edge
+        float edgeWidth = 0.02f; // Very thin ramping collider width for edge
         foreach (var (start, end) in mergedRectangles)
         {
             GameObject colliderObject = new GameObject($"Collider_{start.x}_{start.y}");
@@ -274,7 +274,7 @@ public class LevelLoader : MonoBehaviour
             edgeColliderObject.layer = LayerMask.NameToLayer("Ground");
             BoxCollider boxCollider = edgeColliderObject.AddComponent<BoxCollider>();
             // Calculate the center and size of the collider
-            float height = end.y - start.y + 0.9f;
+            float height = end.y - start.y + 0.98f;
             float depth = 1f;
             float centerX = start.x + (side == "Left" ? -0.5f + edgeWidth / 2f : 0.5f - edgeWidth / 2f);
             float centerY = start.y + height / 2f - 0.5f;
