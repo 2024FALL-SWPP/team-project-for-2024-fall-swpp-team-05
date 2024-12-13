@@ -92,6 +92,7 @@ public class ActionSystem : MonoBehaviour
         currentCouroutine = StartCoroutine(ChangeColliderSize(targetSize, currentAction.TransitionDuration));
     }
 
+    WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
     IEnumerator ChangeColliderSize(Vector3 newSize, float time)
     {
         Vector3 startSize = coll.size;
@@ -101,12 +102,13 @@ public class ActionSystem : MonoBehaviour
         {
             coll.size = Vector3.Lerp(startSize, newSize, elapsedTime / time);
             coll.center = new Vector3(0, coll.size.y / 2, 0);
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            elapsedTime += Time.fixedDeltaTime;
+            yield return waitForFixedUpdate;
         }
 
         // Ensure the final size is set exactly
         coll.size = newSize;
+        coll.enabled = newSize.x > 0 && newSize.y > 0;
         currentCouroutine = null;
     }
     #endregion
