@@ -18,7 +18,7 @@ MonoBehaviour:
     ColliderX: 0.5
     ColliderY: 2.2
     TransitionDuration: 0.1
-    GravityScale: 0
+    GravityScale: 2
     MaxVelocityX: 8
     MaxVelocityY: 6
     NextAction: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
     ColliderX: 0.5
     ColliderY: 2.2
     TransitionDuration: 0.1
-    GravityScale: 0
+    GravityScale: 2
     MaxVelocityX: 8
     MaxVelocityY: 6
     NextAction: 0
@@ -38,7 +38,7 @@ MonoBehaviour:
     ColliderX: 1.6
     ColliderY: 0.8
     TransitionDuration: 0.1
-    GravityScale: 0
+    GravityScale: 2
     MaxVelocityX: 8
     MaxVelocityY: 6
     NextAction: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
     ColliderX: 0.5
     ColliderY: 2.2
     TransitionDuration: 0.1
-    GravityScale: 0
+    GravityScale: 2
     MaxVelocityX: 8
     MaxVelocityY: 6
     NextAction: 101
@@ -78,7 +78,7 @@ MonoBehaviour:
     ColliderX: 0.5
     ColliderY: 2.2
     TransitionDuration: 0.1
-    GravityScale: 0
+    GravityScale: 2
     MaxVelocityX: 12
     MaxVelocityY: 6
     NextAction: 0
@@ -88,7 +88,7 @@ MonoBehaviour:
     ColliderX: 0.5
     ColliderY: 2.2
     TransitionDuration: 0.1
-    GravityScale: 0
+    GravityScale: 2
     MaxVelocityX: 8
     MaxVelocityY: 6
     NextAction: 0
@@ -108,7 +108,7 @@ MonoBehaviour:
     ColliderX: 1.6
     ColliderY: 0.8
     TransitionDuration: 0.1
-    GravityScale: 0
+    GravityScale: 2
     MaxVelocityX: 8
     MaxVelocityY: 6
     NextAction: 0
@@ -208,7 +208,7 @@ MonoBehaviour:
     ColliderX: 0.5
     ColliderY: 2.2
     TransitionDuration: 0.1
-    GravityScale: 0
+    GravityScale: 2
     MaxVelocityX: 8
     MaxVelocityY: 6
     NextAction: 0
