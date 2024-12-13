@@ -321,7 +321,7 @@ public class ActionSystem : MonoBehaviour
     void SpawnObject(string resourcePath)
     {
         GameObject loadedObject = Resources.Load<GameObject>(resourcePath);
-        AudioManager.Instance.PlaySoundEffect(1); // meow!!!
+        // AudioManager.Instance.PlaySoundEffect(1); // meow!!!
         if (loadedObject != null)
         {
             var animTransform = animator.transform;
