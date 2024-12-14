@@ -354,7 +354,7 @@ MonoBehaviour:
     NextAction: 0
     FrameUpdates: '[{Walkable,1,StalkX,-3}]'
   - Key: 701
-    Clip: oni_disguised
+    Clip: enemy_angry
     ColliderX: 0
     ColliderY: 0
     TransitionDuration: 0
@@ -364,7 +364,7 @@ MonoBehaviour:
     NextAction: 0
     FrameUpdates: '[{PlayerInSight,1,SetAction,702}]'
   - Key: 702
-    Clip: oni_transform
+    Clip: enemy_appear
     ColliderX: 0
     ColliderY: 0
     TransitionDuration: 0
@@ -374,7 +374,7 @@ MonoBehaviour:
     NextAction: 703
     FrameUpdates: '[{Frame,-1,MoveInputX,0}]'
   - Key: 703
-    Clip: oni_follow
+    Clip: enemy_rush
     ColliderX: 2
     ColliderY: 3
     TransitionDuration: 0.5
@@ -384,7 +384,7 @@ MonoBehaviour:
     NextAction: 0
     FrameUpdates: '[{Frame,1,StalkX,12},{Frame,1,StalkY,12},{Frame,90,SetAction,704},{None,1,StalkX,0.01}]'
   - Key: 704
-    Clip: oni_idle
+    Clip: enemy_hold
     ColliderX: 2
     ColliderY: 3
     TransitionDuration: 0

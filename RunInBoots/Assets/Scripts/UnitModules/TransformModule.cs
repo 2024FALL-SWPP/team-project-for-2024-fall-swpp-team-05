@@ -9,6 +9,7 @@ public class TransformModule : MonoBehaviour
     public float maxSpeedX = 10.0f;
     public float maxSpeedY = 10.0f;
     public bool jumpAllowed = false;
+    [SerializeField] private bool IsNoTurn = false;
 
     public float speedXCoef = 0.5f;
     public float speedYCoef = 0.5f;
@@ -101,6 +102,8 @@ public class TransformModule : MonoBehaviour
 
     private void UpdateRotation() 
     {
+        if (IsNoTurn)
+            return;
         // update rotation
         if (accelSumX > 0)
         {

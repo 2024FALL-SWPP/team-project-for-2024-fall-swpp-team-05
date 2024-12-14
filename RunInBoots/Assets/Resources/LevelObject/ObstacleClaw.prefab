@@ -885,7 +885,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actions: {fileID: 11400000, guid: 4d02f5c2264e91947b3d186e35a17e0e, type: 2}
   initAction: 501
-  animator: {fileID: 0}
+  animator: {fileID: 1923249343152493210}
   stretchModule: {fileID: 0}
   contactDistance: 1
   currentAction:
