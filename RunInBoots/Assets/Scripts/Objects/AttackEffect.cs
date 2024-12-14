@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class AttackEffect : MonoBehaviour
 {
     public UnityEvent OnActive;
+    public float LifeTime = 0.5f;
     private float _time = 0.0f;
     // Start is called before the first frame update
     void OnEnable()
@@ -22,7 +23,7 @@ public class AttackEffect : MonoBehaviour
     void Update()
     {
         // set active false after 0.5f
-        if(_time > 0.5f)
+        if(_time > LifeTime)
         {
             gameObject.SetActive(false);
             return;
