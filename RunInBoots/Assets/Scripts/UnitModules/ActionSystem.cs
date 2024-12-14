@@ -320,7 +320,7 @@ public class ActionSystem : MonoBehaviour
         return 0;
     }
 
-    void SpawnObject(string resourcePath)
+    void SpawnObject(string resourcePath, Quaternion rotationOffset = default(Quaternion))
     {
         GameObject loadedObject = Resources.Load<GameObject>(resourcePath);
         // AudioManager.Instance.PlaySoundEffect(1); // meow!!!
@@ -329,7 +329,7 @@ public class ActionSystem : MonoBehaviour
             var animTransform = animator.transform;
             var instance = PoolManager.Instance.Pool(loadedObject, transform.position, Quaternion.identity);
             instance.transform.SetParent(animTransform);
-            instance.transform.localRotation = Quaternion.identity;
+            instance.transform.localRotation *= rotationOffset;
             instance.transform.localPosition += loadedObject.transform.position;
         }
         else
@@ -366,7 +366,7 @@ public class ActionSystem : MonoBehaviour
                 break;
             case eActionFunction.Spawn:
                 string obj = "ActionSpawn/" + ((int)val).ToString();
-                SpawnObject(obj);
+                SpawnObject(obj, animator.transform.rotation);
                 break;
             case eActionFunction.StalkX:
                 transformModule.Accelerate(val * GetPlayerDirectionX(), 0);
