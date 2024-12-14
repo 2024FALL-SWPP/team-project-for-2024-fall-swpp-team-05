@@ -4395,13 +4395,6 @@
       }
     },
     {
-      "objectType": "ObstacleBouncyBall",
-      "gridPosition": {
-        "x": 71,
-        "y": 24
-      }
-    },
-    {
       "objectType": "BuildingCube_5",
       "gridPosition": {
         "x": 60,

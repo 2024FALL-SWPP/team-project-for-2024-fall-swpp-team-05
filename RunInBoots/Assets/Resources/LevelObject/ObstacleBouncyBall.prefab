@@ -1,5 +1,51 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &69438977740060934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7514114238243857668}
+  - component: {fileID: 8252059448785961814}
+  m_Layer: 4
+  m_Name: Sphere
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7514114238243857668
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69438977740060934}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9001020279724221825}
+  m_Father: {fileID: 507263715420380433}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &8252059448785961814
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69438977740060934}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &507263715420380437
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,7 +59,6 @@ GameObject:
   - component: {fileID: 1434683752539693688}
   - component: {fileID: 6653706109187249953}
   - component: {fileID: 1275584232777106484}
-  - component: {fileID: 1275584232777106485}
   - component: {fileID: 570385434}
   - component: {fileID: 6525142879479155982}
   m_Layer: 4
@@ -35,7 +80,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9001020279724221825}
+  - {fileID: 7514114238243857668}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -126,19 +171,6 @@ MonoBehaviour:
   speedYCoef: 0.5
   speedX: 0
   speedY: 0
---- !u!135 &1275584232777106485
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 507263715420380437}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 2
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &570385434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,7 +203,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 507263715420380433}
+    m_TransformParent: {fileID: 7514114238243857668}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 7edab6dd501de47f0a76e017be43b495,
         type: 3}
@@ -181,22 +213,22 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7edab6dd501de47f0a76e017be43b495,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 400
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7edab6dd501de47f0a76e017be43b495,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 400
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7edab6dd501de47f0a76e017be43b495,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 400
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7edab6dd501de47f0a76e017be43b495,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7edab6dd501de47f0a76e017be43b495,
         type: 3}
@@ -221,7 +253,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7edab6dd501de47f0a76e017be43b495,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7edab6dd501de47f0a76e017be43b495,
         type: 3}
@@ -246,7 +278,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 7edab6dd501de47f0a76e017be43b495,
         type: 3}
       propertyPath: m_Name
-      value: Obstacle_RubberBall
+      value: Sphere
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7edab6dd501de47f0a76e017be43b495,
         type: 3}
