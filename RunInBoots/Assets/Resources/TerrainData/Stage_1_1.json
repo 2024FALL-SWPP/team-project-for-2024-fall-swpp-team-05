@@ -1480,15 +1480,15 @@
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 55,
-        "y": 5
+        "x": 88,
+        "y": 8
       }
     },
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 61,
-        "y": 9
+        "x": 83,
+        "y": 7
       }
     },
     {
@@ -1508,50 +1508,463 @@
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 62,
-        "y": 8
+        "x": 80,
+        "y": 7
       }
     },
     {
       "objectType": "Cube_Guide",
+      "gridPosition": {
+        "x": 79,
+        "y": 7
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 108,
+        "y": 18
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 107,
+        "y": 18
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 107,
+        "y": 17
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 107,
+        "y": 19
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 108,
+        "y": 19
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 109,
+        "y": 19
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 109,
+        "y": 18
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 110,
+        "y": 18
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 62,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
       "gridPosition": {
         "x": 63,
-        "y": 7
+        "y": 2
       }
     },
     {
-      "objectType": "Cube_Guide",
+      "objectType": "Cube_0",
       "gridPosition": {
-        "x": 89,
-        "y": 9
+        "x": 64,
+        "y": 2
       }
     },
     {
-      "objectType": "Cube_Guide",
+      "objectType": "Cube_0",
       "gridPosition": {
-        "x": 90,
-        "y": 8
+        "x": 65,
+        "y": 1
       }
     },
     {
-      "objectType": "Cube_Guide",
+      "objectType": "Cube_0",
       "gridPosition": {
-        "x": 91,
-        "y": 7
+        "x": 64,
+        "y": 1
       }
     },
     {
-      "objectType": "Cube_Guide",
+      "objectType": "Cube_0",
       "gridPosition": {
-        "x": 90,
-        "y": 7
+        "x": 63,
+        "y": 1
       }
     },
     {
-      "objectType": "Cube_Guide",
+      "objectType": "Cube_0",
       "gridPosition": {
-        "x": 89,
-        "y": 7
+        "x": 62,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 110,
+        "y": 17
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 110,
+        "y": 19
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 62,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 63,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 64,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 86,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 86,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 86,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 86,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 85,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 85,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 85,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 85,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 84,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 84,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 84,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 84,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 83,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 83,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 83,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 83,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 82,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 82,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 82,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 82,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 81,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 81,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 81,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 81,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 80,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 80,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 80,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 80,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 79,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 79,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 79,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 79,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 78,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 78,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 78,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 78,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 77,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 77,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 77,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 77,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 76,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 76,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 76,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 76,
+        "y": 0
       }
     },
     {
@@ -1564,442 +1977,29 @@
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 88,
-        "y": 7
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 85,
-        "y": 5
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 84,
-        "y": 5
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 83,
-        "y": 5
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 82,
-        "y": 5
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 81,
-        "y": 5
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 82,
+        "x": 76,
         "y": 6
       }
     },
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 83,
-        "y": 7
+        "x": 74,
+        "y": 6
       }
     },
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 84,
-        "y": 8
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 85,
-        "y": 9
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 84,
-        "y": 9
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 83,
-        "y": 9
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 82,
-        "y": 9
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 81,
-        "y": 9
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 86,
-        "y": 3
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 86,
-        "y": 2
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 86,
-        "y": 1
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 86,
-        "y": 0
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 85,
-        "y": 3
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 85,
-        "y": 2
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 85,
-        "y": 1
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 85,
-        "y": 0
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 84,
-        "y": 3
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 84,
-        "y": 2
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 84,
-        "y": 1
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 84,
-        "y": 0
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 83,
-        "y": 3
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 83,
-        "y": 2
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 83,
-        "y": 1
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 83,
-        "y": 0
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 82,
-        "y": 3
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 82,
-        "y": 2
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 82,
-        "y": 1
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 82,
-        "y": 0
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 81,
-        "y": 3
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 81,
-        "y": 2
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 81,
-        "y": 1
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 81,
-        "y": 0
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 80,
-        "y": 3
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 80,
-        "y": 2
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 80,
-        "y": 1
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 80,
-        "y": 0
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 79,
-        "y": 3
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 79,
-        "y": 2
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 79,
-        "y": 1
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 79,
-        "y": 0
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 78,
-        "y": 3
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 78,
-        "y": 2
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 78,
-        "y": 1
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 78,
-        "y": 0
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 77,
-        "y": 3
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 77,
-        "y": 2
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 77,
-        "y": 1
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 77,
-        "y": 0
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 76,
-        "y": 3
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 76,
-        "y": 2
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 76,
-        "y": 1
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 76,
-        "y": 0
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 55,
-        "y": 9
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 65,
-        "y": 9
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 66,
-        "y": 8
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 67,
-        "y": 7
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 65,
+        "x": 75,
         "y": 5
+      }
+    },
+    {
+      "objectType": "Cube_Guide",
+      "gridPosition": {
+        "x": 77,
+        "y": 7
       }
     },
     {
@@ -2584,10 +2584,10 @@
       }
     },
     {
-      "objectType": "Cube_Guide",
+      "objectType": "Cube_GuideInWall",
       "gridPosition": {
-        "x": 48,
-        "y": 16
+        "x": 46,
+        "y": 14
       }
     },
     {
@@ -2647,10 +2647,10 @@
       }
     },
     {
-      "objectType": "Cube_Guide",
+      "objectType": "Cube_GuideInWall",
       "gridPosition": {
         "x": 47,
-        "y": 15
+        "y": 13
       }
     },
     {
@@ -2976,10 +2976,10 @@
       }
     },
     {
-      "objectType": "Cube_Guide",
+      "objectType": "Cube_GuideInWall",
       "gridPosition": {
-        "x": 47,
-        "y": 13
+        "x": 45,
+        "y": 15
       }
     },
     {
@@ -3109,10 +3109,10 @@
       }
     },
     {
-      "objectType": "Cube_Guide",
+      "objectType": "Cube_GuideInWall",
       "gridPosition": {
-        "x": 48,
-        "y": 12
+        "x": 45,
+        "y": 13
       }
     },
     {
@@ -3137,10 +3137,10 @@
       }
     },
     {
-      "objectType": "Cube_Guide",
+      "objectType": "Cube_GuideInWall",
       "gridPosition": {
-        "x": 46,
-        "y": 14
+        "x": 47,
+        "y": 15
       }
     },
     {
@@ -3928,10 +3928,10 @@
       }
     },
     {
-      "objectType": "Cube_Guide",
+      "objectType": "Cube_GuideInWall",
       "gridPosition": {
-        "x": 45,
-        "y": 13
+        "x": 44,
+        "y": 12
       }
     },
     {
@@ -3942,10 +3942,10 @@
       }
     },
     {
-      "objectType": "Cube_Guide",
+      "objectType": "Cube_GuideInWall",
       "gridPosition": {
-        "x": 45,
-        "y": 15
+        "x": 48,
+        "y": 12
       }
     },
     {
@@ -5230,9 +5230,9 @@
       }
     },
     {
-      "objectType": "Cube_Guide",
+      "objectType": "Cube_GuideInWall",
       "gridPosition": {
-        "x": 44,
+        "x": 48,
         "y": 16
       }
     },
@@ -5440,10 +5440,10 @@
       }
     },
     {
-      "objectType": "Cube_Guide",
+      "objectType": "Cube_GuideInWall",
       "gridPosition": {
         "x": 44,
-        "y": 12
+        "y": 16
       }
     },
     {
@@ -5489,17 +5489,17 @@
       }
     },
     {
-      "objectType": "Cube_Guide",
+      "objectType": "Cube_0",
       "gridPosition": {
-        "x": 90,
-        "y": 6
+        "x": 108,
+        "y": 17
       }
     },
     {
-      "objectType": "Cube_Guide",
+      "objectType": "Cube_0",
       "gridPosition": {
-        "x": 89,
-        "y": 5
+        "x": 109,
+        "y": 17
       }
     },
     {
@@ -5729,70 +5729,70 @@
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 66,
-        "y": 6
+        "x": 73,
+        "y": 7
       }
     },
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 68,
-        "y": 8
+        "x": 75,
+        "y": 7
       }
     },
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 69,
+        "x": 75,
         "y": 9
       }
     },
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 69,
-        "y": 5
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 68,
-        "y": 6
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 55,
+        "x": 75,
         "y": 8
       }
     },
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 55,
-        "y": 7
-      }
-    },
-    {
-      "objectType": "Cube_Guide",
-      "gridPosition": {
-        "x": 55,
+        "x": 75,
         "y": 6
       }
     },
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 53,
-        "y": 7
+        "x": 88,
+        "y": 6
       }
     },
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 54,
+        "x": 89,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "Cube_Guide",
+      "gridPosition": {
+        "x": 89,
+        "y": 9
+      }
+    },
+    {
+      "objectType": "Cube_Guide",
+      "gridPosition": {
+        "x": 85,
+        "y": 5
+      }
+    },
+    {
+      "objectType": "Cube_Guide",
+      "gridPosition": {
+        "x": 86,
         "y": 6
       }
     },
@@ -5960,7 +5960,7 @@
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 62,
+        "x": 81,
         "y": 7
       }
     },
@@ -6016,8 +6016,8 @@
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 61,
-        "y": 5
+        "x": 81,
+        "y": 9
       }
     },
     {
@@ -6100,8 +6100,8 @@
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 62,
-        "y": 6
+        "x": 82,
+        "y": 7
       }
     },
     {
@@ -6184,8 +6184,8 @@
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 61,
-        "y": 7
+        "x": 82,
+        "y": 8
       }
     },
     {
@@ -6268,8 +6268,8 @@
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 56,
-        "y": 6
+        "x": 86,
+        "y": 8
       }
     },
     {
@@ -6352,8 +6352,8 @@
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 57,
-        "y": 7
+        "x": 85,
+        "y": 9
       }
     },
     {
@@ -6436,8 +6436,8 @@
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 60,
-        "y": 7
+        "x": 82,
+        "y": 6
       }
     },
     {
@@ -6520,8 +6520,8 @@
     {
       "objectType": "Cube_Guide",
       "gridPosition": {
-        "x": 59,
-        "y": 7
+        "x": 81,
+        "y": 5
       }
     },
     {
@@ -10754,15 +10754,6 @@
       "gridPosition": {
         "x": 129,
         "y": 28
-      }
-    },
-    {
-      "$type": "CatnipData, Assembly-CSharp",
-      "catnipID": 1,
-      "objectType": "ACatnip",
-      "gridPosition": {
-        "x": 123,
-        "y": 25
       }
     },
     {
@@ -15426,6 +15417,785 @@
       "gridPosition": {
         "x": 129,
         "y": 39
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 33,
+        "y": 23
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 33,
+        "y": 24
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 33,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 33,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 33,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 33,
+        "y": 28
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 33,
+        "y": 29
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 33,
+        "y": 30
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 33,
+        "y": 31
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 33,
+        "y": 32
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 33,
+        "y": 33
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 33,
+        "y": 34
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 34,
+        "y": 23
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 34,
+        "y": 24
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 34,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 34,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 34,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 34,
+        "y": 28
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 34,
+        "y": 29
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 34,
+        "y": 30
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 34,
+        "y": 31
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 34,
+        "y": 32
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 34,
+        "y": 33
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 34,
+        "y": 34
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 35,
+        "y": 23
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 35,
+        "y": 24
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 35,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 35,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 35,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 35,
+        "y": 28
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 35,
+        "y": 29
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 35,
+        "y": 30
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 35,
+        "y": 31
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 35,
+        "y": 32
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 35,
+        "y": 33
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 35,
+        "y": 34
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 36,
+        "y": 23
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 36,
+        "y": 24
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 36,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 36,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 36,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 36,
+        "y": 28
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 36,
+        "y": 29
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 36,
+        "y": 30
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 36,
+        "y": 31
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 36,
+        "y": 32
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 36,
+        "y": 33
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 36,
+        "y": 34
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 37,
+        "y": 23
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 37,
+        "y": 24
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 37,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 37,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 37,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 37,
+        "y": 28
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 37,
+        "y": 29
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 37,
+        "y": 30
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 37,
+        "y": 31
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 37,
+        "y": 32
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 37,
+        "y": 33
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 37,
+        "y": 34
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 38,
+        "y": 23
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 38,
+        "y": 24
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 38,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 38,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 38,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 38,
+        "y": 28
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 38,
+        "y": 29
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 38,
+        "y": 30
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 38,
+        "y": 31
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 38,
+        "y": 32
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 38,
+        "y": 33
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 38,
+        "y": 34
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 62,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 63,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 64,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 65,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 66,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 67,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 68,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 69,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 70,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 71,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 72,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 73,
+        "y": 0
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 65,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 65,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 66,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 66,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 66,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 67,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 67,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 67,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 68,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 68,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 68,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 69,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 69,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 69,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 70,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 70,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 70,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 71,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 71,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 71,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 72,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 72,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 72,
+        "y": 3
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 73,
+        "y": 1
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 73,
+        "y": 2
+      }
+    },
+    {
+      "objectType": "Cube_0",
+      "gridPosition": {
+        "x": 73,
+        "y": 3
+      }
+    },
+    {
+      "$type": "CatnipData, Assembly-CSharp",
+      "catnipID": 1,
+      "objectType": "ACatnip",
+      "gridPosition": {
+        "x": 123,
+        "y": 25
       }
     }
   ]

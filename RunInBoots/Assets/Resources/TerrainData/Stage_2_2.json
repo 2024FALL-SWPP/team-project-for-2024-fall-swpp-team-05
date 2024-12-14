@@ -8557,77 +8557,7 @@
       "objectType": "ObstacleThorn_R",
       "gridPosition": {
         "x": 80,
-        "y": 28
-      }
-    },
-    {
-      "objectType": "ObstacleThorn_R",
-      "gridPosition": {
-        "x": 80,
-        "y": 27
-      }
-    },
-    {
-      "objectType": "ObstacleThorn_R",
-      "gridPosition": {
-        "x": 80,
-        "y": 26
-      }
-    },
-    {
-      "objectType": "ObstacleThorn_R",
-      "gridPosition": {
-        "x": 80,
-        "y": 25
-      }
-    },
-    {
-      "objectType": "ObstacleThorn_R",
-      "gridPosition": {
-        "x": 80,
-        "y": 24
-      }
-    },
-    {
-      "objectType": "ObstacleThorn_R",
-      "gridPosition": {
-        "x": 80,
-        "y": 23
-      }
-    },
-    {
-      "objectType": "ObstacleThorn_R",
-      "gridPosition": {
-        "x": 80,
-        "y": 22
-      }
-    },
-    {
-      "objectType": "ObstacleThorn_R",
-      "gridPosition": {
-        "x": 80,
-        "y": 21
-      }
-    },
-    {
-      "objectType": "ObstacleThorn_R",
-      "gridPosition": {
-        "x": 80,
-        "y": 20
-      }
-    },
-    {
-      "objectType": "ObstacleThorn_R",
-      "gridPosition": {
-        "x": 80,
-        "y": 19
-      }
-    },
-    {
-      "objectType": "ObstacleThorn_R",
-      "gridPosition": {
-        "x": 80,
-        "y": 18
+        "y": 16
       }
     },
     {
@@ -8641,7 +8571,77 @@
       "objectType": "ObstacleThorn_R",
       "gridPosition": {
         "x": 80,
-        "y": 16
+        "y": 18
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_R",
+      "gridPosition": {
+        "x": 80,
+        "y": 19
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_R",
+      "gridPosition": {
+        "x": 80,
+        "y": 20
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_R",
+      "gridPosition": {
+        "x": 80,
+        "y": 21
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_R",
+      "gridPosition": {
+        "x": 80,
+        "y": 22
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_R",
+      "gridPosition": {
+        "x": 80,
+        "y": 23
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_R",
+      "gridPosition": {
+        "x": 80,
+        "y": 24
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_R",
+      "gridPosition": {
+        "x": 80,
+        "y": 25
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_R",
+      "gridPosition": {
+        "x": 80,
+        "y": 26
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_R",
+      "gridPosition": {
+        "x": 80,
+        "y": 27
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_R",
+      "gridPosition": {
+        "x": 80,
+        "y": 28
       }
     },
     {
@@ -10304,31 +10304,31 @@
       }
     },
     {
-      "objectType": "ObstacleOffThorn_R",
+      "objectType": "ObstacleOnThorn_R",
       "gridPosition": {
         "x": 42,
-        "y": 34
+        "y": 37
       }
     },
     {
-      "objectType": "ObstacleOffThorn_R",
-      "gridPosition": {
-        "x": 42,
-        "y": 35
-      }
-    },
-    {
-      "objectType": "ObstacleOffThorn_R",
+      "objectType": "ObstacleOnThorn_R",
       "gridPosition": {
         "x": 42,
         "y": 36
       }
     },
     {
-      "objectType": "ObstacleOffThorn_R",
+      "objectType": "ObstacleOnThorn_R",
       "gridPosition": {
         "x": 42,
-        "y": 37
+        "y": 35
+      }
+    },
+    {
+      "objectType": "ObstacleOnThorn_R",
+      "gridPosition": {
+        "x": 42,
+        "y": 34
       }
     },
     {
@@ -10388,121 +10388,107 @@
       }
     },
     {
-      "objectType": "ObstacleThorn",
-      "gridPosition": {
-        "x": 64,
-        "y": 33
-      }
-    },
-    {
-      "objectType": "ObstacleThorn",
-      "gridPosition": {
-        "x": 65,
-        "y": 33
-      }
-    },
-    {
-      "objectType": "ObstacleThorn",
-      "gridPosition": {
-        "x": 66,
-        "y": 33
-      }
-    },
-    {
-      "objectType": "ObstacleThorn",
+      "objectType": "ObstacleThorn_D",
       "gridPosition": {
         "x": 67,
         "y": 33
       }
     },
     {
-      "objectType": "ObstacleThorn",
+      "objectType": "ObstacleThorn_D",
       "gridPosition": {
-        "x": 52,
+        "x": 66,
         "y": 33
       }
     },
     {
-      "objectType": "ObstacleThorn",
+      "objectType": "ObstacleThorn_D",
+      "gridPosition": {
+        "x": 65,
+        "y": 33
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_D",
+      "gridPosition": {
+        "x": 64,
+        "y": 33
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_D",
       "gridPosition": {
         "x": 53,
         "y": 33
       }
     },
     {
-      "objectType": "ObstacleThorn",
+      "objectType": "ObstacleThorn_D",
       "gridPosition": {
-        "x": 54,
+        "x": 52,
         "y": 33
       }
     },
     {
-      "objectType": "ObstacleThorn",
+      "objectType": "ObstacleThorn_D",
       "gridPosition": {
-        "x": 55,
-        "y": 33
-      }
-    },
-    {
-      "objectType": "ObstacleThorn",
-      "gridPosition": {
-        "x": 61,
+        "x": 69,
         "y": 22
       }
     },
     {
-      "objectType": "ObstacleThorn",
-      "gridPosition": {
-        "x": 62,
-        "y": 22
-      }
-    },
-    {
-      "objectType": "ObstacleThorn",
-      "gridPosition": {
-        "x": 63,
-        "y": 22
-      }
-    },
-    {
-      "objectType": "ObstacleThorn",
-      "gridPosition": {
-        "x": 64,
-        "y": 22
-      }
-    },
-    {
-      "objectType": "ObstacleThorn",
-      "gridPosition": {
-        "x": 65,
-        "y": 22
-      }
-    },
-    {
-      "objectType": "ObstacleThorn",
-      "gridPosition": {
-        "x": 66,
-        "y": 22
-      }
-    },
-    {
-      "objectType": "ObstacleThorn",
-      "gridPosition": {
-        "x": 67,
-        "y": 22
-      }
-    },
-    {
-      "objectType": "ObstacleThorn",
+      "objectType": "ObstacleThorn_D",
       "gridPosition": {
         "x": 68,
         "y": 22
       }
     },
     {
-      "objectType": "ObstacleThorn",
+      "objectType": "ObstacleThorn_D",
       "gridPosition": {
-        "x": 69,
+        "x": 67,
+        "y": 22
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_D",
+      "gridPosition": {
+        "x": 66,
+        "y": 22
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_D",
+      "gridPosition": {
+        "x": 65,
+        "y": 22
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_D",
+      "gridPosition": {
+        "x": 64,
+        "y": 22
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_D",
+      "gridPosition": {
+        "x": 63,
+        "y": 22
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_D",
+      "gridPosition": {
+        "x": 62,
+        "y": 22
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_D",
+      "gridPosition": {
+        "x": 61,
         "y": 22
       }
     },
@@ -10512,6 +10498,20 @@
       "gridPosition": {
         "x": 93,
         "y": 39
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_D",
+      "gridPosition": {
+        "x": 51,
+        "y": 33
+      }
+    },
+    {
+      "objectType": "ObstacleThorn_D",
+      "gridPosition": {
+        "x": 50,
+        "y": 33
       }
     }
   ]

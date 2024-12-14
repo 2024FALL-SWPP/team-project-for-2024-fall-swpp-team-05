@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1275584232777106485}
   - component: {fileID: 570385434}
   - component: {fileID: 6525142879479155982}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: ObstacleBouncyBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,6 +121,7 @@ MonoBehaviour:
   maxSpeedX: 10
   maxSpeedY: 10
   jumpAllowed: 0
+  IsNoTurn: 0
   speedXCoef: 0.5
   speedYCoef: 0.5
   speedX: 0
@@ -246,6 +247,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Obstacle_RubberBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7edab6dd501de47f0a76e017be43b495,
+        type: 3}
+      propertyPath: m_Layer
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7edab6dd501de47f0a76e017be43b495, type: 3}

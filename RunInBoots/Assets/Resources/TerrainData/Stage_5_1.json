@@ -3011,17 +3011,10 @@
       }
     },
     {
-      "objectType": "MountainMoveHorizontal_5X1",
-      "gridPosition": {
-        "x": 5,
-        "y": 49
-      }
-    },
-    {
       "objectType": "MountainMoveHorizontal_5X1_R",
       "gridPosition": {
-        "x": 15,
-        "y": 46
+        "x": 25,
+        "y": 49
       }
     },
     {
@@ -3033,13 +3026,6 @@
     },
     {
       "objectType": "MountainMoveHorizontal_5X1_R",
-      "gridPosition": {
-        "x": 25,
-        "y": 46
-      }
-    },
-    {
-      "objectType": "MountainMoveHorizontal_5X1",
       "gridPosition": {
         "x": 15,
         "y": 49
@@ -11825,24 +11811,10 @@
       }
     },
     {
-      "objectType": "IndoorCube_8",
-      "gridPosition": {
-        "x": 31,
-        "y": 151
-      }
-    },
-    {
       "objectType": "IndoorCube_2",
       "gridPosition": {
         "x": 29,
         "y": 149
-      }
-    },
-    {
-      "objectType": "IndoorCube_8",
-      "gridPosition": {
-        "x": 30,
-        "y": 151
       }
     },
     {
@@ -11923,6 +11895,13 @@
       "gridPosition": {
         "x": 4,
         "y": 4
+      }
+    },
+    {
+      "objectType": "ATigerHat",
+      "gridPosition": {
+        "x": 2,
+        "y": 103
       }
     }
   ]

@@ -384,7 +384,7 @@ public class GridManager : MonoBehaviour
             }
 
             Vector3 position = GridToWorld(levelObjectData.gridPosition);
-            GameObject obj = PoolManager.Instance.Pool(prefab, position, Quaternion.identity);
+            GameObject obj = PoolManager.Instance.Pool(prefab, position, prefab.transform.rotation);
             placedObjects.Add(levelObjectData.gridPosition, obj);
 
             // 생성된 오브젝트에 데이터 할당

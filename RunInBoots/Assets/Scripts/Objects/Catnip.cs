@@ -8,7 +8,7 @@ public class Catnip : Interactable
 
     private void Start()
     {
-        gameObject.name = "Catnip_" + catnipID;
+        //gameObject.name = "Catnip_" + catnipID;
         Initialize();
     }
 

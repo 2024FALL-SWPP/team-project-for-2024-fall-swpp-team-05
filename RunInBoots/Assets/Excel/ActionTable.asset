@@ -18,7 +18,7 @@ MonoBehaviour:
     ColliderX: 0.5
     ColliderY: 2.2
     TransitionDuration: 0.1
-    GravityScale: 2
+    GravityScale: 0
     MaxVelocityX: 8
     MaxVelocityY: 6
     NextAction: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
     ColliderX: 0.5
     ColliderY: 2.2
     TransitionDuration: 0.1
-    GravityScale: 2
+    GravityScale: 0
     MaxVelocityX: 8
     MaxVelocityY: 6
     NextAction: 0
@@ -38,7 +38,7 @@ MonoBehaviour:
     ColliderX: 1.6
     ColliderY: 0.8
     TransitionDuration: 0.1
-    GravityScale: 2
+    GravityScale: 0
     MaxVelocityX: 8
     MaxVelocityY: 6
     NextAction: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
     TransitionDuration: 0
     GravityScale: 2
     MaxVelocityX: 12
-    MaxVelocityY: 15
+    MaxVelocityY: 16
     NextAction: 105
     FrameUpdates: '[{InputX,1,MoveInputX,1},{Jump,1,MoveY,6},{Jump,0,SetAction,105}]'
   - Key: 105
@@ -68,7 +68,7 @@ MonoBehaviour:
     ColliderX: 0.5
     ColliderY: 2.2
     TransitionDuration: 0.1
-    GravityScale: 2
+    GravityScale: 0
     MaxVelocityX: 8
     MaxVelocityY: 6
     NextAction: 101
@@ -78,7 +78,7 @@ MonoBehaviour:
     ColliderX: 0.5
     ColliderY: 2.2
     TransitionDuration: 0.1
-    GravityScale: 2
+    GravityScale: 0
     MaxVelocityX: 12
     MaxVelocityY: 6
     NextAction: 0
@@ -88,7 +88,7 @@ MonoBehaviour:
     ColliderX: 0.5
     ColliderY: 2.2
     TransitionDuration: 0.1
-    GravityScale: 2
+    GravityScale: 0
     MaxVelocityX: 8
     MaxVelocityY: 6
     NextAction: 0
@@ -108,7 +108,7 @@ MonoBehaviour:
     ColliderX: 1.6
     ColliderY: 0.8
     TransitionDuration: 0.1
-    GravityScale: 2
+    GravityScale: 0
     MaxVelocityX: 8
     MaxVelocityY: 6
     NextAction: 0
@@ -208,7 +208,7 @@ MonoBehaviour:
     ColliderX: 0.5
     ColliderY: 2.2
     TransitionDuration: 0.1
-    GravityScale: 2
+    GravityScale: 0
     MaxVelocityX: 8
     MaxVelocityY: 6
     NextAction: 0
@@ -245,8 +245,8 @@ MonoBehaviour:
     FrameUpdates: '[{InputX,1,MoveInputX,1},{Frame,2,MoveY,12}]'
   - Key: 201
     Clip: on_off_thorn_active
-    ColliderX: 1
-    ColliderY: 0.8
+    ColliderX: 0
+    ColliderY: 0
     TransitionDuration: 0.1
     GravityScale: 0
     MaxVelocityX: 0
@@ -255,7 +255,7 @@ MonoBehaviour:
     FrameUpdates: '[{Frame,120,SetAction,202}]'
   - Key: 202
     Clip: on_off_thorn_deactive
-    ColliderX: 1
+    ColliderX: 0
     ColliderY: 0
     TransitionDuration: 0.1
     GravityScale: 0
@@ -332,7 +332,7 @@ MonoBehaviour:
     MaxVelocityX: 0
     MaxVelocityY: 0
     NextAction: 0
-    FrameUpdates: '[{Frame,120,SetAction,501}]'
+    FrameUpdates: '[{Frame,30,SetAction,501}]'
   - Key: 601
     Clip: dog_move
     ColliderX: 1.6

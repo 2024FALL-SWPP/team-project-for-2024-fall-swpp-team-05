@@ -258,7 +258,7 @@ public class LevelLoader : MonoBehaviour
             colliderObject.layer = LayerMask.NameToLayer("Ground");
             BoxCollider boxCollider = colliderObject.AddComponent<BoxCollider>();
             // Calculate the center and size of the collider
-            float width = end.x - start.x + 1 -edgeWidth;
+            float width = end.x - start.x + 1;
             float height = end.y - start.y + 1;
             Vector3 center = new Vector3(start.x + width / 2f - 0.5f+edgeWidth/2f, start.y + height / 2f - 0.5f, 0);
             Vector3 size = new Vector3(width, height, 1);
@@ -272,16 +272,19 @@ public class LevelLoader : MonoBehaviour
             GameObject edgeColliderObject = new GameObject($"{side}Edge_{start.x}_{start.y}");
             edgeColliderObject.transform.SetParent(colliderParent.transform);
             edgeColliderObject.layer = LayerMask.NameToLayer("Ground");
-            BoxCollider boxCollider = edgeColliderObject.AddComponent<BoxCollider>();
+            CapsuleCollider capsuleCollider = edgeColliderObject.AddComponent<CapsuleCollider>();
+
             // Calculate the center and size of the collider
-            float height = end.y - start.y + 0.98f;
-            float depth = 1f;
-            float centerX = start.x + (side == "Left" ? -0.5f + edgeWidth / 2f : 0.5f - edgeWidth / 2f);
+            float height = end.y - start.y + 1;
+            float centerX = start.x + (side == "Left" ? -0.5f: 0.5f);
             float centerY = start.y + height / 2f - 0.5f;
             Vector3 center = new Vector3(centerX, centerY, 0);
-            Vector3 size = new Vector3(edgeWidth, height, depth);
-            boxCollider.center = center - edgeColliderObject.transform.position;
-            boxCollider.size = size;
+
+            // CapsuleCollider set
+            capsuleCollider.center = center - edgeColliderObject.transform.position;
+            capsuleCollider.height = height;
+            capsuleCollider.radius = edgeWidth / 2f;
+            capsuleCollider.direction = 1;
         }
     }
 

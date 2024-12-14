@@ -246,8 +246,8 @@ public class ActionSystem : MonoBehaviour
                 else cond_val = 0;
                 break;
             case eActionCondition.JumpValid: 
-                if(playerTransformModule == null) playerTransformModule = GameObject.FindGameObjectWithTag("Player").GetComponent<TransformModule>();
-                if(playerTransformModule.jumpAllowed && Input.GetKeyDown(KeyCode.X)) cond_val = 1;
+                if(playerTransformModule == null) playerTransformModule = GameObject.FindGameObjectWithTag("Player")?.GetComponent<TransformModule>();
+                if(playerTransformModule!=null && playerTransformModule.jumpAllowed && Input.GetKeyDown(KeyCode.X)) cond_val = 1;
                 else cond_val = 0;
                 break;
             case eActionCondition.JumpDown:
