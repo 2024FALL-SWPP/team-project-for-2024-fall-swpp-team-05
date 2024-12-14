@@ -73,6 +73,7 @@ MonoBehaviour:
   maxSpeedX: 10
   maxSpeedY: 10
   jumpAllowed: 0
+  IsNoTurn: 0
   speedXCoef: 1
   speedYCoef: 1
   speedX: 0
@@ -270,6 +271,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cat-BothHats
+      objectReference: {fileID: 0}
+    - target: {fileID: 2232297421615071699, guid: 1c47b6c693def49b286d7bd68991451c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8699652204047898494, guid: 1c47b6c693def49b286d7bd68991451c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c47b6c693def49b286d7bd68991451c, type: 3}

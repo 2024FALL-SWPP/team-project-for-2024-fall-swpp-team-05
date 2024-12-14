@@ -94,10 +94,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   g_scale: 1
-  deceleration: 10
+  deceleration: 100
   maxSpeedX: 10
   maxSpeedY: 10
   jumpAllowed: 0
+  IsNoTurn: 0
   speedXCoef: 0.5
   speedYCoef: 0.5
   speedX: 0
@@ -113,8 +114,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6, y: 0.8, z: 1}
-  m_Center: {x: 0, y: 0.4, z: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!114 &555483730651712244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,17 +166,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: dbb5cef31b7d24b7aa70eabda32e49ec,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dbb5cef31b7d24b7aa70eabda32e49ec,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dbb5cef31b7d24b7aa70eabda32e49ec,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dbb5cef31b7d24b7aa70eabda32e49ec,
         type: 3}

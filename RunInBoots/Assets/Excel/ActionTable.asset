@@ -335,8 +335,8 @@ MonoBehaviour:
     FrameUpdates: '[{Frame,120,SetAction,501}]'
   - Key: 601
     Clip: dog_move
-    ColliderX: 1
-    ColliderY: 1
+    ColliderX: 1.6
+    ColliderY: 1.6
     TransitionDuration: 0
     GravityScale: 2
     MaxVelocityX: 2
@@ -345,8 +345,8 @@ MonoBehaviour:
     FrameUpdates: '[{Walkable,1,MoveLocalX,2},{Walkable,0,MoveLocalX,-2}]'
   - Key: 602
     Clip: dog_runaway
-    ColliderX: 1
-    ColliderY: 1
+    ColliderX: 1.6
+    ColliderY: 1.6
     TransitionDuration: 0
     GravityScale: 2
     MaxVelocityX: 3
