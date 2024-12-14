@@ -7,15 +7,22 @@ using UnityEngine.UI;
 public class SpawnUI : MonoBehaviour
 {
     public TextMeshProUGUI stageText;
-    public TextMeshProUGUI lifeText;
+    public GameObject lifeContainer;
 
     public void UpdateStageText(int stage)
     {
         stageText.text = "Stage: " + stage;
     }
 
-    public void UpdateLifeText(int life)
+    public void UpdateLifeContainer(int lifeCount)
     {
-        lifeText.text = "Life: " + life;
+        Transform heartIconContainer = lifeContainer.transform;
+        GameObject liveHeartIconPrefab = Resources.Load<GameObject>("StageUIObject/SpawnHeartIcon");
+
+        for (int i = 0; i < lifeCount; i++)
+        {
+            GameObject liveHeart = PoolManager.Instance.Pool(liveHeartIconPrefab, Vector3.zero, Quaternion.identity, heartIconContainer);
+            liveHeart.transform.SetParent(heartIconContainer, false);
+        }
     }
 }

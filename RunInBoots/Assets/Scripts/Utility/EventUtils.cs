@@ -13,7 +13,7 @@ public class EventUtils
         text.transform.SetParent(canvas.transform, false);
         text.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         text.UpdateStageText(currentStage);
-        text.UpdateLifeText(lifeCount);
+        text.UpdateLifeContainer(lifeCount);
         Animator spawnAnimator = text.GetComponent<Animator>();
         ProducingEvent spawnEvent = new AnimatorEvent(spawnAnimator);
         spawnEvent.AddStartEvent(() =>
