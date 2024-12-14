@@ -26,6 +26,12 @@ public class GameManager : MonoSingleton<GameManager>
             AllStageClear();
             return;
         }
+        if (stage <= 4) {
+            AudioManager.Instance.PlayAudio(1);
+            
+        } else {
+            AudioManager.Instance.PlayAudio(2);
+        }
         currentState = new StageState(stage);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -71,6 +77,7 @@ public class GameManager : MonoSingleton<GameManager>
     // 모든 스테이지 클리어 된 후 동작 나중에 채워넣기
     private void AllStageClear() 
     {
+        AudioManager.Instance.PlayAudio(3);
         currentState = new GameClearState();
         currentState.Start();
         Debug.Log("Game Clear");
@@ -78,9 +85,10 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void GameOver()
     {
+        AudioManager.Instance.StopAllAudio();
         if (currentState != null)
         {
-            currentState.Exit(ExitState.GameOver);
+            currentState.Exit(eExitState.GameOver);
         }
         SceneLoader.LoadTitleScene();
     }

@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   g_scale: 1
-  deceleration: 5
+  deceleration: 10
   maxSpeedX: 10
   maxSpeedY: 10
   jumpAllowed: 0
@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxStretchLength: 5
-  returnSpeed: 25
+  returnSpeed: 30
   targetBone: {fileID: 2958337069329773065}
   currentStretchAmount: 0
   rb: {fileID: 3752571735001906548}

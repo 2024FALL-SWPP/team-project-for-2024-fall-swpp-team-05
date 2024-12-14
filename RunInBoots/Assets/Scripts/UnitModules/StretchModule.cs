@@ -44,15 +44,18 @@ public class StretchModule : MonoBehaviour
     {
         // 천장 제한에 맞춰야 할 경우
         RaycastHit hit;
-        if (Physics.Raycast(transform.position+Vector3.up*(unitCollider.size.y-0.1f), Vector3.up, out hit, stretchAmount+0.1f))
+        if (Physics.Raycast(transform.position+Vector3.up*(unitCollider.size.y-0.1f), Vector3.up, out hit, stretchAmount+0.1f, LayerMask.GetMask("Ground")))
             currentStretchAmount += hit.distance - 0.1f;
         // 늘리기 길이를 누적하고 최대 길이로 제한
         else
-            currentStretchAmount +=stretchAmount;
+            currentStretchAmount +=stretchAmount * Time.deltaTime * 60f;
 
         // 최대 길이 제한
         currentStretchAmount = Mathf.Clamp(currentStretchAmount, 0, maxStretchLength);
 
+        // if (!isStretching) {
+        //     AudioManager.Instance.PlaySoundEffect(0);
+        // }
         isStretching = true;
         _isStretchApplied = false;
     }
@@ -84,7 +87,7 @@ public class StretchModule : MonoBehaviour
         if (currentStretchAmount > 0 && !isStretching)
         {
             float old = currentStretchAmount;
-            currentStretchAmount = Mathf.Lerp(currentStretchAmount, 0, returnSpeed * Time.deltaTime);
+            currentStretchAmount = Mathf.Lerp(currentStretchAmount, 0, returnSpeed * Time.fixedDeltaTime);
             old = old - currentStretchAmount;
             // 유닛 Y축 위치 조정
             rb.MovePosition(rb.position + Vector3.up * old);

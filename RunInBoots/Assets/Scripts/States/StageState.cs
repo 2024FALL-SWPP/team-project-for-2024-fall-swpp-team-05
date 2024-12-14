@@ -23,33 +23,18 @@ public class StageState : IGameState
     // ��� �ʱ�ȭ ��
     const int InitLifeCount = 9;
     private int _lifeCount = InitLifeCount;
-    private float _gridYLowerBound = -2.0f;
+    private const float GridLowerYBound = -2.0f;
 
     private TextMeshProUGUI _timerText;
-    private float _timeLimit = 300f;
+    private const float TimeLimit = 300f;
     private float _remainingTime;
     private float _accumulativeTime = 0f;
 
     private GameObject _player;
-    private CinemachineVirtualCamera _virtualCamera;
-    private int gridSizeX;
-    private int gridSizeY;
-    Dictionary<(int stage, int index), (int gridSizeX, int gridSizeY)> stageGridSizes =
-        new Dictionary<(int, int), (int, int)>
-        {
-        };
+    private StageCamera _stageCamera;
 
-    public int totalCatnipCount;
-    public int collectedCatnipCount;
-    public List<bool> isCatnipCollected = new List<bool>();
-    private List<GameObject> _catnipIcons = new List<GameObject>();
-    private GameObject catnipIconPrefab;
-    private Transform catnipIconContainer;
-
-    private Transform heartIconContainer;
-    private GameObject liveHeartIconPrefab;
-    private GameObject deadHeartIconPrefab;
-
+    private CatnipModule catnipModule;
+    
     private int enteredPipeID = -1;
 
     public bool respawnPositionIsStartPoint = false;
@@ -66,16 +51,10 @@ public class StageState : IGameState
         currentIndex = 1;
         currentHatType = eHatType.None;
         playerPrefab = Resources.Load<GameObject>("PlayerController");
-        catnipIconPrefab = Resources.Load<GameObject>("StageUIObject/CatnipIcon");
-        liveHeartIconPrefab = Resources.Load<GameObject>("StageUIObject/LiveHeartIcon");
-        deadHeartIconPrefab = Resources.Load<GameObject>("StageUIObject/DeadHeartIcon");
         if (playerPrefab == null)
         {
             Debug.LogError("PlayerController prefab�� ã�� �� �����ϴ�.");
         }
-
-        //load all grid sizes on stage construction
-        LoadGridSize(currentStage);
 
         //���� ���� ��ü �ʱ�ȭ �� ��Ȳ �ε�
         _userData = new UserData();
@@ -89,7 +68,7 @@ public class StageState : IGameState
     public void Start()
     {
         _isStarted = true;
-        _remainingTime = _timeLimit;
+        _remainingTime = TimeLimit;
 
         //���� ���� ��ü �ʱ�ȭ �� ��Ȳ �ε�
         _userData = new UserData();
@@ -99,12 +78,16 @@ public class StageState : IGameState
         _lifeCount = _userData.lives;
         _userData.UpdateRecentStage(currentStage);
 
-        InitializeCatnipInfo();
-        FindIconContainers();
-        PlaceCatnipIcons();
-        PlaceHeartIcons();
+        catnipModule = new CatnipModule(currentStage);
+        
+        StageUIUtils.PlaceHeartIcons(_lifeCount);
         SpawnPlayerAtStartPoint();
-        UpdateStageMapSize();
+
+        //find stage camera
+        FindStageCamera();
+        _stageCamera.UpdateStageMapSize(currentStage, currentIndex);
+
+        FindTimerText();
     }
 
     public void Update()
@@ -113,35 +96,37 @@ public class StageState : IGameState
             return;
 
         _remainingTime -= Time.deltaTime;
-        UpdateTimerUI(_remainingTime);
+        UpdateTimerText();
 
         if (_remainingTime <= 0f)
         {
-            KillPlayer();
+            _accumulativeTime += TimeLimit - _remainingTime;
+            _remainingTime = TimeLimit;
+            LifeOverWithEvent();
             return;
         }
 
         if (_player != null)
         {
             Vector3 playerPosition = _player.transform.position;
-            if (playerPosition.y < _gridYLowerBound)
+            if (playerPosition.y < GridLowerYBound)
             {
                 Debug.Log("Player fell off the map.");
-                KillPlayer();
+                LifeOverWithEvent();
                 return;
             }
         }
     }
 
-    public void Exit(ExitState exitState)
+    public void Exit(eExitState exitState)
     {
         switch (exitState)
         {
-            case ExitState.StageClear:
+            case eExitState.StageClear:
                 StageClear();
                 break;
 
-            case ExitState.GameOver:
+            case eExitState.GameOver:
                 // GameOver ���� �� �͵� ���߿� �߰�
                 // ��� ���� �� ����
                 _lifeCount = InitLifeCount;
@@ -159,73 +144,18 @@ public class StageState : IGameState
         GameManager.Instance.StartNewStage(currentStage + 1);
 
         //�������� ��� ����
-        _accumulativeTime += _timeLimit - _remainingTime;
-        _userData.SaveStageData(currentStage, Mathf.FloorToInt(_accumulativeTime), isCatnipCollected);
-    }
-
-    private void UpdateCameraTargetToPlayer()
-    {
-        if (_player == null || _virtualCamera == null)
-        {
-            _player = GameObject.FindWithTag("Player");
-            _virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
-            if (_player != null && _virtualCamera != null)
-            {
-                _virtualCamera.Follow = _player.transform;
-                _virtualCamera.OnTargetObjectWarped(_player.transform, _player.transform.position - _virtualCamera.transform.position);
-            }
-            else
-            {
-                Debug.LogError("Player �Ǵ� Camera�� ã�� �� ����");
-            }
-        }
-    }
-
-    // load all grid sizes on stage construction
-    private void LoadGridSize(int stage) 
-    {
-        for (int index = 1; ; index++)
-        {
-            string fileName = $"Stage_{stage}_{index}";
-            string path = Path.Combine("TerrainData", fileName);
-            var file = Resources.Load<TextAsset>(path);
-
-            if (file == null)
-                break;
-
-            string json = file.text;
-            TerrainData terrainData = JsonConvert.DeserializeObject<TerrainData>(json);
-
-            stageGridSizes[(stage, index)] = (terrainData.gridSize.x, terrainData.gridSize.y);
-        }
-    }
-    private void UpdateStageMapSize()
-    {
-        if (stageGridSizes.TryGetValue((currentStage, currentIndex), out var gridSize))
-        {
-            gridSizeX = gridSize.gridSizeX;
-            gridSizeY = gridSize.gridSizeY;
-        }
-        _virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
-        var confiner = _virtualCamera.GetComponent<CinemachineConfiner>();
-        if (confiner != null)
-        {
-            var colliderObject = new GameObject("Confiner");
-            colliderObject.transform.position = Vector3.zero;
-            colliderObject.layer= LayerMask.NameToLayer("Invincible");
-
-            // Add a PolygonCollider2D to define the bounding shape
-            var boxCollider = colliderObject.AddComponent<BoxCollider>();
-            boxCollider.size = new Vector3(gridSizeX-27.5f*16/9, gridSizeY-27.5f, 100);
-            boxCollider.center = new Vector3(gridSizeX / 2-0.5f, gridSizeY / 2-0.5f, 0);
-
-            confiner.m_BoundingVolume = boxCollider;
-
-            Debug.Log("Confiner setup complete.");
-        }
+        _accumulativeTime += TimeLimit - _remainingTime;
+        _userData.SaveStageData(currentStage, Mathf.FloorToInt(_accumulativeTime), (List<bool>)GetIsCatnipCollected());
     }
 
     /******************** �÷��̾� ���� ���� �Լ��� ********************/
+
+    private void FindStageCamera() 
+    {
+        if (_stageCamera != null) return;
+        _stageCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>().GetComponent<StageCamera>();
+        _stageCamera.LoadGridSize(currentStage);
+    }
 
     private void LifeOver()
     {
@@ -238,7 +168,7 @@ public class StageState : IGameState
         //game over
         if (_lifeCount <= 0)
         {
-            ClearCatnipUI();
+            catnipModule.ClearCatnipIcons();
             GameManager.Instance.GameOver();
             return;
         }
@@ -249,34 +179,16 @@ public class StageState : IGameState
 
     private void LifeOverWithEvent()
     {
-        Debug.Log("LifeOverWithEvent");
         GameObject player = _player;
         _player = null;
-        ActionSystem actionSystem = player.GetComponent<ActionSystem>();
-        Animator playerAnimator = player.GetComponent<AnimatableUI>().animator;
-        player.GetComponent<AnimatableUI>().PlayAnimation(UIConst.ANIM_PLAYER_DEATH);
-        ProducingEvent gameOverEvent = new AnimatorEvent(playerAnimator);
-
-        gameOverEvent.AddStartEvent(() =>
-        {
-            Debug.Log("LifeOver Event Start");
-            if(actionSystem != null) actionSystem.ResumeSelf(false);
-        });
+        ProducingEvent gameOverEvent = EventUtils.DeathEvent();
         gameOverEvent.AddEndEvent(() =>
         {
-            GameObject canvas = GameObject.FindObjectOfType<Canvas>().gameObject;
-            GameObject blackScreen = Resources.Load<GameObject>("BlackScreenUI");
-            GameObject blackScreenObj = PoolManager.Instance.Pool(blackScreen, Vector3.zero, Quaternion.identity, canvas.transform);
-            blackScreenObj.transform.SetParent(canvas.transform, false);
-            blackScreenObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
-
-            Animator screenAnimator = blackScreenObj.GetComponent<Animator>();
-            blackScreenObj.GetComponent<AnimatableUI>().PlayAnimation(UIConst.ANIM_BLACK_START);
-            ProducingEvent blackScreenEvent = new AnimatorEvent(screenAnimator);
+            ProducingEvent blackScreenEvent = EventUtils.BlackScreenEvent();
             blackScreenEvent.AddEndEvent(() =>
             {
                 Debug.Log("LifeOver Event End");
-                if(player != null) player.SetActive(false);
+                if (player != null) player.SetActive(false);
                 LifeOver();
             });
             GameManager.Instance.AddEvent(blackScreenEvent);
@@ -288,9 +200,8 @@ public class StageState : IGameState
     {
         // �ʱ�ȭ �۾�
         FindTimerText();
-        FindIconContainers();
-        PlaceCatnipIcons();
-        PlaceHeartIcons();
+        catnipModule.PlaceCatnipIcons();
+        StageUIUtils.PlaceHeartIcons(_lifeCount);
 
         if (respawnPositionIsStartPoint)
         {
@@ -300,18 +211,9 @@ public class StageState : IGameState
         {
             SpawnPlayerWithEvent(respawnPosition);
         }
-        UpdateStageMapSize();
+        FindStageCamera();
+        _stageCamera.UpdateStageMapSize(currentStage, currentIndex);
         SceneManager.sceneLoaded -= OnCurrentSceneLoaded;
-    }
-
-    private void KillPlayer()
-    {
-        if (_remainingTime <= 0f)
-        {
-            _accumulativeTime += _timeLimit - _remainingTime;
-            _remainingTime = _timeLimit;
-        }
-        LifeOverWithEvent();
     }
 
     /******************** �÷��̾� Spawn ���� �Լ��� ********************/
@@ -319,78 +221,41 @@ public class StageState : IGameState
     public void SpawnPlayer(Vector3 position)
     {
         Debug.LogWarning($"Spawning player at {position}");
-        GameObject player = _player;
-
         DisablePipeColliderTemporarilyIfExists(position);
 
-        if (player == null)
+        if (_player == null)
         {
+            _player = GameObject.FindWithTag("Player");
             Debug.Log($"Player spawned : {position}");
             // raycast ground beneath the spawn position
-            player = PoolManager.Instance.Pool(playerPrefab, position + 0.5f*Vector3.up, Quaternion.identity);
+            _player = PoolManager.Instance.Pool(playerPrefab, position + 0.5f*Vector3.up, Quaternion.identity);
             //�⺻ �̺�Ʈ ����
-            player.GetComponent<BattleModule>().death.AddListener(LifeOverWithEvent);
-            player.GetComponent<CamouflageModule>().InitializeBattleModule();
-            player.GetComponent<CamouflageModule>().onChangeHat.AddListener(() => {
-                currentHatType = player.GetComponent<CamouflageModule>().GetCurrentHatType();
+            _player.GetComponent<BattleModule>().death.AddListener(LifeOverWithEvent);
+            _player.GetComponent<CamouflageModule>().InitializeBattleModule();
+            _player.GetComponent<CamouflageModule>().onChangeHat.AddListener(() => {
+                currentHatType = _player.GetComponent<CamouflageModule>().GetCurrentHatType();
             });
-            player.GetComponent<CamouflageModule>().Initialize(currentHatType);
-            UpdateCameraTargetToPlayer();
+            _player.GetComponent<CamouflageModule>().Initialize(currentHatType);
+            FindStageCamera();
+            _stageCamera.UpdateCameraTargetToPlayer(_player);
         }
         else
         {
-            player.transform.position = position - 0.5f*Vector3.up;
+            _player.transform.position = position - 0.5f*Vector3.up;
             Debug.Log($"Player moved to position: {position}");
         }
     }
 
     public void SpawnPlayerWithEvent(Vector3 spawnPosition)
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        ActionSystem actionSystem = player?.GetComponent<ActionSystem>();
-
-        GameObject spawnUI = Resources.Load<GameObject>("SpawnUI");
-        GameObject canvas = GameObject.FindObjectOfType<Canvas>().gameObject;
-        SpawnUI text = PoolManager.Instance.Pool(spawnUI, Vector3.zero, Quaternion.identity, canvas.transform).GetComponent<SpawnUI>();
-        text.transform.SetParent(canvas.transform, false);
-        text.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
-        text.UpdateStageText(currentStage);
-        text.UpdateLifeText(_lifeCount);
-
-        Animator spawnAnimator = text.GetComponent<Animator>();
-        ProducingEvent spawnEvent = new AnimatorEvent(spawnAnimator);
-
-        spawnEvent.AddStartEvent(() =>
+        ProducingEvent spawnEvent = EventUtils.SpawnEvent(currentStage, _lifeCount, spawnPosition);
+        spawnEvent.InsertStartEvent(() =>
         {
             SpawnPlayer(spawnPosition);
-            if(player == null || actionSystem == null)
-            {
-                player = GameObject.FindWithTag("Player");
-                actionSystem = player.GetComponent<ActionSystem>();
-                actionSystem.ResumeSelf(false);
-            }
-            else actionSystem.ResumeSelf(false);
-            //set idle and grounded
-            actionSystem.SetAction(actionSystem.initAction);
-            //ray cast ground beneath the spawn position
-            if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hit, 100f, LayerMask.GetMask("Ground")))
-            {
-                player.transform.position = hit.point;
-            }
-        });
-        spawnEvent.AddEndEvent(() =>
-        {
-            if(player == null || actionSystem == null)
-            {
-                player = GameObject.FindWithTag("Player");
-                actionSystem = player.GetComponent<ActionSystem>();
-                actionSystem.ResumeSelf(true);
-            }
-            else actionSystem.ResumeSelf(true);
         });
         GameManager.Instance.AddEvent(spawnEvent);
     }
-    
+
     private void DisablePipeColliderTemporarilyIfExists(Vector3 position)
     {
         // 리스폰 위치 근처에 Pipe가 있는지 확인
@@ -436,9 +301,8 @@ public class StageState : IGameState
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         FindTimerText();
-        FindIconContainers();
-        PlaceCatnipIcons();
-        PlaceHeartIcons();
+        catnipModule.PlaceCatnipIcons();
+        StageUIUtils.PlaceHeartIcons(_lifeCount);
 
         Pipe targetPipe = PipeUtils.FindPipeByID(enteredPipeID);
         enteredPipeID = -1;
@@ -450,133 +314,29 @@ public class StageState : IGameState
         {
             Debug.LogError("���� ������ target Pipe�� ã�� �� �����ϴ�.");
         }
-        UpdateStageMapSize();
+        FindStageCamera();
+        _stageCamera.UpdateStageMapSize(currentStage,currentIndex);
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     /******************** Ÿ�̸� ���� �Լ��� ********************/
 
-    public void FindTimerText()
-    {
-        GameObject timerObject = GameObject.FindGameObjectWithTag("TimerText");
-        if (timerObject != null)
-        {
-            _timerText = timerObject.GetComponent<TextMeshProUGUI>();
-        }
-        else
-        {
-            Debug.LogWarning("TimerText UI�� ã�� �� �����ϴ�.");
-        }
+    private void FindTimerText() 
+    { 
+        _timerText = GameObject.FindGameObjectWithTag("TimerText").GetComponent<TextMeshProUGUI>();
+        UpdateTimerText();
     }
-
-    public void UpdateTimerUI(float remainingTime)
+    private void UpdateTimerText()
     {
-        if (_timerText != null)
-        {
-            _timerText.text = $"{Mathf.CeilToInt(remainingTime)}";
-        }
-        else
-        {
-            FindTimerText();
-        }
+        if (_timerText != null) _timerText.text = $"{Mathf.CeilToInt(_remainingTime)}";
     }
 
     /******************** Catnip ���� �Լ��� ********************/
 
-    private void InitializeCatnipInfo()
-    {
-        totalCatnipCount = CatnipUtils.CountTotalCatnipInStage(currentStage);
-        Debug.Log($"�� Ĺ�� ���� : {totalCatnipCount}");
-        InitializeCatnipCollectionStates(totalCatnipCount);
-        collectedCatnipCount = 0;
-    }
-
-    private void InitializeCatnipCollectionStates(int count)
-    {
-        isCatnipCollected = new List<bool>(new bool[count]);
-    }
-
-    private void FindIconContainers()
-    {
-        if (catnipIconContainer == null)
-        {
-            GameObject catnipContainerObject = GameObject.FindGameObjectWithTag("CatnipIconContainer");
-            if (catnipContainerObject != null)
-            {
-                catnipIconContainer = catnipContainerObject.transform;
-            }
-        }
-        if (heartIconContainer == null)
-        {
-            GameObject heartContainerObject = GameObject.FindGameObjectWithTag("HeartIconContainer");
-            if (heartContainerObject != null)
-            {
-                heartIconContainer = heartContainerObject.transform;
-            }
-        }
-    }
-
-    private void PlaceCatnipIcons()
-    {
-        ClearCatnipUI();
-        Debug.LogWarning($"_catnipIcon ����Ʈ ���� ����: {_catnipIcons.Count}");
-        for (int i = 0; i < totalCatnipCount; i++)
-        {
-            GameObject icon = PoolManager.Instance.Pool(catnipIconPrefab, Vector3.zero, Quaternion.identity, catnipIconContainer);
-            icon.transform.SetParent(catnipIconContainer, false);
-            _catnipIcons.Add(icon);
-            SetCatnipIconState(icon, isCatnipCollected[i]);
-        }
-    }
-
-    private void PlaceHeartIcons()
-    {
-        for (int i = 0; i < _lifeCount; i++)
-        {
-            GameObject liveHeart = PoolManager.Instance.Pool(liveHeartIconPrefab, Vector3.zero, Quaternion.identity, heartIconContainer);
-            liveHeart.transform.SetParent(heartIconContainer, false);
-        }
-
-        for (int i = _lifeCount; i < InitLifeCount; i++)
-        {
-            GameObject deadHeart = PoolManager.Instance.Pool(deadHeartIconPrefab, Vector3.zero, Quaternion.identity, heartIconContainer);
-            deadHeart.transform.SetParent(heartIconContainer, false);
-        }
-    }
-
     public void CollectCatnipInStageState(int catnipID)
     {
-        collectedCatnipCount++;
-        UpdateCatnipStateToCollected(catnipID);
+        catnipModule.UpdateCatnipStateToCollected(catnipID);
     }
 
-    public void UpdateCatnipStateToCollected(int catnipID)
-    {
-        if (catnipID > 0 && catnipID <= _catnipIcons.Count)
-        {
-            isCatnipCollected[catnipID - 1] = true;
-            SetCatnipIconState(_catnipIcons[catnipID - 1], true);
-        }
-        else
-        {
-            Debug.LogWarning("�������� catnipID: " + catnipID);
-        }
-    }
-
-    public void ClearCatnipUI()
-    {
-        _catnipIcons.Clear();
-    }
-
-    private void SetCatnipIconState(GameObject icon, bool isActive)
-    {
-        if (icon == null)
-        {
-            Debug.LogError("�ش� catnip Icon�� ã�� �� ����");
-            return;
-        }
-        Color iconColor = icon.GetComponent<UnityEngine.UI.Image>().color;
-        iconColor.a = isActive ? 1.0f : 0.5f;
-        icon.GetComponent<UnityEngine.UI.Image>().color = iconColor;
-    }
+    public IReadOnlyList<bool> GetIsCatnipCollected() => catnipModule.GetIsCatnipCollected();
 }

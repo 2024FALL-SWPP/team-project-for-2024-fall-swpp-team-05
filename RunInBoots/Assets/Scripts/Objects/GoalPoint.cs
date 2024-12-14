@@ -47,6 +47,6 @@ public class GoalPoint : Interactable
 
     private void OnGoalReached()
     {
-        GameManager.Instance.GetCurrentStageState().Exit(ExitState.StageClear);
+        GameManager.Instance.GetCurrentStageState().Exit(eExitState.StageClear);
     }
 }

@@ -30,6 +30,8 @@ public class ActionSystem : MonoBehaviour
     private BattleModule battleModule;
     private BoxCollider coll;
 
+    private int lastEventFrame = -1;
+
     #region Functions for setting new action
     void ParseUpdateRules(string updates)
     {
@@ -74,20 +76,23 @@ public class ActionSystem : MonoBehaviour
         string updates = currentAction.FrameUpdates;
         ParseUpdateRules(updates);
         actionFrames = 0;
+        lastEventFrame = frameUpdates.Where(update => update.cond_name == eActionCondition.Frame).LastOrDefault()?.cond_value ?? -1;
         transformModule.g_scale = currentAction.GravityScale;
         transformModule.maxSpeedX = currentAction.MaxVelocityX;
         transformModule.maxSpeedY = currentAction.MaxVelocityY;
         transformModule.ResetAcceleration();
 
         if(pastAction == nextAction && IsLooping()) return;
-        else animator.CrossFadeInFixedTime(currentAction.Clip, currentAction.TransitionDuration, 0, 0);
-        
+        else if (currentAction.TransitionDuration>0) animator.CrossFadeInFixedTime(currentAction.Clip, currentAction.TransitionDuration, 0, 0);
+        else animator.Play(currentAction.Clip, 0, 0);
+
         // Change collider size
-        if(currentCouroutine != null) StopCoroutine(currentCouroutine);
+        if (currentCouroutine != null) StopCoroutine(currentCouroutine);
         Vector3 targetSize = new Vector3(currentAction.ColliderX, currentAction.ColliderY, coll.size.z);
         currentCouroutine = StartCoroutine(ChangeColliderSize(targetSize, currentAction.TransitionDuration));
     }
 
+    WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
     IEnumerator ChangeColliderSize(Vector3 newSize, float time)
     {
         Vector3 startSize = coll.size;
@@ -97,12 +102,13 @@ public class ActionSystem : MonoBehaviour
         {
             coll.size = Vector3.Lerp(startSize, newSize, elapsedTime / time);
             coll.center = new Vector3(0, coll.size.y / 2, 0);
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            elapsedTime += Time.fixedDeltaTime;
+            yield return waitForFixedUpdate;
         }
 
         // Ensure the final size is set exactly
         coll.size = newSize;
+        coll.enabled = newSize.x > 0 && newSize.y > 0;
         currentCouroutine = null;
     }
     #endregion
@@ -130,10 +136,10 @@ public class ActionSystem : MonoBehaviour
     {
         // Check if character is on the ground
         Vector3 origin = transform.position;
-        origin = new Vector3(origin.x, origin.y + coll.size.y/2, origin.z);
+        origin = new Vector3(origin.x, origin.y + 0.1f, origin.z);
         RaycastHit hit;
-        float distance = contactDistance + coll.size.y/2;
-        if(Physics.BoxCast(origin, new Vector3(coll.size.x/2,contactDistance/2f,coll.size.z/2), Vector3.down, out hit, transform.rotation, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        float distance = contactDistance + 0.1f;
+        if(Physics.BoxCast(origin, new Vector3(coll.size.x/2,0,coll.size.z/2), Vector3.down, out hit, transform.rotation, distance) && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             return true;
         }
@@ -215,24 +221,24 @@ public class ActionSystem : MonoBehaviour
         int cond_val = 1;
         switch(cond) {
             case eActionCondition.InputX: 
-                if(Input.GetAxis("Horizontal") == 0) cond_val = 0;
+                if(Input.GetAxisRaw("Horizontal") == 0) cond_val = 0;
                 else cond_val = 1;
                 break;
             case eActionCondition.InputY: 
-                if(Input.GetAxis("Vertical") > 0) cond_val = 1;
-                else if(Input.GetAxis("Vertical") < 0) cond_val = -1;
+                if(Input.GetAxisRaw("Vertical") > 0) cond_val = 1;
+                else if(Input.GetAxisRaw("Vertical") < 0) cond_val = -1;
                 else cond_val = 0;
                 break;
             case eActionCondition.InputYDown:
                 if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.UpArrow)) 
                 {
-                    if (Input.GetAxis("Vertical") > 0) cond_val = 1;
-                    else if (Input.GetAxis("Vertical") < 0) cond_val = -1;
+                    if (Input.GetAxisRaw("Vertical") > 0) cond_val = 1;
+                    else if (Input.GetAxisRaw("Vertical") < 0) cond_val = -1;
                 }
                 else cond_val = 0;
                 break;
             case eActionCondition.Risable: 
-                if(Input.GetAxis("Vertical") >= 0 && VerticalSpaceCheck()) cond_val = 1;
+                if(Input.GetAxisRaw("Vertical") >= 0 && VerticalSpaceCheck()) cond_val = 1;
                 else cond_val = 0;
                 break;
             case eActionCondition.Jump: 
@@ -254,7 +260,7 @@ public class ActionSystem : MonoBehaviour
                 break;
             case eActionCondition.Run: 
                 if(Input.GetKey(KeyCode.Z)) {
-                    if(Input.GetAxis("Horizontal") != 0) cond_val = 1;
+                    if(Input.GetAxisRaw("Horizontal") != 0) cond_val = 1;
                     else cond_val = 0;
                 }
                 else cond_val = 0;
@@ -317,6 +323,7 @@ public class ActionSystem : MonoBehaviour
     void SpawnObject(string resourcePath, Quaternion rotationOffset = default(Quaternion))
     {
         GameObject loadedObject = Resources.Load<GameObject>(resourcePath);
+        // AudioManager.Instance.PlaySoundEffect(1); // meow!!!
         if (loadedObject != null)
         {
             var animTransform = animator.transform;
@@ -339,8 +346,8 @@ public class ActionSystem : MonoBehaviour
                 SetAction((int)val);
                 break;
             case eActionFunction.MoveInputX:
-                if(Input.GetAxis("Horizontal") > 0) transformModule.Accelerate(val, 0);
-                else if(Input.GetAxis("Horizontal") < 0) transformModule.Accelerate(-val, 0);
+                if(Input.GetAxisRaw("Horizontal") > 0) transformModule.Accelerate(val, 0);
+                else if(Input.GetAxisRaw("Horizontal") < 0) transformModule.Accelerate(-val, 0);
                 else transformModule.Accelerate(0, 0);
                 break;
             case eActionFunction.MoveLocalX:
@@ -389,7 +396,7 @@ public class ActionSystem : MonoBehaviour
         var nextAction = 0;
         // if current clip is not looping and animation is finished, set next action
         var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        if(stateInfo.IsName(currentAction.Clip) && stateInfo.normalizedTime > 1 && !IsLooping() && animator.GetCurrentAnimatorClipInfo(0).Length > 0)
+        if(stateInfo.IsName(currentAction.Clip) && stateInfo.normalizedTime > 1 && !IsLooping() && animator.GetCurrentAnimatorClipInfo(0).Length > 0 && (lastEventFrame<0 || actionFrames>lastEventFrame))
         {
             //Debug.Log("Animation finished"+ currentAction.Clip);
             nextAction = currentAction.NextAction != 0 ? currentAction.NextAction : initAction;
@@ -438,5 +445,8 @@ public class ActionSystem : MonoBehaviour
         enabled = isResume;
         // set player velocity to zero
         GetComponent<Rigidbody>().velocity = Vector3.zero;
+        // set idle action on resume
+        if(isResume)
+            SetAction(initAction);
     }
 }
