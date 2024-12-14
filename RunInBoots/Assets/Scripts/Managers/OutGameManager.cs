@@ -11,8 +11,6 @@ public class OutGameManager : MonoBehaviour
     public Button selectStageButton; // Assign via Inspector
     public Button exitButton; // Assign via Inspector
     public Image titleSceneImage; // Assign via Inspector
-    public Image lifeCountImage; // Assign via Inspector
-    public TextMeshProUGUI lifeCountText; // Assign via Inspector
     public UserData userData; // Assign via Inspector
 
     public GameObject stageSelectUI; // Assign via Inspector
@@ -25,7 +23,6 @@ public class OutGameManager : MonoBehaviour
     void Start()
     {
         AudioManager.Instance.PlayAudio(0);
-        stageSelectUI.SetActive(false);
         
         goBackButton.onClick.RemoveAllListeners(); // Remove any old listeners
         goBackButton.onClick.AddListener(GoBackToTitleScene);
@@ -50,8 +47,11 @@ public class OutGameManager : MonoBehaviour
         // initialize catnip images
         for (int i = 0; i < catnipImageList.Length; i++)
         {
-            catnipImageList[i].color = Color.black;
+            catnipImageList[i].color = new Color(0,0,0,0);
         }
+        Debug.Log(GameObject.FindGameObjectWithTag("HeartIconContainer").name);
+        StageUIUtils.PlaceHeartIcons(userData.lives);
+        stageSelectUI.SetActive(false);
     }
 
     void GoBackToTitleScene()
@@ -59,15 +59,6 @@ public class OutGameManager : MonoBehaviour
         // UnityEngine.SceneManagement.SceneManager.LoadScene("TitleScene");
         titleUI.SetActive(true);
         stageSelectUI.SetActive(false);
-    }
-
-    void Update()
-    {   
-        // Update the life count text if current scene is SelectStageScene
-        if (lifeCountText.IsActive())
-        {
-            lifeCountText.text = $"X0{userData.lives}";
-        }
     }
 
     public void ExitGameMode()
@@ -121,16 +112,7 @@ public class OutGameManager : MonoBehaviour
             }
 
             for (int catnip = 0; catnip < catnipStatus.Count; catnip++)
-            {
-                if (catnipStatus[catnip])
-                {
-                    catnipImageList[_GetCatnipIdx(stage, catnip)].color = Color.green;
-                }
-                else
-                {
-                    catnipImageList[_GetCatnipIdx(stage, catnip)].color = Color.black;
-                }
-            }
+                catnipImageList[_GetCatnipIdx(stage, catnip)].color = catnipStatus[catnip] ? Color.white : new Color(0,0,0,0);
         }
     }
 }

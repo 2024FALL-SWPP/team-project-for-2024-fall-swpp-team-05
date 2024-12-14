@@ -44,7 +44,7 @@ public class StretchModule : MonoBehaviour
     {
         // 천장 제한에 맞춰야 할 경우
         RaycastHit hit;
-        if (Physics.Raycast(transform.position+Vector3.up*(unitCollider.size.y-0.1f), Vector3.up, out hit, stretchAmount+0.1f))
+        if (Physics.Raycast(transform.position+Vector3.up*(unitCollider.size.y-0.1f), Vector3.up, out hit, stretchAmount+0.1f, LayerMask.GetMask("Ground")))
             currentStretchAmount += hit.distance - 0.1f;
         // 늘리기 길이를 누적하고 최대 길이로 제한
         else
@@ -53,6 +53,9 @@ public class StretchModule : MonoBehaviour
         // 최대 길이 제한
         currentStretchAmount = Mathf.Clamp(currentStretchAmount, 0, maxStretchLength);
 
+        // if (!isStretching) {
+        //     AudioManager.Instance.PlaySoundEffect(0);
+        // }
         isStretching = true;
         _isStretchApplied = false;
     }
