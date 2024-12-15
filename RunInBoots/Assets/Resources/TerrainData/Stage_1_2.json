@@ -14162,20 +14162,6 @@
       "objectType": "Cube_0",
       "gridPosition": {
         "x": 111,
-        "y": 31
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 111,
-        "y": 32
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 111,
         "y": 33
       }
     },
@@ -14204,20 +14190,6 @@
       "objectType": "Cube_0",
       "gridPosition": {
         "x": 112,
-        "y": 31
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 112,
-        "y": 32
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 112,
         "y": 33
       }
     },
@@ -14240,20 +14212,6 @@
       "gridPosition": {
         "x": 71,
         "y": 1
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 113,
-        "y": 31
-      }
-    },
-    {
-      "objectType": "Cube_0",
-      "gridPosition": {
-        "x": 113,
-        "y": 32
       }
     },
     {
@@ -14789,7 +14747,7 @@
       "objectType": "APipe",
       "gridPosition": {
         "x": 112,
-        "y": 29
+        "y": 31
       }
     },
     {
