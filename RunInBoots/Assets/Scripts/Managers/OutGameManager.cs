@@ -49,7 +49,7 @@ public class OutGameManager : MonoBehaviour
         {
             catnipImageList[i].color = new Color(0,0,0,0);
         }
-        Debug.Log(GameObject.FindGameObjectWithTag("HeartIconContainer").name);
+
         StageUIUtils.PlaceHeartIcons(userData.lives);
         stageSelectUI.SetActive(false);
     }
