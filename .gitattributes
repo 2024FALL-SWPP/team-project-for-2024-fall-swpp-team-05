@@ -1,0 +1,6 @@
+RunInBoots/Assets/Art/TerrainSampleAssets/ filter=lfs diff=lfs merge=lfs -text
+RunInBoots/Assets/Art/TerrainSampleAssets/* filter=lfs diff=lfs merge=lfs -text
+RunInBoots/Assets/Art/CliffFormations/* filter=lfs diff=lfs merge=lfs -text
+RunInBoots/Assets/Art/CliffFormations/ filter=lfs diff=lfs merge=lfs -text
+RunInBoots/Assets/Art/CliffFormations/**/* filter=lfs diff=lfs merge=lfs -text
+RunInBoots/Assets/Art/TerrainSampleAssets/**/* filter=lfs diff=lfs merge=lfs -text
