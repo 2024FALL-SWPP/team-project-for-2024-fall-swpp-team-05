@@ -115,6 +115,13 @@ public class TransformModule : MonoBehaviour
         }
     }
 
+    public void LookAhead()
+    {
+        if(rb == null)
+            rb = GetComponent<Rigidbody>();
+        rb?.MoveRotation(Quaternion.Euler(0, 90, 0));
+    }
+    
     List<Collider> groundColliders = new List<Collider>();
     private void OnCollisionEnter(Collision collision)
     {

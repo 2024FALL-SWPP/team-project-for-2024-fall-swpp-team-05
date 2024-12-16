@@ -184,14 +184,21 @@ public class StageState : IGameState
         ProducingEvent gameOverEvent = EventUtils.DeathEvent();
         gameOverEvent.AddEndEvent(() =>
         {
-            ProducingEvent blackScreenEvent = EventUtils.BlackScreenEvent();
-            blackScreenEvent.AddEndEvent(() =>
+            player.GetComponent<Rigidbody>().useGravity = true;
+            player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -1.0f);
+            ProducingEvent delayEvent = new DelayEvent(1.0f);
+            delayEvent.AddEndEvent(() =>
             {
-                Debug.Log("LifeOver Event End");
-                if (player != null) player.SetActive(false);
-                LifeOver();
+                ProducingEvent blackScreenEvent = EventUtils.BlackScreenEvent();
+                blackScreenEvent.AddEndEvent(() =>
+                {
+                    Debug.Log("LifeOver Event End");
+                    if (player != null) player.SetActive(false);
+                    LifeOver();
+                });
+                GameManager.Instance.AddEvent(blackScreenEvent);
             });
-            GameManager.Instance.AddEvent(blackScreenEvent);
+            GameManager.Instance.AddEvent(delayEvent);
         });
         GameManager.Instance.AddEvent(gameOverEvent);
     }

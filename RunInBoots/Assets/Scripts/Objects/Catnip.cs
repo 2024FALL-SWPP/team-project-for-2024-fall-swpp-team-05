@@ -25,6 +25,7 @@ public class Catnip : Interactable
         GameObject player = GameObject.FindWithTag("Player");
         ActionSystem actionSystem = player.GetComponent<ActionSystem>();
         BattleModule battleModule = player.GetComponent<BattleModule>();
+        TransformModule transformModule = player.GetComponent<TransformModule>();
 
         Animator playerAnimator = player.GetComponent<AnimatableUI>().animator;
         player.GetComponent<AnimatableUI>().PlayAnimation(UIConst.ANIM_PLAYER_CATNIP);
@@ -32,8 +33,9 @@ public class Catnip : Interactable
         catnipEvent.AddStartEvent(() =>
         {
             // Debug.Log("Catnip Event Start");
+            transformModule.LookAhead();
             actionSystem.ResumeSelf(false);
-            transform.position = player.transform.position + Vector3.up * 3.0f;
+            transform.position = player.transform.position + Vector3.up * 4.0f;
         });
         catnipEvent.AddEndEvent(() =>
         {
