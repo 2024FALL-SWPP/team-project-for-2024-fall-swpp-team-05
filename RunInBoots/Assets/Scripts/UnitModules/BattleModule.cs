@@ -15,11 +15,13 @@ public class BattleModule : MonoBehaviour
     public int invincibleTime = 10;
 
     private UnityEvent _attacked;
-    private Material[] _material;
-    private Material[] _invincibleMaterial;
+    [SerializeField] private Material[] _material;
+    [SerializeField] private Material[] _invincibleMaterial;
     private Renderer[] _renderers;
+    private Color[] _originColors;
     private int _defaultLayer;
     private bool _isTransparent = false;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -27,13 +29,29 @@ public class BattleModule : MonoBehaviour
         _attacked = new UnityEvent();
         _attacked.AddListener(OnAttacked);
         _renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
-        _material = new Material[_renderers.Length];
-        _invincibleMaterial = new Material[_renderers.Length];
+
+        // add all materials in the array
+        int materialCount = 0;
+        for (int i = 0; i < _renderers.Length; i++)
+            materialCount += _renderers[i].materials.Length;
+
+        // init array
+        _material = new Material[materialCount];
+        _invincibleMaterial = new Material[materialCount];
+
+        int index = 0;
         for (int i = 0; i < _renderers.Length; i++)
         {
-            _material[i] = new Material(_renderers[i].material);
-            _invincibleMaterial[i] = new Material(_material[i]);
-            _invincibleMaterial[i].color = new Color(_material[i].color.r, _material[i].color.g, _material[i].color.b, 0.5f);
+            Material[] mats = _renderers[i].materials;
+            for (int j = 0; j < mats.Length; j++)
+            {
+                _material[index] = new Material(mats[j]);
+                _invincibleMaterial[index] = new Material(_material[index]);
+                // emission color for invincible
+                _invincibleMaterial[index].SetColor("_EmissionColor", new Color(0.25f, 0.25f, 0.25f));
+                _invincibleMaterial[index].EnableKeyword("_EMISSION");
+                index++;
+            }
         }
         _defaultLayer = gameObject.layer;
     }
@@ -74,33 +92,29 @@ public class BattleModule : MonoBehaviour
         {
             if(elapsedTime % blinkTime < 0.01f)
             {
-                if(_isTransparent)
-                {
-                    for(int i = 0; i < _renderers.Length; i++)
-                    {
-                        _renderers[i].material = _material[i];
-                    }
-                    _isTransparent = false;
-                }
-                else
-                {
-                    for(int i = 0; i < _renderers.Length; i++)
-                    {
-                        _renderers[i].material = _invincibleMaterial[i];
-                    }
-                    _isTransparent = true;
-                }
+                SetMaterial();
+                _isTransparent = !_isTransparent;
             }
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         gameObject.layer = _defaultLayer;
-        for(int i = 0; i < _renderers.Length; i++)
-        {
-            _renderers[i].material = _material[i];
-        }
+        _isTransparent = true;
+        SetMaterial();
         _isTransparent = false;
+    }
+
+    private void SetMaterial() 
+    {
+        int index = 0;
+        for (int i = 0; i < _renderers.Length; i++)
+        {
+            var materials = _renderers[i].materials;
+            for (int j = 0; j < materials.Length; j++)
+                materials[j] = _isTransparent ? _material[index++] : _invincibleMaterial[index++];
+            _renderers[i].materials = materials;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
