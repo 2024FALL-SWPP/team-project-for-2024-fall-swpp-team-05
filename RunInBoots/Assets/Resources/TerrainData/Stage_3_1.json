@@ -7223,6 +7223,13 @@
         "x": 77,
         "y": 7
       }
+    },
+    {
+      "objectType": "Arrow_R",
+      "gridPosition": {
+        "x": 62,
+        "y": 33
+      }
     }
   ]
 }

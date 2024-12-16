@@ -11626,6 +11626,20 @@
         "x": 68,
         "y": 44
       }
+    },
+    {
+      "objectType": "Arrow_T",
+      "gridPosition": {
+        "x": 72,
+        "y": 21
+      }
+    },
+    {
+      "objectType": "Arrow_R",
+      "gridPosition": {
+        "x": 88,
+        "y": 31
+      }
     }
   ]
 }

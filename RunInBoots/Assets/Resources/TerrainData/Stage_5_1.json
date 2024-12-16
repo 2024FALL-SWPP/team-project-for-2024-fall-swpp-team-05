@@ -10918,13 +10918,6 @@
       }
     },
     {
-      "objectType": "IndoorCube_8",
-      "gridPosition": {
-        "x": 27,
-        "y": 155
-      }
-    },
-    {
       "objectType": "IndoorCube2_6",
       "gridPosition": {
         "x": 16,
@@ -10950,13 +10943,6 @@
       "gridPosition": {
         "x": 31,
         "y": 148
-      }
-    },
-    {
-      "objectType": "IndoorCube_8",
-      "gridPosition": {
-        "x": 28,
-        "y": 155
       }
     },
     {
@@ -11079,13 +11065,6 @@
       }
     },
     {
-      "objectType": "IndoorCube_8",
-      "gridPosition": {
-        "x": 29,
-        "y": 155
-      }
-    },
-    {
       "objectType": "IndoorCube_2",
       "gridPosition": {
         "x": 31,
@@ -11100,7 +11079,7 @@
       "objectType": "APipe",
       "gridPosition": {
         "x": 31,
-        "y": 150
+        "y": 153
       }
     },
     {
@@ -11629,20 +11608,6 @@
       }
     },
     {
-      "objectType": "IndoorCube_5",
-      "gridPosition": {
-        "x": 30,
-        "y": 152
-      }
-    },
-    {
-      "objectType": "IndoorCube_5",
-      "gridPosition": {
-        "x": 30,
-        "y": 153
-      }
-    },
-    {
       "objectType": "IndoorCube2_5",
       "gridPosition": {
         "x": 21,
@@ -11654,20 +11619,6 @@
       "gridPosition": {
         "x": 21,
         "y": 147
-      }
-    },
-    {
-      "objectType": "IndoorCube_5",
-      "gridPosition": {
-        "x": 30,
-        "y": 154
-      }
-    },
-    {
-      "objectType": "IndoorCube_5",
-      "gridPosition": {
-        "x": 30,
-        "y": 155
       }
     },
     {
@@ -11706,13 +11657,6 @@
       }
     },
     {
-      "objectType": "IndoorCube_8",
-      "gridPosition": {
-        "x": 24,
-        "y": 155
-      }
-    },
-    {
       "objectType": "IndoorCube2_5",
       "gridPosition": {
         "x": 23,
@@ -11727,13 +11671,6 @@
       }
     },
     {
-      "objectType": "IndoorCube_5",
-      "gridPosition": {
-        "x": 31,
-        "y": 152
-      }
-    },
-    {
       "objectType": "IndoorCube2_5",
       "gridPosition": {
         "x": 20,
@@ -11745,13 +11682,6 @@
       "gridPosition": {
         "x": 30,
         "y": 147
-      }
-    },
-    {
-      "objectType": "IndoorCube_8",
-      "gridPosition": {
-        "x": 25,
-        "y": 155
       }
     },
     {
@@ -11771,22 +11701,8 @@
     {
       "objectType": "IndoorCube_5",
       "gridPosition": {
-        "x": 31,
-        "y": 153
-      }
-    },
-    {
-      "objectType": "IndoorCube_5",
-      "gridPosition": {
         "x": 29,
         "y": 148
-      }
-    },
-    {
-      "objectType": "IndoorCube_8",
-      "gridPosition": {
-        "x": 26,
-        "y": 155
       }
     },
     {
@@ -11804,24 +11720,10 @@
       }
     },
     {
-      "objectType": "IndoorCube_5",
-      "gridPosition": {
-        "x": 31,
-        "y": 155
-      }
-    },
-    {
       "objectType": "IndoorCube_2",
       "gridPosition": {
         "x": 29,
         "y": 149
-      }
-    },
-    {
-      "objectType": "IndoorCube_5",
-      "gridPosition": {
-        "x": 31,
-        "y": 154
       }
     },
     {
@@ -11902,6 +11804,34 @@
       "gridPosition": {
         "x": 2,
         "y": 103
+      }
+    },
+    {
+      "objectType": "Arrow_T",
+      "gridPosition": {
+        "x": 15,
+        "y": 36
+      }
+    },
+    {
+      "objectType": "Arrow_R",
+      "gridPosition": {
+        "x": 15,
+        "y": 58
+      }
+    },
+    {
+      "objectType": "Arrow_L",
+      "gridPosition": {
+        "x": 15,
+        "y": 104
+      }
+    },
+    {
+      "objectType": "Arrow_R",
+      "gridPosition": {
+        "x": 14,
+        "y": 144
       }
     }
   ]

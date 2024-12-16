@@ -3663,6 +3663,20 @@
         "x": 33,
         "y": 5
       }
+    },
+    {
+      "objectType": "Arrow_D",
+      "gridPosition": {
+        "x": 4,
+        "y": 53
+      }
+    },
+    {
+      "objectType": "Arrow_D",
+      "gridPosition": {
+        "x": 22,
+        "y": 27
+      }
     }
   ]
 }
