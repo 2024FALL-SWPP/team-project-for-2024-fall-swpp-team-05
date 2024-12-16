@@ -26,6 +26,14 @@ public class StageCamera : MonoBehaviour
         }
     }
 
+    public void StopFollowingPlayer()
+    {
+        if (_virtualCamera != null)
+        {
+            _virtualCamera.Follow = null;
+        }
+    }
+
     // load all grid sizes on stage construction
     public void LoadGridSize(int stage)
     {

@@ -42,6 +42,7 @@ public class Catnip : Interactable
             actionSystem.ResumeSelf(true);
             battleModule.BeInvincible();
             OnCatnipCollected();
+            transformModule.LookAhead(false);
             // Debug.Log("Catnip Event End");
         });
         GameManager.Instance.AddEvent(catnipEvent);

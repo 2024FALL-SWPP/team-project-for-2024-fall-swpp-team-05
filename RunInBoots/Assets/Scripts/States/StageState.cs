@@ -184,6 +184,7 @@ public class StageState : IGameState
         ProducingEvent gameOverEvent = EventUtils.DeathEvent();
         gameOverEvent.AddEndEvent(() =>
         {
+            _stageCamera.StopFollowingPlayer();
             player.GetComponent<Rigidbody>().useGravity = true;
             player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -1.0f);
             ProducingEvent delayEvent = new DelayEvent(1.0f);
