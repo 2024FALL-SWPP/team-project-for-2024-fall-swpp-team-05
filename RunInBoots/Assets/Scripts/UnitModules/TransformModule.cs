@@ -146,9 +146,12 @@ public class TransformModule : MonoBehaviour
 
     public void UpdateJumpAllowed()
     {
+        List<Collider> toRemove = new List<Collider>();
         foreach(var col in groundColliders)
             if(col == null || col.enabled == false)
-                groundColliders.Remove(col);
+                toRemove.Add(col);
+        foreach(var col in toRemove)
+            groundColliders.Remove(col);
         if(groundColliders.Count == 0)
             jumpAllowed = false;
     }
