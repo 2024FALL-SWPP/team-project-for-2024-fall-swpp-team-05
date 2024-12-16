@@ -18,6 +18,7 @@ public class BattleModule : MonoBehaviour
     private Material[] _material;
     private Material[] _invincibleMaterial;
     private Renderer[] _renderers;
+    private Color[] _originColors;
     private int _defaultLayer;
     private bool _isTransparent = false;
 
@@ -33,7 +34,7 @@ public class BattleModule : MonoBehaviour
         {
             _material[i] = new Material(_renderers[i].material);
             _invincibleMaterial[i] = new Material(_material[i]);
-            _invincibleMaterial[i].color = new Color(_material[i].color.r, _material[i].color.g, _material[i].color.b, 0.5f);
+            _invincibleMaterial[i].color = Color.red;
         }
         _defaultLayer = gameObject.layer;
     }
