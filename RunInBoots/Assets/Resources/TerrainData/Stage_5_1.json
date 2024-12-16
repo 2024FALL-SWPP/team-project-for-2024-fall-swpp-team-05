@@ -11805,6 +11805,34 @@
         "x": 2,
         "y": 103
       }
+    },
+    {
+      "objectType": "Arrow_T",
+      "gridPosition": {
+        "x": 15,
+        "y": 36
+      }
+    },
+    {
+      "objectType": "Arrow_R",
+      "gridPosition": {
+        "x": 15,
+        "y": 58
+      }
+    },
+    {
+      "objectType": "Arrow_L",
+      "gridPosition": {
+        "x": 15,
+        "y": 104
+      }
+    },
+    {
+      "objectType": "Arrow_R",
+      "gridPosition": {
+        "x": 14,
+        "y": 144
+      }
     }
   ]
 }

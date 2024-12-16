@@ -3268,6 +3268,13 @@
         "x": 121,
         "y": 2
       }
+    },
+    {
+      "objectType": "Arrow_R",
+      "gridPosition": {
+        "x": 98,
+        "y": 18
+      }
     }
   ]
 }

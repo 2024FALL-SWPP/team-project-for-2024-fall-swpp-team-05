@@ -3261,7 +3261,7 @@
       }
     },
     {
-      "objectType": "MountainCube_6",
+      "objectType": "MountainCube_5",
       "gridPosition": {
         "x": 18,
         "y": 20
@@ -3312,7 +3312,7 @@
     {
       "objectType": "MountainCube_8",
       "gridPosition": {
-        "x": 21,
+        "x": 20,
         "y": 21
       }
     },
@@ -3333,7 +3333,7 @@
     {
       "objectType": "MountainCube_8",
       "gridPosition": {
-        "x": 20,
+        "x": 21,
         "y": 21
       }
     },
@@ -4605,7 +4605,7 @@
       "objectType": "APipe",
       "gridPosition": {
         "x": 74,
-        "y": 30
+        "y": 32
       }
     },
     {
@@ -8286,6 +8286,20 @@
       "gridPosition": {
         "x": 75,
         "y": 5
+      }
+    },
+    {
+      "objectType": "Arrow_R",
+      "gridPosition": {
+        "x": 43,
+        "y": 61
+      }
+    },
+    {
+      "objectType": "Arrow_D",
+      "gridPosition": {
+        "x": 62,
+        "y": 54
       }
     }
   ]
