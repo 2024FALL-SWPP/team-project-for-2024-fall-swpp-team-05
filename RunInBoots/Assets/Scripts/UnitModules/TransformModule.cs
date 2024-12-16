@@ -84,6 +84,7 @@ public class TransformModule : MonoBehaviour
         accelSumX = 0;
         accelSumY = 0;
         rb.velocity = new Vector3(speedX, speedY, 0);
+        UpdateJumpAllowed();
     }
 
     #region Physics Related Methods
@@ -139,12 +140,17 @@ public class TransformModule : MonoBehaviour
             {
                 groundColliders.Remove(collision.collider);
             }
-            foreach(var col in groundColliders)
-                if(col ==null)
-                    groundColliders.Remove(col);
-            if (groundColliders.Count == 0)
-                jumpAllowed = false;
+            UpdateJumpAllowed();
         }
+    }
+
+    public void UpdateJumpAllowed()
+    {
+        foreach(var col in groundColliders)
+            if(col == null || col.enabled == false)
+                groundColliders.Remove(col);
+        if(groundColliders.Count == 0)
+            jumpAllowed = false;
     }
 }
 #endregion
