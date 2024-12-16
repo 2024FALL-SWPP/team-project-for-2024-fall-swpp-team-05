@@ -62,12 +62,14 @@ public class EventUtils
         Debug.Log("LifeOverWithEvent");
         GameObject player = GameObject.FindWithTag("Player");
         ActionSystem actionSystem = player.GetComponent<ActionSystem>();
+        TransformModule transformModule = player.GetComponent<TransformModule>();
         Animator playerAnimator = player.GetComponent<AnimatableUI>().animator;
         player.GetComponent<AnimatableUI>().PlayAnimation(UIConst.ANIM_PLAYER_DEATH);
         ProducingEvent deathEvent = new AnimatorEvent(playerAnimator);
         deathEvent.AddStartEvent(() =>
         {
             Debug.Log("LifeOver Event Start");
+            transformModule.LookAhead();
             if (actionSystem != null) actionSystem.ResumeSelf(false);
         });
         return deathEvent;

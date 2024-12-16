@@ -8,4 +8,7 @@ public class UIConst
     public static string ANIM_PLAYER_CATNIP = "player_get_catnip";
     public static string ANIM_STAGE_CLEAR = "player_stage_clear";
     public static string ANIM_CLEAR_UI = "clear_ui";
+    public static string ANIM_RAT_SAD = "Rat Sad";
+    public static string ANIM_RAT_HAPPY = "Rat Happy";
+    public static string ANIM_RAT_TRAN = "Rat Transition";
 }

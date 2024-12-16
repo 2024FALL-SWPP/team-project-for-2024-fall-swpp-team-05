@@ -24,6 +24,7 @@ public class TransformModule : MonoBehaviour
     private float deltaTime = 0f;
     private bool deaccelerating = false;
     private Quaternion targetRotation;
+    private Quaternion _lastRotation = Quaternion.Euler(0, 0, 0);
 
     // Start is called before the first frame update
     void Start()
@@ -116,6 +117,18 @@ public class TransformModule : MonoBehaviour
         }
     }
 
+    public void LookAhead(bool lookAhead = true)
+    {
+        if(rb == null)
+            rb = GetComponent<Rigidbody>();
+        if(lookAhead)
+        {
+            _lastRotation = rb.rotation;
+            rb?.MoveRotation(Quaternion.Euler(0, 90, 0));
+        }
+        else rb?.MoveRotation(_lastRotation);
+    }
+    
     List<Collider> groundColliders = new List<Collider>();
     private void OnCollisionEnter(Collision collision)
     {
