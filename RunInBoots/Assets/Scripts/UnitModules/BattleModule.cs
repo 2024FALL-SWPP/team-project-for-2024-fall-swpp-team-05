@@ -15,8 +15,8 @@ public class BattleModule : MonoBehaviour
     public int invincibleTime = 10;
 
     private UnityEvent _attacked;
-    [SerializeField] private Material[] _material;
-    [SerializeField] private Material[] _invincibleMaterial;
+    private Material[] _material;
+    private Material[] _invincibleMaterial;
     private Renderer[] _renderers;
     private Color[] _originColors;
     private int _defaultLayer;
