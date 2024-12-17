@@ -134,8 +134,8 @@ ModelImporter:
       name: cat_crouch_jump
       takeName: Character Rig|Crouch Jump
       internalID: -270255763379979057
-      firstFrame: 0
-      lastFrame: 30
+      firstFrame: 9
+      lastFrame: 15
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
