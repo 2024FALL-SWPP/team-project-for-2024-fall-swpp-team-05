@@ -33,6 +33,25 @@ public class StageCamera : MonoBehaviour
             _virtualCamera.Follow = null;
         }
     }
+    
+    public void ZoomInPlayer()
+    {
+        Debug.Log("ZoomInPlayer");
+        if (_virtualCamera != null)
+        {
+            _virtualCamera.GetComponent<CinemachineConfiner>().m_BoundingVolume = null;
+            _virtualCamera.m_Lens.FieldOfView = 15.0f;
+        }
+    }
+
+    public void ZoomOutPlayer()
+    {
+        Debug.Log("ZoomOutPlayer");
+        if (_virtualCamera != null)
+        {
+            _virtualCamera.m_Lens.FieldOfView = 30.0f;
+        }
+    }
 
     // load all grid sizes on stage construction
     public void LoadGridSize(int stage)

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Cinemachine;
 
 public class GoalPoint : Interactable
 {
@@ -16,6 +17,7 @@ public class GoalPoint : Interactable
         GameObject player = GameObject.FindWithTag("Player");
         ActionSystem actionSystem = player.GetComponent<ActionSystem>();
         TransformModule transformModule = player.GetComponent<TransformModule>();
+        StageCamera stageCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>().GetComponent<StageCamera>();
 
         Animator playerAnimator = player.GetComponent<AnimatableUI>().animator;
         player.GetComponent<AnimatableUI>().PlayAnimation(UIConst.ANIM_STAGE_CLEAR);
@@ -29,6 +31,7 @@ public class GoalPoint : Interactable
             transformModule.LookAhead();
             actionSystem.ResumeSelf(false);
             transform.position = player.transform.position + Vector3.up * 4.0f;
+            stageCamera.ZoomInPlayer();
         });
         stageClearEvent.AddEndEvent(() =>
         {
@@ -45,6 +48,7 @@ public class GoalPoint : Interactable
             ProducingEvent blackScreenEvent = new AnimatorEvent(screenAnimator);
             blackScreenEvent.AddEndEvent(() =>
             {
+                stageCamera.ZoomOutPlayer();
                 // Debug.Log("Stage Clear Event End");
                 actionSystem.ResumeSelf(true);
                 OnGoalReached();
