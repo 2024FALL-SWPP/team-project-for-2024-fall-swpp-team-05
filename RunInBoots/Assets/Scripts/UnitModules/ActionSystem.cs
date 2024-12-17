@@ -121,7 +121,7 @@ public class ActionSystem : MonoBehaviour
         RaycastHit hit;
         origin += (coll.size.y/2) * Vector3.up;
         float distance = coll.size.y * 1.5f;
-        if(Physics.Raycast(origin, Vector3.up, out hit, distance))
+        if(Physics.Raycast(origin, Vector3.up, out hit, distance, LayerMask.NameToLayer("Ground")))
         {
             // Check if there is enough space under the character
             if(Physics.Raycast(origin, Vector3.down, out hit, distance))
@@ -286,6 +286,11 @@ public class ActionSystem : MonoBehaviour
                 break;
             case eActionCondition.PlayerInSight:
                 if(CheckPlayerInSight()) cond_val = 1;
+                else cond_val = 0;
+                break;
+            case eActionCondition.IsStretchingStart:
+                stretchModule = GetComponent<StretchModule>();
+                if(actionFrames == 0 && stretchModule != null && stretchModule.currentStretchAmount ==0) cond_val = 1;
                 else cond_val = 0;
                 break;
 

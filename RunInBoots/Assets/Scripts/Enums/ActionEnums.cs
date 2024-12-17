@@ -16,6 +16,7 @@ public enum eActionCondition
     Frame,
     Walkable,
     PlayerInSight,
+    IsStretchingStart,
 }
 public enum eActionFunction
 {
