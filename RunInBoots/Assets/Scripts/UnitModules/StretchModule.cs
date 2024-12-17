@@ -6,8 +6,8 @@ public class StretchModule : MonoBehaviour
     public float maxStretchLength = 5f; // 최대 길이 (m)
     public float returnSpeed = 0.1f; // 돌아가기 속도 (Lerp 계수)
     public float rayOffset = 0.5f;
-    public float rayError = 0.2f;
-    public float stretchSpeed = 50f; // 늘리기 속도
+    public float rayError = 1.0f;
+    public float stretchSpeed = 50; // 늘리기 속도
     public Transform targetBone; // 상체 본 (이동시키기 위한 본)
 
     // Private variables to track stretching state
@@ -45,17 +45,22 @@ public class StretchModule : MonoBehaviour
     // **늘리기** 기능: 늘릴 길이만큼 스트레칭 적용
     public void Stretch(float stretchAmount)
     {
+        Debug.Log("Stretching: " + stretchAmount);
         // 천장 제한에 맞춰야 할 경우
         RaycastHit hit;
         if (Physics.Raycast(transform.position+Vector3.up*(unitCollider.size.y-rayOffset), Vector3.up, out hit, stretchAmount+rayOffset, LayerMask.GetMask("Ground"))) {
-            if (hit.distance < rayOffset + rayError && hit.distance > rayOffset - rayError)
-                return;
-            currentStretchAmount += hit.distance - rayOffset;
             Debug.Log("hit distance: " + hit.distance);
+            if (hit.distance > rayOffset) {
+                if (hit.distance - rayOffset < stretchAmount) {
+                    stretchAmount = hit.distance - rayOffset;
+                }
+                currentStretchAmount += stretchAmount * Time.deltaTime * stretchSpeed / 2;
+            }
+                
         }
         // 늘리기 길이를 누적하고 최대 길이로 제한
         else
-            currentStretchAmount +=stretchAmount * Time.deltaTime * stretchSpeed;
+            currentStretchAmount += stretchAmount * Time.deltaTime * stretchSpeed;
 
         // 최대 길이 제한
         currentStretchAmount = Mathf.Clamp(currentStretchAmount, 0, maxStretchLength);
