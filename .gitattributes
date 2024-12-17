@@ -4,3 +4,7 @@ RunInBoots/Assets/Art/CliffFormations/* filter=lfs diff=lfs merge=lfs -text
 RunInBoots/Assets/Art/CliffFormations/ filter=lfs diff=lfs merge=lfs -text
 RunInBoots/Assets/Art/CliffFormations/**/* filter=lfs diff=lfs merge=lfs -text
 RunInBoots/Assets/Art/TerrainSampleAssets/**/* filter=lfs diff=lfs merge=lfs -text
+*.data filter=lfs diff=lfs merge=lfs -text
+*.wasm filter=lfs diff=lfs merge=lfs -text
+*.framwork.js filter=lfs diff=lfs merge=lfs -text
+*.br filter=lfs diff=lfs merge=lfs -text
