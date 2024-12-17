@@ -342,7 +342,7 @@ MonoBehaviour:
     MaxVelocityX: 2
     MaxVelocityY: 6
     NextAction: 0
-    FrameUpdates: '[{Walkable,1,MoveLocalX,2},{Walkable,0,MoveLocalX,-2}]'
+    FrameUpdates: '[{Walkable,1,MoveLocalX,2},{Walkable,0,MoveLocalX,-2},{OnLand,0,SetAction,603}]'
   - Key: 602
     Clip: dog_runaway
     ColliderX: 1.6
@@ -353,14 +353,24 @@ MonoBehaviour:
     MaxVelocityY: 6
     NextAction: 0
     FrameUpdates: '[{Walkable,1,StalkX,-3}]'
+  - Key: 603
+    Clip: dog_move
+    ColliderX: 1.6
+    ColliderY: 1.6
+    TransitionDuration: 0
+    GravityScale: 2
+    MaxVelocityX: 3
+    MaxVelocityY: 6
+    NextAction: 0
+    FrameUpdates: '[{OnLand,1,SetAction,601}]'
   - Key: 701
     Clip: enemy_angry
-    ColliderX: 0
-    ColliderY: 0
+    ColliderX: 1.6
+    ColliderY: 1.6
     TransitionDuration: 0
-    GravityScale: 0
-    MaxVelocityX: 0
-    MaxVelocityY: 0
+    GravityScale: 2
+    MaxVelocityX: 3
+    MaxVelocityY: 6
     NextAction: 0
     FrameUpdates: '[{PlayerInSight,1,SetAction,702}]'
   - Key: 702
