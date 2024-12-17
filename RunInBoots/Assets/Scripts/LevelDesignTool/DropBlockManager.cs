@@ -15,7 +15,7 @@ public class DropBlockManager : MonoBehaviour
     private bool playerOnTop = false;            // 플레이어가 블록 위에 있는지 여부
 
     private Collider blockPhysicalCollider, blockTriggerCollider; // 블록의 3D Collider
-    private GameObject player;
+    private Rigidbody playerRb;
 
     // Start is called before the first frame update
     void Start()
@@ -45,9 +45,9 @@ public class DropBlockManager : MonoBehaviour
             transform.position += Vector3.down * fallSpeed * Time.deltaTime;
 
             // let PC be sticked to the block
-            if (playerOnTop && player != null)
+            if (playerOnTop && playerRb != null)
             {
-                player.GetComponent<Rigidbody>().MovePosition(player.transform.position + Vector3.down * fallSpeed * Time.deltaTime);
+                playerRb.MovePosition(playerRb.position + Vector3.down * fallSpeed * Time.fixedDeltaTime);
             }
 
             // 화면 밖에서 일정 시간 동안 머물면 초기 위치로 복귀
@@ -75,7 +75,7 @@ public class DropBlockManager : MonoBehaviour
             Debug.Log("Player Enter");
             if (other.transform.position.y + triggerHeightOffset > transform.position.y) {
                 playerOnTop = true;
-                player = other.gameObject;
+                playerRb = other.gameObject.GetComponent<Rigidbody>();
                 Debug.Log("Player Stay");
                 blockPhysicalCollider.enabled = true;  // 충돌 활성화
                 Invoke("StartFalling", fallDelay);  // 일정 시간 후 낙하 시작
@@ -89,7 +89,7 @@ public class DropBlockManager : MonoBehaviour
         if (other.GetComponent<Collider>().CompareTag("Player"))
         {
             playerOnTop = false;
-            player = null;
+            playerRb = null;
             blockTriggerCollider.enabled = true; // activate trigger
             Debug.Log("Player Exit");
             CancelInvoke("StartFalling");
@@ -117,6 +117,7 @@ public class DropBlockManager : MonoBehaviour
         transform.position = startPosition;
         isFalling = false;
         playerOnTop = false;
+        playerRb = null;
         timeOutsideView = 0f;
         blockPhysicalCollider.enabled = false;
         blockTriggerCollider.enabled = true; // activate trigger
