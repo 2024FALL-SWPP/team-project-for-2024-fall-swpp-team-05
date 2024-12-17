@@ -364,17 +364,17 @@ MonoBehaviour:
     NextAction: 0
     FrameUpdates: '[{OnLand,1,SetAction,601}]'
   - Key: 701
-    Clip: enemy_angry
-    ColliderX: 1.6
-    ColliderY: 1.6
+    Clip: Rat Happy
+    ColliderX: 0
+    ColliderY: 0
     TransitionDuration: 0
-    GravityScale: 2
-    MaxVelocityX: 3
-    MaxVelocityY: 6
+    GravityScale: 0
+    MaxVelocityX: 0
+    MaxVelocityY: 0
     NextAction: 0
     FrameUpdates: '[{PlayerInSight,1,SetAction,702}]'
   - Key: 702
-    Clip: enemy_appear
+    Clip: enemy_disappear
     ColliderX: 0
     ColliderY: 0
     TransitionDuration: 0
@@ -382,24 +382,54 @@ MonoBehaviour:
     MaxVelocityX: 0
     MaxVelocityY: 0
     NextAction: 703
-    FrameUpdates: '[{Frame,-1,MoveInputX,0}]'
+    FrameUpdates: '[{Frame,0,Spawn,0},{Frame,50,Spawn,1}]'
   - Key: 703
-    Clip: enemy_rush
-    ColliderX: 2
-    ColliderY: 3
-    TransitionDuration: 0.5
+    Clip: Empty
+    ColliderX: 0
+    ColliderY: 0
+    TransitionDuration: 0
     GravityScale: 0
-    MaxVelocityX: 12
-    MaxVelocityY: 12
+    MaxVelocityX: 0
+    MaxVelocityY: 0
     NextAction: 0
-    FrameUpdates: '[{Frame,1,StalkX,12},{Frame,1,StalkY,12},{Frame,90,SetAction,704},{None,1,StalkX,0.01}]'
-  - Key: 704
+    FrameUpdates: '[{Frame,-1,SetAction,703}]'
+  - Key: 801
+    Clip: enemy_appear
+    ColliderX: 0
+    ColliderY: 0
+    TransitionDuration: 0
+    GravityScale: 0
+    MaxVelocityX: 0
+    MaxVelocityY: 0
+    NextAction: 0
+    FrameUpdates: '[{Frame,60,SetAction,803}]'
+  - Key: 802
     Clip: enemy_hold
     ColliderX: 2
     ColliderY: 3
-    TransitionDuration: 0
+    TransitionDuration: 0.1
     GravityScale: 0
     MaxVelocityX: 3
     MaxVelocityY: 3
     NextAction: 0
-    FrameUpdates: '[{Frame,360,SetAction,703},{None,1,StalkX,0.1},{None,1,StalkY,0.1}]'
+    FrameUpdates: '[{Frame,360,SetAction,803},{None,1,StalkX,0.1},{None,1,StalkY,0.1}]'
+  - Key: 803
+    Clip: enemy_angry
+    ColliderX: 2
+    ColliderY: 3
+    TransitionDuration: 0.1
+    GravityScale: 0
+    MaxVelocityX: 0
+    MaxVelocityY: 0
+    NextAction: 0
+    FrameUpdates: '[{Frame,120,SetAction,804}]'
+  - Key: 804
+    Clip: enemy_hold
+    ColliderX: 2
+    ColliderY: 3
+    TransitionDuration: 0.1
+    GravityScale: 0
+    MaxVelocityX: 12
+    MaxVelocityY: 12
+    NextAction: 0
+    FrameUpdates: '[{Frame,1,StalkX,12},{Frame,1,StalkY,12},{Frame,90,SetAction,802},{None,1,StalkX,0.01}]'
