@@ -288,6 +288,11 @@ public class ActionSystem : MonoBehaviour
                 if(CheckPlayerInSight()) cond_val = 1;
                 else cond_val = 0;
                 break;
+            case eActionCondition.IsStretchingStart:
+                stretchModule = GetComponent<StretchModule>();
+                if(actionFrames == 0 && stretchModule != null && stretchModule.currentStretchAmount < 0.5) cond_val = 1;
+                else cond_val = 0;
+                break;
 
         }
         // if(cond_val == val) Debug.Log("Check condition: " + cond + " " + val);
