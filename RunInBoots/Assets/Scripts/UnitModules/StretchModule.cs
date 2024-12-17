@@ -88,6 +88,7 @@ public class StretchModule : MonoBehaviour
         {
             float old = currentStretchAmount;
             currentStretchAmount = Mathf.Lerp(currentStretchAmount, 0, returnSpeed * Time.fixedDeltaTime);
+            currentStretchAmount = currentStretchAmount < 0.01f ? 0 : currentStretchAmount;
             old = old - currentStretchAmount;
             // 유닛 Y축 위치 조정
             rb.MovePosition(rb.position + Vector3.up * old);

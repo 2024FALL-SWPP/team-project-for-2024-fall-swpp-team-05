@@ -92,7 +92,7 @@ MonoBehaviour:
     MaxVelocityX: 8
     MaxVelocityY: 6
     NextAction: 0
-    FrameUpdates: '[{InputY,1,Stretch,0.2},{InputX,1,SetAction,181},{InputY,0,SetAction,184},{InputY,-1,SetAction,184},{OnLand,0,SetAction,183},{JumpValid,1,SetAction,182},{Frame,0,Spawn,10100002}]'
+    FrameUpdates: '[{IsStretchingStart,1,Spawn,10100002},{InputY,1,Stretch,0.2},{InputX,1,SetAction,181},{InputY,0,SetAction,184},{InputY,-1,SetAction,184},{OnLand,0,SetAction,183},{JumpValid,1,SetAction,182}]'
   - Key: 109
     Clip: cat_crouch
     ColliderX: 1.6
