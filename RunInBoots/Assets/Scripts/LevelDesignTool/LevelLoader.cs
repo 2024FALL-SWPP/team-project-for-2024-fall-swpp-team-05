@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 using Newtonsoft.Json;
 using UnityEditor;
 using System.Linq;
-
+#if UNITY_EDITOR
 public class LevelLoader : MonoBehaviour
 {
     public int stage;
@@ -308,3 +308,4 @@ public class LevelLoader : MonoBehaviour
         return new Vector3(gridPosition.x, gridPosition.y, 0);
     }
 }
+#endif
