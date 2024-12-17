@@ -89,9 +89,14 @@ public class StageCamera : MonoBehaviour
             colliderObject.transform.position = Vector3.zero;
             colliderObject.layer = LayerMask.NameToLayer("Invincible");
 
+            // calculate size of confiner based on width, height, fov, distance, and screen ratio
+            float halfViewHeight = _virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance * Mathf.Tan(Mathf.Deg2Rad * _virtualCamera.m_Lens.FieldOfView*0.5f);
+            float halfViewWidth = halfViewHeight * Screen.width/Screen.height;
+            Debug.Log($"halfViewHeight: {halfViewHeight}, halfViewWidth: {halfViewWidth} {_virtualCamera.m_Lens.Aspect}");
+
             // Add a PolygonCollider2D to define the bounding shape
             var boxCollider = colliderObject.AddComponent<BoxCollider>();
-            boxCollider.size = new Vector3(gridSizeX - 27.5f * 16 / 9, gridSizeY - 27.5f, 100);
+            boxCollider.size = new Vector3((gridSizeX - 2*halfViewWidth), gridSizeY - 2*halfViewHeight, 100);
             boxCollider.center = new Vector3(gridSizeX / 2 - 0.5f, gridSizeY / 2 - 0.5f, 0);
 
             confiner.m_BoundingVolume = boxCollider;
