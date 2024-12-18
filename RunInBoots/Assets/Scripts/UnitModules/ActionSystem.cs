@@ -121,7 +121,7 @@ public class ActionSystem : MonoBehaviour
         RaycastHit hit;
         origin += (coll.size.y/2) * Vector3.up;
         float distance = coll.size.y * 1.5f;
-        if(Physics.Raycast(origin, Vector3.up, out hit, distance, LayerMask.NameToLayer("Ground")))
+        if(Physics.Raycast(origin, Vector3.up, out hit, distance, 1<<LayerMask.NameToLayer("Ground")))
         {
             // Check if there is enough space under the character
             if(Physics.Raycast(origin, Vector3.down, out hit, distance))
