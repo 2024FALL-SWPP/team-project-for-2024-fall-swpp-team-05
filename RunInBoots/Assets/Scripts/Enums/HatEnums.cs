@@ -1,1 +1,0 @@
-public enum eHatType { None, Normal, Tiger }
